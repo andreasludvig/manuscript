@@ -6,7 +6,8 @@
 \documentclass[
   letterpaper,
   DIV=11,
-  numbers=noendperiod]{scrartcl}
+  numbers=noendperiod,
+  oneside]{scrartcl}
 
 \usepackage{amsmath,amssymb}
 \usepackage{iftex}
@@ -40,6 +41,7 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
+\usepackage[left=1in,marginparwidth=2.0666666666667in,textwidth=4.1333333333333in,marginparsep=0.3in]{geometry}
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 % Make \paragraph and \subparagraph free-standing
@@ -120,6 +122,10 @@
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
+\makeatletter
+\@ifpackageloaded{sidenotes}{}{\usepackage{sidenotes}}
+\@ifpackageloaded{marginnote}{}{\usepackage{marginnote}}
+\makeatother
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -128,9 +134,10 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={La Palma Earthquakes},
-  pdfauthor={Steve Purves; Rowan Cockett},
-  pdfkeywords={La Palma, Earthquakes},
+  pdftitle={Manuscript 1},
+  pdfauthor={Andreas Ludvig Ohm Svendsen; Tore B. Stage},
+  pdfkeywords={3D primary human hepatocytes, Inflammation, Drug
+metabolism},
   colorlinks=true,
   linkcolor={blue},
   filecolor={Maroon},
@@ -138,18 +145,14 @@
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
-\title{La Palma Earthquakes}
-\author{Steve Purves \and Rowan Cockett}
+\title{Manuscript 1}
+\author{Andreas Ludvig Ohm Svendsen \and Tore B. Stage}
 \date{2024-02-02}
 
 \begin{document}
 \maketitle
 \begin{abstract}
-In September 2021, a significant jump in seismic activity on the island
-of La Palma (Canary Islands, Spain) signaled the start of a volcanic
-crisis that still continues at the time of writing. Earthquake data is
-continually collected and published by the Instituto Geográphico
-Nacional (IGN). \ldots{}
+This is an abstract \ldots{}
 \end{abstract}
 
 \subsection{Introduction}\label{introduction}

@@ -11,19 +11,19 @@ and Interchange DTD v1.2 20190208//EN" "JATS-archivearticle1.dtd">
 
 
 <title-group>
-<article-title>La Palma Earthquakes</article-title>
+<article-title>Manuscript 1</article-title>
 </title-group>
 
 <contrib-group>
 <contrib contrib-type="author" corresp="yes">
-<contrib-id contrib-id-type="orcid">0000-0002-0760-5497</contrib-id>
+<contrib-id contrib-id-type="orcid">0000-0001-8050-6447</contrib-id>
 <name>
-<surname>Purves</surname>
-<given-names>Steve</given-names>
+<surname>Svendsen</surname>
+<given-names>Andreas Ludvig Ohm</given-names>
 </name>
-<string-name>Steve Purves</string-name>
+<string-name>Andreas Ludvig Ohm Svendsen</string-name>
 
-<email>steve@curvenote.com</email>
+<email>alosvendsen@health.sdu.dk</email>
 <role vocab="https://credit.niso.org" vocab-term="investigation" vocab-term-identifier="https://credit.niso.org/contributor-roles/investigation/">Investigation</role>
 <role vocab="https://credit.niso.org" vocab-term="project
 administration" vocab-term-identifier="https://credit.niso.org/contributor-roles/project-administration/">Project
@@ -33,20 +33,19 @@ administration</role>
 <xref ref-type="aff" rid="aff-1">a</xref>
 <xref ref-type="corresp" rid="cor-1">&#x002A;</xref>
 </contrib>
-<contrib contrib-type="author">
-<contrib-id contrib-id-type="orcid">0000-0002-7859-8394</contrib-id>
+<contrib contrib-type="author" corresp="yes">
 <name>
-<surname>Cockett</surname>
-<given-names>Rowan</given-names>
+<surname>Stage</surname>
+<given-names>Tore B.</given-names>
 </name>
-<string-name>Rowan Cockett</string-name>
+<string-name>Tore B. Stage</string-name>
 
-<xref ref-type="aff" rid="aff-1">a</xref>
+<xref ref-type="corresp" rid="cor-2">&#x002A;</xref>
 </contrib>
 </contrib-group>
 <aff id="aff-1">
 <institution-wrap>
-<institution>Curvenote</institution>
+<institution>SDU</institution>
 </institution-wrap>
 
 
@@ -57,7 +56,8 @@ administration</role>
 
 </aff>
 <author-notes>
-<corresp id="cor-1">steve@curvenote.com</corresp>
+<corresp id="cor-1">alosvendsen@health.sdu.dk</corresp>
+<corresp id="cor-2"></corresp>
 </author-notes>
 
 
@@ -72,15 +72,12 @@ administration</role>
 
 
 <abstract>
-<p>In September 2021, a significant jump in seismic activity on the
-island of La Palma (Canary Islands, Spain) signaled the start of a
-volcanic crisis that still continues at the time of writing. Earthquake
-data is continually collected and published by the Instituto Geográphico
-Nacional (IGN). …</p>
+<p>This is an abstract …</p>
 </abstract>
 <kwd-group kwd-group-type="author">
-<kwd>La Palma</kwd>
-<kwd>Earthquakes</kwd>
+<kwd>3D primary human hepatocytes</kwd>
+<kwd>Inflammation</kwd>
+<kwd>Drug metabolism</kwd>
 </kwd-group>
 
 
