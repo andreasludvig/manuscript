@@ -1,36 +1,35 @@
 ---
-title: Manuscript 1
+title: La Palma Earthquakes
 author:
-  - name: Andreas Ludvig Ohm Svendsen
-    orcid: 0000-0001-8050-6447
-    corresponding: true 
-    email: alosvendsen@health.sdu.dk
+  - name: Steve Purves
+    orcid: 0000-0002-0760-5497
+    corresponding: true
+    email: steve@curvenote.com
     roles:
       - Investigation
       - Project administration
       - Software
       - Visualization
     affiliations:
-      - SDU
-  - name: Tore B. Stage
+      - Curvenote
+  - name: Rowan Cockett
+    orcid: 0000-0002-7859-8394
     corresponding: false
-      - SDU
+    roles: []
+    affiliations:
+      - Curvenote
 keywords:
-  - 3D primary human hepatocytes
-  - Inflammation
-  - Drug metabolism
+  - La Palma
+  - Earthquakes
 abstract: |
-  This is an abstract ...
+  In September 2021, a significant jump in seismic activity on the island of La Palma (Canary Islands, Spain) signaled the start of a volcanic crisis that still continues at the time of writing. Earthquake data is continually collected and published by the Instituto Geográphico Nacional (IGN). ...
 plain-language-summary: |
-  Some plain language summary...
+  Earthquake data for the island of La Palma from the September 2021 eruption is found ...
 key-points:
-  - First keypoint.
-  - Second keypoint.
+  - A web scraping script was developed to pull data from the Instituto Geogràphico Nacional into a machine-readable form for analysis
+  - Earthquake events on La Palma are consistent with the presence of both mantle and crustal reservoirs.
 date: last-modified
 bibliography: references.bib
-csl: vancouver.csl
-number-sections: false
-reference-location: margin
 ---
 
 ## Introduction
