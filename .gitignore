@@ -12,3 +12,5 @@
 .httr-oauth
 .DS_Store
 
+/notebooks/viability/data_raw/
+/notebooks/viability/data_processed/
