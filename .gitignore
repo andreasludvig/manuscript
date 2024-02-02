@@ -4,10 +4,11 @@
 /.quarto/
 /_manuscript
 
-/agujournal2019.cls
+/vancouver.csl
 /trackchanges.sty
 .Rproj.user
 .Rhistory
 .Rdata
 .httr-oauth
 .DS_Store
+
