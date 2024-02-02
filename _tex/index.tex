@@ -4,7 +4,9 @@
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
 \documentclass[
-]{agujournal2019}
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrartcl}
 
 \usepackage{amsmath,amssymb}
 \usepackage{iftex}
@@ -39,7 +41,7 @@
 \makeatother
 \usepackage{xcolor}
 \setlength{\emergencystretch}{3em} % prevent overfull lines
-\setcounter{secnumdepth}{5}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 % Make \paragraph and \subparagraph free-standing
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
@@ -109,11 +111,7 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
-\usepackage{url} %this package should fix any errors with URLs in refs.
-\usepackage{lineno}
-\usepackage[inline]{trackchanges} %for better track changes. finalnew option will compile document with changes incorporated.
-\usepackage{soul}
-\linenumbers
+\KOMAoption{captions}{tableheading}
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \AtBeginDocument{%
@@ -173,18 +171,12 @@
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
-\journalname{Earth and Space Science}
-
-\draftfalse
+\title{La Palma Earthquakes}
+\author{Steve Purves \and Rowan Cockett}
+\date{2024-02-02}
 
 \begin{document}
-\title{La Palma Earthquakes}
-
-\authors{Steve Purves\affil{1}, Rowan Cockett\affil{1}}
-\affiliation{1}{Curvenote, }
-\correspondingauthor{Steve Purves}{steve@curvenote.com}
-
-
+\maketitle
 \begin{abstract}
 In September 2021, a significant jump in seismic activity on the island
 of La Palma (Canary Islands, Spain) signaled the start of a volcanic
@@ -193,13 +185,7 @@ continually collected and published by the Instituto Geográphico
 Nacional (IGN). \ldots{}
 \end{abstract}
 
-\section*{Plain Language Summary}
-Earthquake data for the island of La Palma from the September 2021
-eruption is found \ldots{}
-
-
-
-\section{Introduction}\label{introduction}
+\subsection{Introduction}\label{introduction}
 
 \textsubscript{Source:
 \href{https://andreasludvig.github.io/manuscript/index.qmd.html}{Article
@@ -311,23 +297,22 @@ Earthquakes}}
 Figure~\ref{fig-spatial-plot} shows the location of recent Earthquakes
 on La Palma.
 
-\section{Data \& Methods}\label{sec-data-methods}
+\subsection{Data \& Methods}\label{sec-data-methods}
 
-\section{Conclusion}\label{conclusion}
+\subsection{Conclusion}\label{conclusion}
 
-\section*{References}\label{references}
-\addcontentsline{toc}{section}{References}
+\subsection*{References}\label{references}
+\addcontentsline{toc}{subsection}{References}
 
 \phantomsection\label{refs}
 \begin{CSLReferences}{1}{0}
-\vspace{1em}
-
 \bibitem[\citeproctext]{ref-marrero2019}
-Marrero, J., García, A., Berrocoso, M., Llinares, Á., Rodríguez-Losada,
-A., \& Ortiz, R. (2019). Strategies for the development of volcanic
-hazard maps in monogenetic volcanic fields: The example of {La} {Palma}
-({Canary} {Islands}). \emph{Journal of Applied Volcanology}, \emph{8}.
-\url{https://doi.org/10.1186/s13617-019-0085-5}
+Marrero, José, Alicia García, Manuel Berrocoso, Ángeles Llinares,
+Antonio Rodríguez-Losada, and R. Ortiz. 2019. {``Strategies for the
+Development of Volcanic Hazard Maps in Monogenetic Volcanic Fields: The
+Example of {La} {Palma} ({Canary} {Islands}).''} \emph{Journal of
+Applied Volcanology} 8 (July).
+\url{https://doi.org/10.1186/s13617-019-0085-5}.
 
 \end{CSLReferences}
 

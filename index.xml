@@ -5,18 +5,6 @@ and Interchange DTD v1.2 20190208//EN" "JATS-archivearticle1.dtd">
 <article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" dtd-version="1.2" article-type="other">
 
 <front>
-<journal-meta>
-<journal-id></journal-id>
-
-<journal-title-group>
-<journal-title>Earth and Space Science</journal-title>
-</journal-title-group>
-<issn></issn>
-
-<publisher>
-<publisher-name></publisher-name>
-</publisher>
-</journal-meta>
 
 
 <article-meta>
@@ -72,11 +60,7 @@ administration</role>
 <corresp id="cor-1">steve@curvenote.com</corresp>
 </author-notes>
 
-<pub-date date-type="pub" publication-format="electronic" iso-8601-date="2024-02-02">
-<year>2024</year>
-<month>2</month>
-<day>2</day>
-</pub-date>
+
 
 
 
@@ -108,7 +92,7 @@ Nacional (IGN). …</p>
 
 <body>
 <sec id="introduction">
-  <title>1 Introduction</title>
+  <title>Introduction</title>
   <fig id="fig-timeline">
     <caption><p>Figure 1: Timeline of recent earthquakes on La
     Palma</p></caption>
@@ -215,10 +199,10 @@ Nacional (IGN). …</p>
   the location of recent Earthquakes on La Palma.</p>
 </sec>
 <sec id="sec-data-methods">
-  <title>2 Data &amp; Methods</title>
+  <title>Data &amp; Methods</title>
 </sec>
 <sec id="conclusion">
-  <title>3 Conclusion</title>
+  <title>Conclusion</title>
 </sec>
 </body>
 
@@ -308,7 +292,7 @@ Nacional (IGN). …</p>
 
 <body>
 <sec id="introduction-nb-article">
-  <title>1 Introduction</title>
+  <title>Introduction</title>
   <sec id="nb-code-cell-1-nb-article" specific-use="notebook-code">
   <code language="r script">eruptions &lt;- c(1492, 1585, 1646, 1677, 1712, 1949, 1971, 2021)
 n_eruptions &lt;- length(eruptions)</code>
@@ -443,10 +427,10 @@ avg_years_between_eruptions</code>
   the location of recent Earthquakes on La Palma.</p>
 </sec>
 <sec id="sec-data-methods-nb-article">
-  <title>2 Data &amp; Methods</title>
+  <title>Data &amp; Methods</title>
 </sec>
 <sec id="conclusion-nb-article">
-  <title>3 Conclusion</title>
+  <title>Conclusion</title>
 </sec>
 </body>
 

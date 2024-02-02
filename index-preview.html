@@ -200,7 +200,6 @@
 <meta name="citation_year" content="2024">
 <meta name="citation_online_date" content="2024-02-02">
 <meta name="citation_language" content="en">
-<meta name="citation_journal_title" content="Earth and Space Science">
 <meta name="citation_reference" content="citation_title=Strategies for the development of volcanic hazard maps in monogenetic volcanic fields: The example of La Palma (Canary Islands);,citation_author=José Marrero;,citation_author=Alicia García;,citation_author=Manuel Berrocoso;,citation_author=Ángeles Llinares;,citation_author=Antonio Rodríguez-Losada;,citation_author=R. Ortiz;,citation_publication_date=2019-07;,citation_cover_date=2019-07;,citation_year=2019;,citation_doi=10.1186/s13617-019-0085-5;,citation_volume=8;,citation_journal_title=Journal of Applied Volcanology;">
 </head>
 
@@ -283,9 +282,9 @@
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#sec-data-methods" id="toc-sec-data-methods" class="nav-link" data-scroll-target="#sec-data-methods"><span class="header-section-number">2</span> Data &amp; Methods</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">3</span> Conclusion</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#sec-data-methods" id="toc-sec-data-methods" class="nav-link" data-scroll-target="#sec-data-methods">Data &amp; Methods</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
@@ -294,13 +293,13 @@
 </div>
 <main class="content quarto-banner-title-block" id="quarto-document-content">      
 
-       <section id="introduction" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
-<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div class="cell" data-warning.hidden="true" data-message.hidden="true">
+       <section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>eruptions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1492</span>, <span class="dv">1585</span>, <span class="dv">1646</span>, <span class="dv">1677</span>, <span class="dv">1712</span>, <span class="dv">1949</span>, <span class="dv">1971</span>, <span class="dv">2021</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>n_eruptions <span class="ot">&lt;-</span> <span class="fu">length</span>(eruptions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-fig-timeline" class="cell" data-warning.hidden="true" data-message.hidden="true">
+<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-fig-timeline" class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">+</span> <span class="fl">0.1</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(eruptions, <span class="fu">rep</span>(<span class="dv">0</span>, n_eruptions), </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pch =</span> <span class="st">"|"</span>, <span class="at">axes =</span> <span class="cn">FALSE</span>)</span>
@@ -310,7 +309,7 @@
 <div id="fig-timeline" class="quarto-figure quarto-figure-center quarto-float anchored" alt="An event plot of the years of the last 8 eruptions on La Palma.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-timeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/fig-timeline-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="index_files/figure-html/fig-timeline-1.png" class="img-fluid figure-img" alt="An event plot of the years of the last 8 eruptions on La Palma." width="576"></a>
+<a href="index_files/figure-html/fig-timeline-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="index_files/figure-html/fig-timeline-1.png" class="img-fluid figure-img" alt="An event plot of the years of the last 8 eruptions on La Palma." width="576"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-timeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Timeline of recent earthquakes on La Palma
@@ -319,7 +318,7 @@ Figure&nbsp;1: Timeline of recent earthquakes on La Palma
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div class="cell" data-warning.hidden="true" data-message.hidden="true">
+<div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>avg_years_between_eruptions <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">diff</span>(eruptions[<span class="sc">-</span>n_eruptions]))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>avg_years_between_eruptions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -390,7 +389,7 @@ Table&nbsp;1: Recent historic eruptions on La Palma
 <div id="fig-map" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/la-palma-map.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="images/la-palma-map.png" class="img-fluid figure-img"></a>
+<a href="images/la-palma-map.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2"><img src="images/la-palma-map.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Map of La Palma
@@ -410,7 +409,7 @@ Figure&nbsp;2: Map of La Palma
 <div id="fig-spatial-plot" class="quarto-figure quarto-figure-center quarto-float anchored" alt="A scatterplot of earthquake locations plotting latitude against longitude.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-spatial-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/notebooks-explore-earthquakes-fig-spatial-plot-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/notebooks-explore-earthquakes-fig-spatial-plot-output-1.png" class="img-fluid figure-img" alt="A scatterplot of earthquake locations plotting latitude against longitude."></a>
+<a href="index_files/figure-html/notebooks-explore-earthquakes-fig-spatial-plot-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-glightbox="description: .lightbox-desc-3"><img src="index_files/figure-html/notebooks-explore-earthquakes-fig-spatial-plot-output-1.png" class="img-fluid figure-img" alt="A scatterplot of earthquake locations plotting latitude against longitude."></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spatial-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: Locations of earthquakes on La Palma since 2017
@@ -422,11 +421,11 @@ Figure&nbsp;3: Locations of earthquakes on La Palma since 2017
 </div>
 <p><a href="#fig-spatial-plot" class="quarto-xref">Figure&nbsp;3</a> shows the location of recent Earthquakes on La Palma.</p>
 </section>
-<section id="sec-data-methods" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="sec-data-methods"><span class="header-section-number">2</span> Data &amp; Methods</h2>
+<section id="sec-data-methods" class="level2">
+<h2 class="anchored" data-anchor-id="sec-data-methods">Data &amp; Methods</h2>
 </section>
-<section id="conclusion" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">3</span> Conclusion</h2>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 </section>
 <section id="references" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
@@ -828,7 +827,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom","openEffect":"zoom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"zoom","selector":".lightbox","openEffect":"zoom","loop":false});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
