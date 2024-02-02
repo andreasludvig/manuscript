@@ -1,51 +1,174 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="generator" content="quarto-1.5.6">
 
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.6">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="author" content="Andreas Ludvig Ohm Svendsen">
+    <meta name="author" content="Tore B. Stage">
+    <meta name="dcterms.date" content="2024-02-02">
+    <meta name="keywords" content="3D primary human hepatocytes, Inflammation, Drug metabolism">
 
-<meta name="author" content="Andreas Ludvig Ohm Svendsen">
-<meta name="author" content="Tore B. Stage">
-<meta name="dcterms.date" content="2024-02-02">
-<meta name="keywords" content="3D primary human hepatocytes, Inflammation, Drug metabolism">
+    <title>Manuscript 1</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      div.columns{display: flex; gap: min(4vw, 1.5em);}
+      div.column{flex: auto; overflow-x: auto;}
+      div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+      ul.task-list{list-style: none;}
+      ul.task-list li input[type="checkbox"] {
+        width: 0.8em;
+        margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+        vertical-align: middle;
+      }
+      /* CSS for syntax highlighting */
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+        }
+      pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+      div.sourceCode
+        {   }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      /* CSS for citations */
+      div.csl-bib-body { }
+      div.csl-entry {
+        clear: both;
+      }
+      .hanging-indent div.csl-entry {
+        margin-left:2em;
+        text-indent:-2em;
+      }
+      div.csl-left-margin {
+        min-width:2em;
+        float:left;
+      }
+      div.csl-right-inline {
+        margin-left:2em;
+        padding-left:1em;
+      }
+      div.csl-indent {
+        margin-left: 2em;
+      }    </style>
 
-<title>Manuscript 1</title>
-<style>
-code{white-space: pre-wrap;}
-span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
-div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-ul.task-list{list-style: none;}
-ul.task-list li input[type="checkbox"] {
-  width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
-  vertical-align: middle;
-}
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+    <style>
+      body.hypothesis-enabled #quarto-embed-header {
+        padding-right: 36px;
+      }
 
+      #quarto-embed-header {
+        height: 3em;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: solid 1px;
+      }
 
+      #quarto-embed-header h6 {
+        font-size: 1.1em;
+        padding-top: 0.6em;
+        margin-left: 1em;
+        margin-right: 1em;
+        font-weight: 400;
+      }
+
+      #quarto-embed-header a.quarto-back-link,
+      #quarto-embed-header a.quarto-download-embed {
+        font-size: 0.8em;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        margin-left: 1em;
+        margin-right: 1em;
+      }
+
+      .quarto-back-container {
+        padding-left: 0.5em;
+        display: flex;
+      }
+
+      .headroom {
+          will-change: transform;
+          transition: transform 200ms linear;
+      }
+
+      .headroom--pinned {
+          transform: translateY(0%);
+      }
+
+      .headroom--unpinned {
+          transform: translateY(-100%);
+      }      
+    </style>
+
+    <script>
+    window.document.addEventListener("DOMContentLoaded", function () {
+
+      var header = window.document.querySelector("#quarto-embed-header");
+      const titleBannerEl = window.document.querySelector("body > #title-block-header");
+      if (titleBannerEl) {
+        titleBannerEl.style.paddingTop = header.clientHeight + "px";
+      }
+      const contentEl = window.document.getElementById('quarto-content');
+      for (const child of contentEl.children) {
+        child.style.paddingTop = header.clientHeight + "px";
+        child.style.marginTop = "1em";
+      }
+
+      // Use the article root if the `back` call doesn't work. This isn't perfect
+      // but should typically work
+      window.quartoBackToArticle = () => {
+        var currentUrl = window.location.href;
+        window.history.back();
+        setTimeout(() => {
+            // if location was not changed in 100 ms, then there is no history back
+            if(currentUrl === window.location.href){              
+                // redirect to site root
+                window.location.href = "index.html";
+            }
+        }, 100);
+      }
+
+      const headroom = new window.Headroom(header, {
+        tolerance: 5,
+        onPin: function () {
+        },
+        onUnpin: function () {
+        },
+      });
+      headroom.init();
+    });
+    </script>
+
+    
+<script src="site_libs/manuscript-notebook/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -56,15 +179,13 @@ div.csl-indent {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script async="" src="https://hypothes.is/embed.js"></script>
+     <script async="" src="https://hypothes.is/embed.js"></script>
 <script>
   window.document.addEventListener("DOMContentLoaded", function (_event) {
     document.body.classList.add('hypothesis-enabled');
   });
-</script>
-
-
-<meta name="citation_title" content="Manuscript 1">
+</script>  
+      <meta name="citation_title" content="Manuscript 1">
 <meta name="citation_abstract" content="This is an abstract ...
 ">
 <meta name="citation_keywords" content="3D primary human hepatocytes,Inflammation,Drug metabolism">
@@ -99,9 +220,16 @@ div.csl-indent {
 <meta name="citation_reference" content="citation_title=Enrichment-free High-throughput Liquid ChromatographyMultiple-Reaction Monitoring Quantification of Cytochrome P450 Proteins in Plated Human Hepatocytes Direct from 96-Well Plates Enables Routine Protein Induction Measurements;,citation_author=John P. Savaryn;,citation_author=Ning Liu;,citation_author=Jun Sun;,citation_author=Junli Ma;,citation_author=David M. Stresser;,citation_author=Gary Jenkins;,citation_publication_date=2020-07-01;,citation_cover_date=2020-07-01;,citation_year=2020;,citation_fulltext_html_url=https://dmd.aspetjournals.org/content/48/7/594;,citation_issue=7;,citation_doi=10.1124/dmd.120.090480;,citation_volume=48;,citation_language=en;,citation_journal_title=Drug Metabolism and Disposition;">
 </head>
 
-<body>
+  <body class="quarto-notebook">
+    <div id="quarto-embed-header" class="headroom fixed-top bg-primary">
+      
+      <a onclick="window.quartoBackToArticle(); return false;" class="btn btn-primary quarto-back-link" href=""><i class="bi bi-caret-left"></i> Back to Article</a>
+      <h6><i class="bi bi-journal-code"></i> Article Notebook</h6>
 
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+            <a href="./index.qmd" class="btn btn-primary quarto-download-embed" download="index.qmd">Download Source</a>
+          </div>
+
+     <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Manuscript 1</h1>
@@ -141,7 +269,7 @@ div.csl-indent {
               </div>
       </div>
       <div class="quarto-title-meta-column-end quarto-other-formats-target">
-      <div class="quarto-alternate-formats"><div class="quarto-title-meta-heading">Other Formats</div><div class="quarto-title-meta-contents"><p><a href="index.docx"><i class="bi bi-file-word"></i>MS Word</a></p></div><div class="quarto-title-meta-contents"><p><a href="index.pdf"><i class="bi bi-file-pdf"></i>PDF</a></p></div></div></div>
+      </div>
     </div>
 
     <div>
@@ -178,17 +306,25 @@ div.csl-indent {
   </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
   </ul>
-<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="notebooks/explore-earthquakes-preview.html"><i class="bi bi-journal-code"></i>Explore Earthquakes</a></li></ul></div></nav>
+</nav>
 </div>
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
 </div>
-<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">      
 
-
-
-  
-
-
+       <div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Always load same package versions</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>groundhog.day <span class="ot">&lt;-</span> <span class="st">"2024-01-01"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>groundhog<span class="sc">::</span><span class="fu">meta.groundhog</span>(groundhog.day) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[1;36mNow using 'groundhog_3.1.2'.[0m</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span>  <span class="fu">c</span>(<span class="st">"data.table"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">groundhog.library</span>(pkgs, groundhog.day)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[36mSuccessfully attached 'data.table_1.14.10'[0m</code></pre>
+</div>
+</div></div>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Inflammation is a complex biological response that is pivotal in various pathological conditions. These range from systemic inflammatory diseases, such as rheumatoid arthritis and sepsis, to lower-grade chronic inflammatory states such as type 2 diabetes mellitus. Given the prevalence of systemic inflammation, understanding its interaction with drug metabolism is of substantial clinical relevance.</p>
@@ -198,9 +334,9 @@ div.csl-indent {
 <p>Recently, 3D primary human hepatocytes (PHH) have challenged 2D PHH as a more physiologically relevant culture method of PHH. 3D culture leads to more stable cell cultures that retain their hepatic phenotype for extended periods of time <span class="citation" data-cites="bell2016">(<a href="#ref-bell2016" role="doc-biblioref">8</a>)</span>. Consequently, this 3D PHH have been shown to predict CYP induction and hepatotoxicity more accurately than 2D PHH <span class="citation" data-cites="bell2018 järvinen2023">(<a href="#ref-bell2018" role="doc-biblioref">9</a>,<a href="#ref-järvinen2023" role="doc-biblioref">10</a>)</span>. Historically, 2D PHH have been utilized to study the effect of drugs and inflammation on hepatocyte/liver function. However, the inherent limitations of 2D cultures, primarily their inability to maintain the physiological phenotype and liver-specific functions of hepatocytes, have prompted a shift towards the 3D liver spheroid models. This model is increasingly recognized for their physiological relevance and stability, offering a more accurate representation of hepatic responses. The 3D liver spheroids preserve liver cell phenotypes and functions over extended periods, thereby enhancing the reliability of drug-induced liver injury predictions and disease mechanism investigations. This advancement positions 3D liver spheroids as potentially the new standard for in vitro hepatocyte studies, while still being suitable for a high throughput setting, and financially accessible as opposed to even more advanced liver models (ref for last part) <span class="citation" data-cites="ingelman-sundberg dunvald">(<a href="#ref-dunvald" role="doc-biblioref">1</a>,<a href="#ref-ingelman-sundberg" role="doc-biblioref">11</a>)</span> . Another claim for the lack of correlation discussed in the review by AC et al.&nbsp;is that there might be methodological limitations to the widespread use of 2D models of PHHs <span class="citation" data-cites="dunvald">(<a href="#ref-dunvald" role="doc-biblioref">1</a>)</span>.</p>
 <p>We aimed to utilize 3D primary human hepatocytes <span class="citation" data-cites="bell2016">(<a href="#ref-bell2016" role="doc-biblioref">8</a>)</span> to study the impact of physiologically relevant concentrations of cytokines on CYP expression and activity. This may help further our understanding of the impact of inflammation on clinical drug metabolism among patients with inflammation. This, in turn, may inform more precise and adaptive prescribing strategies for patients in various inflammatory states.</p>
 </section>
-<section id="methods" class="level2 page-columns page-full">
+<section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
-<section id="d-spheroid-culture-of-phhs" class="level3 page-columns page-full">
+<section id="d-spheroid-culture-of-phhs" class="level3">
 <h3 class="anchored" data-anchor-id="d-spheroid-culture-of-phhs">3D spheroid culture of PHHs</h3>
 <section id="materials" class="level4">
 <h4 class="anchored" data-anchor-id="materials">Materials</h4>
@@ -210,12 +346,12 @@ div.csl-indent {
 <h4 class="anchored" data-anchor-id="cell-source-and-preparation">Cell source and preparation</h4>
 <p>Three lots of cryopreserved primary human hepatocytes, specifically Hu8345-A, Hu8373-A and Hu8381, were procured from Thermo Fisher Scientific (Waltham, MA). All necessary cell culture reagents were sourced from the same supplier. All PHHs were qualified for spheroid formation per the manufacturer.</p>
 </section>
-<section id="spheroid-formation-and-maintenance" class="level4 page-columns page-full">
+<section id="spheroid-formation-and-maintenance" class="level4">
 <h4 class="anchored" data-anchor-id="spheroid-formation-and-maintenance">Spheroid formation and maintenance</h4>
 <p>The spheroid culture followed an adapted protocol from a previous study <span class="citation" data-cites="bell2016">(<a href="#ref-bell2016" role="doc-biblioref">8</a>)</span>. In short 1500 hepatocytes per well in ultra-low attachment 96-well plates. Following seeding, the plates were centrifuged for 2 minutes at 200g. Subsequently, the plates were incubated at 37°C with 5% CO2.</p>
 <p>On day 0 cells were seeded in culture medium, totaling 100 μL per well, consisting of 5% fetal bovine serum, 1 μM dexamethasone, 5 μg/mL human recombinant insulin, 100 U/mL penicillin, 100 μg/mL streptomycin, 2 mM L-glutamine, and 15 mM HEPES in Williams’ E medium.</p>
 <p>After spheroid formation the seeding medium was replaced with FBS free maintenance medium. This medium comprised 0.1 μM dexamethasone, 10 μg/mL human recombinant insulin, 5.5 μg/mL transferrin, 6.7 ng/mL selenium, 100 U/mL penicillin, 100 μg/mL streptomycin, and 2 mM L-glutamine in Williams’ E medium. This FBS washout with maintenance medium was done with a 70% medium change on days 5-7. <code>For donor 1 (Hu8345-A) the maintenance also contained 5.35 μg/mL linoleic acid, 1.25 mg/mL bovine serum albumin and 15 mM HEPES. These supplements are, however, no longer recommended by the manufacturer</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a><code>.</code></p>
-<div class="no-row-height column-margin column-container"><p><sup>1</sup>&nbsp;Skip this?</p></div><p>Detailed descriptions of the spheroid culture process, as well as donor information, are available in the supplementary materials (Table SX).</p>
+<div class="no-row-height"><p><sup>1</sup>&nbsp;Skip this?</p></div><p>Detailed descriptions of the spheroid culture process, as well as donor information, are available in the supplementary materials (Table SX).</p>
 </section>
 </section>
 <section id="treatments" class="level3">
@@ -227,11 +363,11 @@ div.csl-indent {
 <p>The viability of the spheroids was monitored by measuring their ATP content, using the luminiscence CellTiter-Glo 3D assay from Promega (Madison, WI). Quantification of ATP was done using an ATP (from Thermo Fisher Scientific) standard curve. Viability was assessed every 2-3 days throughout the experiments.</p>
 <p>In addition to viability testing, the morphology of the spheroids was monitored. Imaging was done every second or third day, aligning with the viability assays. The spheroids were imaged using a light microscope equipped with a 10X magnification lens and a digital camera from Motic (Hong Kong, China).</p>
 </section>
-<section id="rna-extraction-cdna-synthesis-and-qpcr" class="level3 page-columns page-full">
+<section id="rna-extraction-cdna-synthesis-and-qpcr" class="level3">
 <h3 class="anchored" data-anchor-id="rna-extraction-cdna-synthesis-and-qpcr">RNA extraction, cDNA synthesis and qPCR</h3>
 <p>RNA was extracted using the phenol-chloroform method, following the manufacturer’s protocol from Qiagen with minor modifications <span class="citation" data-cites="toni2018">(<a href="#ref-toni2018" role="doc-biblioref">12</a>)</span>. Each spheroid pool was treated with 1 mL of Qiazol (Qiagen) reagent for lysis, followed by co-precipitation with 15 μg of RNA grade glycogen (Thermo Fisher Scientific). The RNA pellet underwent three washes with 75% ethanol. Post-wash, a combination of heating and evaporation techniques was applied to remove residual ethanol and to facilitate the solubilization of the RNA pellet in water.</p>
 <p>RNA integrity was assessed for a subset of samples<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> using the Agilent BioAnalyzer, yielding RNA Integrity Number (RIN) values from 7 to 9.8. These values indicate high-quality RNA. Concentration of RNA were estimated utilizing the NanoDrop spectrophotometer.</p>
-<div class="no-row-height column-margin column-container"><p><sup>2</sup>&nbsp;Dog ikke fra nogle af disse 3 donorer, så måske bedre med: To assess the integrity of the RNA, we evaluated the RNA Integrity Number (RIN) for a subset of samples, which yielded values ranging from 7 to 9.8.<br>
+<div class="no-row-height"><p><sup>2</sup>&nbsp;Dog ikke fra nogle af disse 3 donorer, så måske bedre med: To assess the integrity of the RNA, we evaluated the RNA Integrity Number (RIN) for a subset of samples, which yielded values ranging from 7 to 9.8.<br>
 <br>
 To validate the RNA extraction method, we assessed the RNA Integrity Number (RIN) using the Agilent BioAnalyzer for a subset of samples not derived from the donors discussed in this article. These assessments yielded RIN values between 7 and 9.8, indicative of high-quality RNA.</p></div><p>Approximately 500 ng of extracted RNA was used for cDNA synthesis. This process was performed using the High-Capacity cDNA Reverse Transcription Kit with RNase Inhibitor (Thermo Fisher Scientific).</p>
 <p>For qPCR, 10 ng of cDNA, based on the initial RNA concentration, was utilized for each reaction. The reactions were set up in a 10 μL volume containing TaqMan Universal Master Mix II and target-specific TaqMan assays (detailed in Supplementary Methods). The qPCR was run for 40 cycles, following the manufacturer’s guidelines (Thermo Fisher Scientific). The PCR plate sample maximization method was applied<span class="citation" data-cites="derveaux2010">(<a href="#ref-derveaux2010" role="doc-biblioref">13</a>)</span>, and a stable reference gene as well as no template controls and no reverse transcriptase controls was included in each plate.</p>
@@ -248,12 +384,8 @@ To validate the RNA extraction method, we assessed the RNA Integrity Number (RIN
 </section>
 </section>
 <section id="results" class="level2 unnumbered">
-
-
-</section>
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Results</h2><div id="refs" class="references csl-bib-body" role="list">
+<h2 class="unnumbered anchored" data-anchor-id="results">Results</h2>
+<div id="refs" class="references csl-bib-body" role="list">
 <div id="ref-dunvald" class="csl-entry" role="listitem">
 <div class="csl-left-margin">1. </div><div class="csl-right-inline">Dunvald ACD, Järvinen E, Mortensen C, Stage TB. Clinical and Molecular Perspectives on Inflammation-Mediated Regulation of Drug Metabolism and Transport. Clinical Pharmacology &amp; Therapeutics [Internet]. n/a(n/a). Available from: <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/cpt.2432">https://onlinelibrary.wiley.com/doi/abs/10.1002/cpt.2432</a></div>
 </div>
@@ -299,9 +431,11 @@ To validate the RNA extraction method, we assessed the RNA Integrity Number (RIN
 <div id="ref-savaryn2020" class="csl-entry" role="listitem">
 <div class="csl-left-margin">15. </div><div class="csl-right-inline">Savaryn JP, Liu N, Sun J, Ma J, Stresser DM, Jenkins G. Enrichment-free High-throughput Liquid Chromatography<span></span>Multiple-Reaction Monitoring Quantification of Cytochrome P450 Proteins in Plated Human Hepatocytes Direct from 96-Well Plates Enables Routine Protein Induction Measurements. Drug Metabolism and Disposition [Internet]. 2020 Jul 1;48(7):594–602. Available from: <a href="https://dmd.aspetjournals.org/content/48/7/594">https://dmd.aspetjournals.org/content/48/7/594</a></div>
 </div>
-</div></section></div></main>
-<!-- /main column -->
-<script id="quarto-html-after-body" type="application/javascript">
+</div>
+</section>
+
+     </main>
+<!-- /main column -->  <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -687,10 +821,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-</div> <!-- /content -->
-
-
-
-
+</script>  </div> <!-- /content --> 
+  
 </body></html>
