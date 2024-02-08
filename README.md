@@ -1,4 +1,15 @@
-## A Quarto Manuscript Template
+---
+editor: 
+  markdown: 
+    wrap: 72
+---
 
-This is a template repo for generating a manuscript from Quarto that accompanies the tutorial at: [Quarto Manuscripts: RStudio](https://quarto.org/docs/manuscripts/authoring/rstudio.html)
+## Donors
+
+| Donor #| ThermoFisher cat. # | Lot #    | Sex    |
+|--------|---------------------|----------|--------|
+|   1    |  HMCPSQ             | Hu8345-A | Male   |
+|   2    |  HMCPSQ             | Hu8373-A | Female |
+|   3    |  HMCPSQ             | Hu8381   | Male   |
+
 

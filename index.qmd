@@ -117,3 +117,4 @@ The quantification of human CYP ~~and transporter~~ proteins was performed using
 
 ## Results
 
+![](images/Picture1.png)
