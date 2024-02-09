@@ -31,6 +31,7 @@ bibliography: references.bib
 csl: vancouver.csl
 number-sections: false
 reference-location: margin
+lightbox: true
 ---
 
 ```{r}
@@ -117,4 +118,4 @@ The quantification of human CYP ~~and transporter~~ proteins was performed using
 
 ## Results
 
-![](images/Picture1.png)
+![](images/morph.png){fig-morph}
