@@ -14,3 +14,9 @@
 
 /notebooks/viability/data_raw/
 /notebooks/viability/data_processed/
+
+/notebooks/qPCR/data_raw/
+/notebooks/qPCR/data_cleaned/
+/notebooks/qPCR/data_processed/
+/notebooks/qPCR/old_qPCR_import/
+/notebooks/qPCR/data_final_for_plotting/
