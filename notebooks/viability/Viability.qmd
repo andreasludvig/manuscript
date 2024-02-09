@@ -3,7 +3,7 @@ title: "Viability"
 author: "Andreas Svendsen"
 editor: visual
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
 
 # Viability
@@ -195,9 +195,4 @@ plot_donor_relative_viability <-
 #| fig-height: 5
 
 plot_donor_relative_viability
-```
-
-```{r}
-rmv <- ls()[-grep("plot", ls())]
-rm(list = rmv, rmv)
 ```
