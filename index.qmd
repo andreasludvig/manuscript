@@ -122,9 +122,19 @@ The quantification of human CYP ~~and transporter~~ proteins was performed using
 
 in @fig-viability-absolute-overall we see that a relatively stable viability during the first 9 days of culture, and stayed above 60 percent of the varibility after spheroids formation. Viability for donor was stable throughout the experiment, for the timepoints measured. Donor 12 was stable for the first 9 days of the experiment, with a slight dropoff seen from day 12, but stable hereafter., never dropping below 60 % of the viability after spheroid formation. Donor 3 was stable for the first 12 days, with a slight dropoff hereafter. Furthermore, morpholgy was consistent throughout the experiment, disregardign a tendency for the spheroids to shrink during the experimentm, which might be due to compaction or shedding of cells?(main speroid article had atp relative to size).
 
-{{< embed notebooks/viability/Viability.qmd#fig-viability-absolute-overall >}}
+Some loss of viability or metabolic activity cannot be ruled out, however this should not be a major concern since we are looking at relative data within each timepoints.
+
+Within nine days from seeding the spheroid has formed and exhibit a tightly compacted appearance.
+
+We used ATP content as a proxy for viability. Viability and morphology for
 
 ![Morphology for donors one, two, and three. Photos from the same well for each donor throughout the experiment. Scale bars represent 200 µm.](images/morph.png){#fig-morph}
+
+{{< embed notebooks/viability/Viability.qmd#fig-viability-absolute-overall >}}
+
+### Effect of inflammatory cytokines on mRNA expression
+
+The treatments did not have a negative effect on the viability or morphology of the spheroids.
 
 ## Supplementary
 
@@ -132,4 +142,6 @@ in @fig-viability-absolute-overall we see that a relatively stable viability dur
 
 {{< embed notebooks/viability/Viability.qmd#fig-donor-viabilities >}}
 
-Why no plots?
+Mødes den 13. klokkwn 10-10.15 eller 8.30.
+
+Send artikel inden frokost.. Tore læser og laver en struktur til diskussion, og sender tilabage idag. Jeg går igang med vulkanplot il-6 vs control.
