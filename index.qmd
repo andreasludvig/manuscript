@@ -120,6 +120,8 @@ The quantification of human CYP ~~and transporter~~ proteins was performed using
 
 ### Viability and morphology
 
+in @fig-viability-absolute-overall we see that a relatively stable viability during the first 9 days of culture, and stayed above 60 percent of the varibility after spheroids formation. Viability for donor was stable throughout the experiment, for the timepoints measured. Donor 12 was stable for the first 9 days of the experiment, with a slight dropoff seen from day 12, but stable hereafter., never dropping below 60 % of the viability after spheroid formation. Donor 3 was stable for the first 12 days, with a slight dropoff hereafter. Furthermore, morpholgy was consistent throughout the experiment, disregardign a tendency for the spheroids to shrink during the experimentm, which might be due to compaction or shedding of cells?(main speroid article had atp relative to size).
+
 {{< embed notebooks/viability/Viability.qmd#fig-viability-absolute-overall >}}
 
 ![Morphology for donors one, two, and three. Photos from the same well for each donor throughout the experiment. Scale bars represent 200 µm.](images/morph.png){#fig-morph}
