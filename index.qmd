@@ -129,3 +129,5 @@ The quantification of human CYP ~~and transporter~~ proteins was performed using
 {{< embed notebooks/viability/Viability.qmd#fig-viability-relative-overall >}}
 
 {{< embed notebooks/viability/Viability.qmd#fig-donor-viabilities >}}
+
+Why no plots?
