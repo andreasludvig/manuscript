@@ -1,5 +1,8 @@
 project:
   type: manuscript
+  render: 
+    - "*.qmd"
+    - "!notebooks/qPCR/old_qPCR_import/"
 
 execute:
   freeze: auto
