@@ -92,7 +92,7 @@ mean_ATP[day == 10, day := 9]
 mean_ATP <- mean_ATP[day %in% c(5, 7, 9, 12, 14, 16)]
 mean_ATP <- mean_ATP[!(donor == 1 & day == 5)]
 
-plot_absolute_viability <- 
+plot_viability <- 
   ggplot(data = mean_ATP, 
          aes(x = day, 
              y = mean_ATP, 
@@ -114,15 +114,16 @@ plot_absolute_viability <-
         legend.title = element_blank(),  # Remove legend title for size
         legend.key.size = unit(1.2, 'lines'))  # Adjust the size of the legend keys
 
-plot_absolute_viability
+ggsave(filename = here("notebooks/viability/output/viability.png"),
+       dpi = "retina")
+
 ```
 
 ```{r}
-#| label: fig-viability-absolute-overall
+#| label: fig-viability
 #| fig-cap: "Each point is the mean ATP content of 5-8 spheroids/replicates (mean = 7). There is no data for for donor 1 on day 5 and 16. Data for donor 3 day 9 was measured on day 10"
 
-#| 
-plot_absolute_viability
+plot_viability
 ```
 
 Number of replicates:
