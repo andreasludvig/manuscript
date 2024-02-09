@@ -3,7 +3,7 @@ title: "Viability"
 author: "Andreas Svendsen"
 editor: visual
 editor_options: 
-  chunk_output_type: inline
+  chunk_output_type: console
 ---
 
 # Viability
@@ -14,10 +14,12 @@ editor_options:
 #| message: false
 #| warning: false
 
-library(data.table)
-library(ggplot2)
-library(patchwork)
-library(here)
+# Always load same package versions
+groundhog.day <- "2024-01-01"
+groundhog::meta.groundhog(groundhog.day) 
+
+pkgs <-  c("data.table", "ggplot2", "patchwork", "here", "RColorBrewer")
+groundhog.library(pkgs, groundhog.day)
 ```
 
 ## Load and wrangle data
@@ -79,31 +81,47 @@ plot_relative_viability
 #### Overall absolute viability
 
 ```{r}
+# read processed data
 data <- readRDS(here("notebooks/viability/data_processed/final_viability.rds"))
 
-mean_ATP <- data[, mean(ATP, na.rm = TRUE), by = .(day, donor)]
+# Caclulate mean ATP by day and donor
+mean_ATP <- data[, .(mean_ATP = mean(ATP, na.rm = TRUE)), by = .(day, donor)]
+
+# Set for donor 3 day 9 was measured on day 10. 
+mean_ATP[day == 10, day := 9]
+
+# Keep only day 5, 7, 9, 12, 14, and 16
+mean_ATP <- mean_ATP[day %in% c(5, 7, 9, 12, 14, 16)]
+mean_ATP <- mean_ATP[!(donor == 1 & day == 5)]
 
 plot_absolute_viability <- 
-ggplot() +
-  geom_point(
-    data = mean_ATP,
-    mapping = aes(
-      x = day,
-      y = V1,
-      color = as.factor(donor)
-    )
-  ) +
+  ggplot(data = mean_ATP, 
+         aes(x = day, 
+             y = mean_ATP, 
+             color = as.factor(donor),
+             shape = as.factor(donor))) +
+  geom_point(size = 8) +
+  scale_color_brewer(palette = "Set2") +
   labs(title = "Absolute ATP content",
        x = "Day",
-       y = "ATP content (pmol/spheroid") +
-  scale_y_continuous(limits = c(0, NA))
+       y = "Mean ATP content (pmol/spheroid",
+       color = "Donor",  # Rename the legend title
+       shape = "Donor") +  # Ensure this is the same as color
+  guides(color = guide_legend(), shape = guide_legend()) +  # Combine color and shape legends
+  scale_y_continuous(limits = c(0, NA)) +
+  scale_x_continuous(breaks = c(5, 7, 9, 12, 14, 16)) +
+  theme_bw() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        legend.title = element_blank(),  # Remove legend title for size
+        legend.key.size = unit(1.2, 'lines'))  # Adjust the size of the legend keys
 
-
+plot_absolute_viability
 ```
 
 ```{r}
 #| label: fig-viability-absolute-overall
-#| fig-cap: "Note that the concentration of ATP of donor one on day 5 was to high. Data for this donor/day not trustworthy/viability to high"
+#| fig-cap: "Note that the concentration of ATP of donor one on day 5 was to high. Data for this donor/day not trustworthy/viability to high. Omitted. No data for day 16 for donor 1. Data for donor 3 day 9 was measured on day 10"
 #| 
 plot_absolute_viability
 ```
