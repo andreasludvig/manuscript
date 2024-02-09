@@ -118,4 +118,14 @@ The quantification of human CYP ~~and transporter~~ proteins was performed using
 
 ## Results
 
-![Morphology for 3 donors. Scale bars represent 200 µm.](images/morph.png){#fig-morph}
+### Viability and morphology
+
+{{< embed notebooks/viability/Viability.qmd#fig-viability-absolute-overall >}}
+
+![Morphology for donors one, two, and three. Photos from the same well for each donor throughout the experiment. Scale bars represent 200 µm.](images/morph.png){#fig-morph}
+
+## Supplementary
+
+{{< embed notebooks/viability/Viability.qmd#fig-viability-relative-overall >}}
+
+{{< embed notebooks/viability/Viability.qmd#fig-donor-viabilities >}}
