@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="generator" content="quarto-1.5.9">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+    <title>mRNA</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      div.columns{display: flex; gap: min(4vw, 1.5em);}
+      div.column{flex: auto; overflow-x: auto;}
+      div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+      ul.task-list{list-style: none;}
+      ul.task-list li input[type="checkbox"] {
+        width: 0.8em;
+        margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+        vertical-align: middle;
+      }
+      /* CSS for syntax highlighting */
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+        }
+      pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+      div.sourceCode
+        {   }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+    </style>
+
+    <style>
+      body.hypothesis-enabled #quarto-embed-header {
+        padding-right: 36px;
+      }
+
+      #quarto-embed-header {
+        height: 3em;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: solid 1px;
+      }
+
+      #quarto-embed-header h6 {
+        font-size: 1.1em;
+        padding-top: 0.6em;
+        margin-left: 1em;
+        margin-right: 1em;
+        font-weight: 400;
+      }
+
+      #quarto-embed-header a.quarto-back-link,
+      #quarto-embed-header a.quarto-download-embed {
+        font-size: 0.8em;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        margin-left: 1em;
+        margin-right: 1em;
+      }
+
+      .quarto-back-container {
+        padding-left: 0.5em;
+        display: flex;
+      }
+
+      .headroom {
+          will-change: transform;
+          transition: transform 200ms linear;
+      }
+
+      .headroom--pinned {
+          transform: translateY(0%);
+      }
+
+      .headroom--unpinned {
+          transform: translateY(-100%);
+      }      
+    </style>
+
+    <script>
+    window.document.addEventListener("DOMContentLoaded", function () {
+
+      var header = window.document.querySelector("#quarto-embed-header");
+      const titleBannerEl = window.document.querySelector("body > #title-block-header");
+      if (titleBannerEl) {
+        titleBannerEl.style.paddingTop = header.clientHeight + "px";
+      }
+      const contentEl = window.document.getElementById('quarto-content');
+      for (const child of contentEl.children) {
+        child.style.paddingTop = header.clientHeight + "px";
+        child.style.marginTop = "1em";
+      }
+
+      // Use the article root if the `back` call doesn't work. This isn't perfect
+      // but should typically work
+      window.quartoBackToArticle = () => {
+        var currentUrl = window.location.href;
+        window.history.back();
+        setTimeout(() => {
+            // if location was not changed in 100 ms, then there is no history back
+            if(currentUrl === window.location.href){              
+                // redirect to site root
+                window.location.href = "../../index.html";
+            }
+        }, 100);
+      }
+
+      const headroom = new window.Headroom(header, {
+        tolerance: 5,
+        onPin: function () {
+        },
+        onUnpin: function () {
+        },
+      });
+      headroom.init();
+    });
+    </script>
+
+    
+<script src="../../site_libs/manuscript-notebook/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+     <script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>  
+      </head>
+
+  <body class="quarto-notebook">
+    <div id="quarto-embed-header" class="headroom fixed-top bg-primary">
+      
+      <a onclick="window.quartoBackToArticle(); return false;" class="btn btn-primary quarto-back-link" href=""><i class="bi bi-caret-left"></i> Back to Article</a>
+      <h6><i class="bi bi-journal-code"></i> mRNA</h6>
+
+            <a href="../../notebooks/qPCR/mRNA.qmd" class="btn btn-primary quarto-download-embed" download="mRNA.qmd">Download Source</a>
+          </div>
+
+     <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">mRNA</h1>
+          </div>
+
+    
+    <div class="quarto-title-meta-container">
+      <div class="quarto-title-meta-column-start">
+        
+        <div class="quarto-title-meta">
+
+                
+          
+                
+              </div>
+      </div>
+      <div class="quarto-title-meta-column-end quarto-other-formats-target">
+      </div>
+    </div>
+
+
+
+    <div class="quarto-other-links-text-target">
+    </div>  </div>
+</header><div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#finalize-the-data-and-save-the-data-table" id="toc-finalize-the-data-and-save-the-data-table" class="nav-link" data-scroll-target="#finalize-the-data-and-save-the-data-table">Finalize the data and save the data table</a>
+  <ul class="collapse">
+  <li><a href="#load-data-remove-0.001-ngml-cytokine-concentrations-calculate-means-for-each-experiment." id="toc-load-data-remove-0.001-ngml-cytokine-concentrations-calculate-means-for-each-experiment." class="nav-link" data-scroll-target="#load-data-remove-0.001-ngml-cytokine-concentrations-calculate-means-for-each-experiment.">Load data, remove 0.001 ng/ml cytokine concentrations, calculate means for each experiment.</a></li>
+  </ul></li>
+  <li><a href="#plots" id="toc-plots" class="nav-link" data-scroll-target="#plots">Plots</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content quarto-banner-title-block" id="quarto-document-content">      
+
+       <p>All data manipulation was done before the start of this quarto manuscript project. Code is in: C:/Users/alosvendsen/OneDrive - Syddansk Universitet/PhD/R_code/manuscript_1 And copied to this project: /notebooks/qPCR/old_qPCR_import</p>
+<p>Donor 1: timepoints = 72 and 120 hours Donor 2: timepoints = 24, 72, and 120 hours Donor 2: timepoints = 24, 72, and 120 hours</p>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>groundhog.date <span class="ot">&lt;-</span> <span class="st">"2024-01-01"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>groundhog<span class="sc">::</span><span class="fu">meta.groundhog</span>(<span class="at">date =</span> groundhog.date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[1;36mNow using 'groundhog_3.1.2'.[0m</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pckgs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"here"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>           <span class="st">"data.table"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>           <span class="st">"ggplot2"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">groundhog.library</span>(<span class="at">pkg =</span> pckgs, <span class="at">date =</span> groundhog.date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>here() starts at C:/Users/alosvendsen/Documents/R/manuscript</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[36mSuccessfully attached 'here_1.0.1'[0m</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[36mSuccessfully attached 'data.table_1.14.10'[0m</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[36mSuccessfully attached 'ggplot2_3.4.4'[0m</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"notebooks/qPCR/custom_functions.R"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+</section>
+<section id="finalize-the-data-and-save-the-data-table" class="level2">
+<h2 class="anchored" data-anchor-id="finalize-the-data-and-save-the-data-table">Finalize the data and save the data table</h2>
+<section id="load-data-remove-0.001-ngml-cytokine-concentrations-calculate-means-for-each-experiment." class="level3">
+<h3 class="anchored" data-anchor-id="load-data-remove-0.001-ngml-cytokine-concentrations-calculate-means-for-each-experiment.">Load data, remove 0.001 ng/ml cytokine concentrations, calculate means for each experiment.</h3>
+<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### Load data, filter data and calculate geometric means</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># data &lt;- readRDS(here("notebooks/qPCR/data_processed/final_dataframe.rds"))</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # Remove the lowest concentrations of cytokines, since not used in all </span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># # Experiments. Note 24 hour time points was only used in one experiment</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># plot_data &lt;- data[!treatment %chin% c("0.001 ng/ml IL-1B", "0.001 ng/ml IL-6")]</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># # Calculate the mean expression grouped by experiment, condition, treatment, and time. USE GEOMETRIC MEAN when averaging normalized expression (RQ) values. </span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># plot_data[,</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#           bio_group_mean_expression := geometric_mean(normalized_expression),</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#           by = .(experiment, condition, treatment, time, target)</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#           ]</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co"># # Save the data</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># saveRDS(plot_data, here("notebooks/qPCR/data_final_for_plotting/plot_data.rds"))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rmv &lt;- ls()[!grepl(x =ls(), pattern = "geometric")]</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># rm(list = rmv)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+</section>
+</section>
+<section id="plots" class="level2">
+<h2 class="anchored" data-anchor-id="plots">Plots</h2>
+<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"notebooks/qPCR/data_final_for_plotting/plot_data.rds"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+<section id="a4-il-6" class="level4">
+<h4 class="anchored" data-anchor-id="a4-il-6">3A4 IL-6</h4>
+<p>Subset</p>
+<div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset for 3A4 and IL-6</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>cyp3A4_IL6 <span class="ot">&lt;-</span> plot_data[treatment <span class="sc">!=</span> <span class="st">"0.0001% BSA"</span> <span class="sc">&amp;</span> condition <span class="sc">==</span> <span class="st">"IL-6"</span> <span class="sc">&amp;</span> target <span class="sc">==</span> <span class="st">"CYP3A4"</span>]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>cyp3A4_IL6[,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>           time_means <span class="sc">:</span><span class="er">=</span> <span class="fu">geometric_mean</span>(bio_group_mean_expression),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>           by <span class="ot">=</span> .(treatment, time)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>           ]</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the average downregulation grouped by treatment. Ie, the average of the average grouped by time. </span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>cyp3A4_IL6[<span class="fu">order</span>(treatment),</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>           .(<span class="at">down =</span> <span class="fu">mean</span>(time_means),</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">down_pct =</span> <span class="dv">100</span> <span class="sc">-</span> <span class="fu">mean</span>(time_means) <span class="sc">*</span><span class="dv">100</span>),</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>           by <span class="ot">=</span> .(treatment)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         treatment       down  down_pct
+1: 0.01 ng/ml IL-6 0.96853976  3.146024
+2:  0.1 ng/ml IL-6 0.85684974 14.315026
+3:    1 ng/ml IL-6 0.33064588 66.935412
+4:   10 ng/ml IL-6 0.06374017 93.625983</code></pre>
+</div>
+</div></div>
+<p>Plot 3a4 il-6</p>
+<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-fig-mrna-3a4-il6" class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cyp3A4_IL6, <span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> time_means, <span class="at">color =</span> <span class="fu">factor</span>(time))) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"CYP3A4 mRNA expression relative to vehicle control after IL-6 treatment"</span>) <span class="sc">+</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Relative mRNA expression"</span>) <span class="sc">+</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Treatment"</span>) <span class="sc">+</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-mrna-3a4-il6" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mrna-3a4-il6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="mRNA_files/figure-html/fig-mrna-3a4-il6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Small points are mean of three donors for 72 and 120 hours, and two donors for 24 hours"><img src="mRNA_files/figure-html/fig-mrna-3a4-il6-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mrna-3a4-il6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Small points are mean of three donors for 72 and 120 hours, and two donors for 24 hours
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+<p>Plot individual means of 120 hour treatment from each donor.</p>
+<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div id="cell-fig-mrna-120hours" class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cyp3A4_IL6[time <span class="sc">==</span> <span class="dv">120</span>], <span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> bio_group_mean_expression)) <span class="sc">+</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> experiment)) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="cn">NA</span>)) <span class="sc">+</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-mrna-120hours" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mrna-120hours-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="mRNA_files/figure-html/fig-mrna-120hours-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Means of each donor for just 120 hours. Donor one had way higher Cq values"><img src="mRNA_files/figure-html/fig-mrna-120hours-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mrna-120hours-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Means of each donor for just 120 hours. Donor one had way higher Cq values
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="a4-il-1b" class="level4">
+<h4 class="anchored" data-anchor-id="a4-il-1b">3A4 IL-1B</h4>
+<p>Subset data</p>
+<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset for 3A4 and IL-1B</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>cyp3A4_IL1B <span class="ot">&lt;-</span> plot_data[treatment <span class="sc">!=</span> <span class="st">"0.0001% BSA"</span> <span class="sc">&amp;</span> condition <span class="sc">==</span> <span class="st">"IL-1B"</span> <span class="sc">&amp;</span> target <span class="sc">==</span> <span class="st">"CYP3A4"</span>]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>cyp3A4_IL1B[,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>           time_means <span class="sc">:</span><span class="er">=</span> <span class="fu">geometric_mean</span>(bio_group_mean_expression),</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>           by <span class="ot">=</span> .(treatment, time)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>           ]</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the average downregulation grouped by treatment. Ie, the average of the average grouped by time. </span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>cyp3A4_IL1B[<span class="fu">order</span>(treatment),</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>           .(<span class="at">down =</span> <span class="fu">mean</span>(time_means),</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">down_pct =</span> <span class="dv">100</span> <span class="sc">-</span> <span class="fu">mean</span>(time_means) <span class="sc">*</span><span class="dv">100</span>),</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>           by <span class="ot">=</span> .(treatment)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          treatment      down down_pct
+1: 0.01 ng/ml IL-1B 0.8556492 14.43508
+2:  0.1 ng/ml IL-1B 0.6039612 39.60388
+3:    1 ng/ml IL-1B 0.2979700 70.20300
+4:   10 ng/ml IL-1B 0.1595929 84.04071</code></pre>
+</div>
+</div></div>
+<p><br>
+Plot IL-1B CYP3A4</p>
+<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div id="cell-fig-mrna-3a4-il1B" class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cyp3A4_IL1B, <span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> time_means, <span class="at">color =</span> <span class="fu">factor</span>(time))) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"CYP3A4 mRNA expression relative to vehicle control after IL-1B treatment"</span>) <span class="sc">+</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Relative mRNA expression"</span>) <span class="sc">+</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Treatment"</span>) <span class="sc">+</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-mrna-3a4-il1B" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mrna-3a4-il1B-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="mRNA_files/figure-html/fig-mrna-3a4-il1B-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Small points are mean of three donors for 72 and 120 hours, and two donors for 24 hours"><img src="mRNA_files/figure-html/fig-mrna-3a4-il1B-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mrna-3a4-il1B-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Small points are mean of three donors for 72 and 120 hours, and two donors for 24 hours
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+<p>Plot 120 hour means of each donor</p>
+<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cyp3A4_IL1B[time <span class="sc">==</span> <span class="dv">120</span>], <span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> bio_group_mean_expression)) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> experiment)) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="cn">NA</span>)) <span class="sc">+</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><a href="mRNA_files/figure-html/unnamed-chunk-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="mRNA_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="cell-fig-rest_of_cyps" class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for CYP enzymes only, remove lowest concentration</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>cyp_data <span class="ot">&lt;-</span> plot_data[target <span class="sc">%like%</span> <span class="st">"CYP"</span> <span class="sc">&amp;</span> <span class="sc">!</span>treatment <span class="sc">%like%</span> <span class="st">"0.001"</span>]</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Split data based on condition, and remove 3A4 since done separately. </span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>cyp_data_IL6 <span class="ot">&lt;-</span> cyp_data[condition <span class="sc">==</span> <span class="st">"IL-6"</span> <span class="sc">&amp;</span> target <span class="sc">!=</span> <span class="st">"CYP3A4"</span>]</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>cyp_data_IL1B <span class="ot">&lt;-</span> cyp_data[condition <span class="sc">==</span> <span class="st">"IL-1B"</span> <span class="sc">&amp;</span> target <span class="sc">!=</span> <span class="st">"CYP3A4"</span>]</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a function to create the plot</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>create_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(cyp_data) {</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate mean normalized expression for each combination of CYP enzyme, treatment, and experiment</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  cyp_means <span class="ot">&lt;-</span> cyp_data[, .(<span class="at">mean_normalized_expression =</span> <span class="fu">mean</span>(normalized_expression)),</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>                        by <span class="ot">=</span> .(experiment, treatment, target, time)]</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the overall mean across experiments</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  cyp_overall_means <span class="ot">&lt;-</span> cyp_means[, .(<span class="at">overall_mean_normalized_expression =</span> <span class="fu">mean</span>(mean_normalized_expression)),</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>                                 by <span class="ot">=</span> .(treatment, target, time)]</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create and return the plot</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> cyp_means, <span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> mean_normalized_expression, <span class="at">color =</span> experiment), <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> cyp_overall_means, <span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> overall_mean_normalized_expression),</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">8</span>, <span class="at">shape =</span> <span class="dv">18</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="cn">NA</span>)) <span class="sc">+</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> target <span class="sc">+</span> time, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Treatment"</span>, <span class="at">y =</span> <span class="st">"Mean Normalized Expression"</span>) <span class="sc">+</span></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Create plots</span></span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>plot_IL6 <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(cyp_data_IL6)</span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>plot_IL1B <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(cyp_data_IL1B)</span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a><span class="co"># You can now view, save, or further manipulate these plots:</span></span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>plot_IL6</span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>plot_IL1B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-rest_of_cyps-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rest_of_cyps-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="mRNA_files/figure-html/fig-rest_of_cyps-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Normalized expression after IL-6 facetted by treatment duration"><img src="mRNA_files/figure-html/fig-rest_of_cyps-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rest_of_cyps-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Normalized expression after IL-6 facetted by treatment duration
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-rest_of_cyps-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rest_of_cyps-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="mRNA_files/figure-html/fig-rest_of_cyps-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Normalized expression after IL-6 facetted by treatment duration"><img src="mRNA_files/figure-html/fig-rest_of_cyps-2.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rest_of_cyps-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Normalized expression after IL-6 facetted by treatment duration
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [12]:</pre></div><div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>cyp_data_IL1B[,</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>              mean_normalized_expression <span class="sc">:</span><span class="er">=</span> <span class="fu">mean</span>(normalized_expression, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>              by <span class="ot">=</span> .(experiment, treatment, target, time)]</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>cyp_data_IL1B[,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>              overall_mean_normalized_expression <span class="sc">:</span><span class="er">=</span> <span class="fu">mean</span>(mean_normalized_expression, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>              by <span class="ot">=</span> .(treatment, target, time)]</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>cyp3A4_IL1B[]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    experiment condition plate    sample        treatment time target rep_bio
+ 1:     AS0004     IL-1B     4 AS0004/24   10 ng/ml IL-1B   72 CYP3A4       1
+ 2:     AS0004     IL-1B     4 AS0004/25   10 ng/ml IL-1B   72 CYP3A4       2
+ 3:     AS0004     IL-1B     4 AS0004/34  0.1 ng/ml IL-1B   72 CYP3A4       1
+ 4:     AS0004     IL-1B     4 AS0004/26   10 ng/ml IL-1B   72 CYP3A4       3
+ 5:     AS0004     IL-1B     4 AS0004/35  0.1 ng/ml IL-1B   72 CYP3A4       2
+ 6:     AS0004     IL-1B     4 AS0004/27    1 ng/ml IL-1B   72 CYP3A4       1
+ 7:     AS0004     IL-1B     4 AS0004/36  0.1 ng/ml IL-1B   72 CYP3A4       3
+ 8:     AS0004     IL-1B     4 AS0004/28    1 ng/ml IL-1B   72 CYP3A4       2
+ 9:     AS0004     IL-1B     4 AS0004/37 0.01 ng/ml IL-1B   72 CYP3A4       1
+10:     AS0004     IL-1B     4 AS0004/29    1 ng/ml IL-1B   72 CYP3A4       3
+11:     AS0004     IL-1B     4 AS0004/38 0.01 ng/ml IL-1B   72 CYP3A4       2
+12:     AS0004     IL-1B     4 AS0004/39 0.01 ng/ml IL-1B   72 CYP3A4       3
+13:     AS0004     IL-1B     5 AS0004/82   10 ng/ml IL-1B  120 CYP3A4       1
+14:     AS0004     IL-1B     5 AS0004/83   10 ng/ml IL-1B  120 CYP3A4       2
+15:     AS0004     IL-1B     5 AS0004/92  0.1 ng/ml IL-1B  120 CYP3A4       1
+16:     AS0004     IL-1B     5 AS0004/84   10 ng/ml IL-1B  120 CYP3A4       3
+17:     AS0004     IL-1B     5 AS0004/93  0.1 ng/ml IL-1B  120 CYP3A4       2
+18:     AS0004     IL-1B     5 AS0004/85    1 ng/ml IL-1B  120 CYP3A4       1
+19:     AS0004     IL-1B     5 AS0004/94  0.1 ng/ml IL-1B  120 CYP3A4       3
+20:     AS0004     IL-1B     5 AS0004/86    1 ng/ml IL-1B  120 CYP3A4       2
+21:     AS0004     IL-1B     5 AS0004/95 0.01 ng/ml IL-1B  120 CYP3A4       1
+22:     AS0004     IL-1B     5 AS0004/87    1 ng/ml IL-1B  120 CYP3A4       3
+23:     AS0004     IL-1B     5 AS0004/96 0.01 ng/ml IL-1B  120 CYP3A4       2
+24:     AS0004     IL-1B     5 AS0004/97 0.01 ng/ml IL-1B  120 CYP3A4       3
+25:     AS0007     IL-1B     5 AS0007/26  0.1 ng/ml IL-1B   24 CYP3A4       3
+26:     AS0007     IL-1B     5 AS0007/51 0.01 ng/ml IL-1B   72 CYP3A4       1
+27:     AS0007     IL-1B     5 AS0007/59   10 ng/ml IL-1B   72 CYP3A4       2
+28:     AS0007     IL-1B     5 AS0007/84  0.1 ng/ml IL-1B  120 CYP3A4       1
+29:     AS0007     IL-1B     5 AS0007/27    1 ng/ml IL-1B   24 CYP3A4       1
+30:     AS0007     IL-1B     5 AS0007/52  0.1 ng/ml IL-1B   72 CYP3A4       1
+31:     AS0007     IL-1B     5 AS0007/85    1 ng/ml IL-1B  120 CYP3A4       1
+32:     AS0007     IL-1B     5 AS0007/93 0.01 ng/ml IL-1B  120 CYP3A4       3
+33:     AS0007     IL-1B     5 AS0007/28    1 ng/ml IL-1B   24 CYP3A4       2
+34:     AS0007     IL-1B     5 AS0007/53    1 ng/ml IL-1B   72 CYP3A4       1
+35:     AS0007     IL-1B     5 AS0007/61 0.01 ng/ml IL-1B   72 CYP3A4       3
+36:     AS0007     IL-1B     5 AS0007/86   10 ng/ml IL-1B  120 CYP3A4       1
+37:     AS0007     IL-1B     5 AS0007/94  0.1 ng/ml IL-1B  120 CYP3A4       3
+38:     AS0007     IL-1B     5 AS0007/21 0.01 ng/ml IL-1B   24 CYP3A4       1
+39:     AS0007     IL-1B     5 AS0007/29    1 ng/ml IL-1B   24 CYP3A4       3
+40:     AS0007     IL-1B     5 AS0007/54   10 ng/ml IL-1B   72 CYP3A4       1
+41:     AS0007     IL-1B     5 AS0007/62  0.1 ng/ml IL-1B   72 CYP3A4       3
+42:     AS0007     IL-1B     5 AS0007/95    1 ng/ml IL-1B  120 CYP3A4       3
+43:     AS0007     IL-1B     5 AS0007/22 0.01 ng/ml IL-1B   24 CYP3A4       2
+44:     AS0007     IL-1B     5 AS0007/30   10 ng/ml IL-1B   24 CYP3A4       1
+45:     AS0007     IL-1B     5 AS0007/63    1 ng/ml IL-1B   72 CYP3A4       3
+46:     AS0007     IL-1B     5 AS0007/88 0.01 ng/ml IL-1B  120 CYP3A4       2
+47:     AS0007     IL-1B     5 AS0007/96   10 ng/ml IL-1B  120 CYP3A4       3
+48:     AS0007     IL-1B     5 AS0007/23 0.01 ng/ml IL-1B   24 CYP3A4       3
+49:     AS0007     IL-1B     5 AS0007/31   10 ng/ml IL-1B   24 CYP3A4       2
+50:     AS0007     IL-1B     5 AS0007/56 0.01 ng/ml IL-1B   72 CYP3A4       2
+51:     AS0007     IL-1B     5 AS0007/64   10 ng/ml IL-1B   72 CYP3A4       3
+52:     AS0007     IL-1B     5 AS0007/89  0.1 ng/ml IL-1B  120 CYP3A4       2
+53:     AS0007     IL-1B     5 AS0007/24  0.1 ng/ml IL-1B   24 CYP3A4       1
+54:     AS0007     IL-1B     5 AS0007/32   10 ng/ml IL-1B   24 CYP3A4       3
+55:     AS0007     IL-1B     5 AS0007/57  0.1 ng/ml IL-1B   72 CYP3A4       2
+56:     AS0007     IL-1B     5 AS0007/90    1 ng/ml IL-1B  120 CYP3A4       2
+57:     AS0007     IL-1B     5 AS0007/25  0.1 ng/ml IL-1B   24 CYP3A4       2
+58:     AS0007     IL-1B     5 AS0007/58    1 ng/ml IL-1B   72 CYP3A4       2
+59:     AS0007     IL-1B     5 AS0007/83 0.01 ng/ml IL-1B  120 CYP3A4       1
+60:     AS0007     IL-1B     5 AS0007/91   10 ng/ml IL-1B  120 CYP3A4       2
+61:     AS0013     IL-1B     5 AS0013/61  0.1 ng/ml IL-1B   24 CYP3A4       3
+62:     AS0013     IL-1B     5 AS0013/68    1 ng/ml IL-1B   72 CYP3A4       1
+63:     AS0013     IL-1B     5 AS0013/89    1 ng/ml IL-1B  120 CYP3A4       2
+64:     AS0013     IL-1B     5 AS0013/52    1 ng/ml IL-1B   24 CYP3A4       1
+65:     AS0013     IL-1B     5 AS0013/73    1 ng/ml IL-1B   72 CYP3A4       2
+66:     AS0013     IL-1B     5 AS0013/82 0.01 ng/ml IL-1B  120 CYP3A4       1
+67:     AS0013     IL-1B     5 AS0013/94    1 ng/ml IL-1B  120 CYP3A4       3
+68:     AS0013     IL-1B     5 AS0013/57    1 ng/ml IL-1B   24 CYP3A4       2
+69:     AS0013     IL-1B     5 AS0013/66 0.01 ng/ml IL-1B   72 CYP3A4       1
+70:     AS0013     IL-1B     5 AS0013/78    1 ng/ml IL-1B   72 CYP3A4       3
+71:     AS0013     IL-1B     5 AS0013/87 0.01 ng/ml IL-1B  120 CYP3A4       2
+72:     AS0013     IL-1B     5 AS0013/85   10 ng/ml IL-1B  120 CYP3A4       1
+73:     AS0013     IL-1B     5 AS0013/50 0.01 ng/ml IL-1B   24 CYP3A4       1
+74:     AS0013     IL-1B     5 AS0013/62    1 ng/ml IL-1B   24 CYP3A4       3
+75:     AS0013     IL-1B     5 AS0013/71 0.01 ng/ml IL-1B   72 CYP3A4       2
+76:     AS0013     IL-1B     5 AS0013/69   10 ng/ml IL-1B   72 CYP3A4       1
+77:     AS0013     IL-1B     5 AS0013/92 0.01 ng/ml IL-1B  120 CYP3A4       3
+78:     AS0013     IL-1B     5 AS0013/90   10 ng/ml IL-1B  120 CYP3A4       2
+79:     AS0013     IL-1B     5 AS0013/55 0.01 ng/ml IL-1B   24 CYP3A4       2
+80:     AS0013     IL-1B     5 AS0013/76 0.01 ng/ml IL-1B   72 CYP3A4       3
+81:     AS0013     IL-1B     5 AS0013/74   10 ng/ml IL-1B   72 CYP3A4       2
+82:     AS0013     IL-1B     5 AS0013/83  0.1 ng/ml IL-1B  120 CYP3A4       1
+83:     AS0013     IL-1B     5 AS0013/95   10 ng/ml IL-1B  120 CYP3A4       3
+84:     AS0013     IL-1B     5 AS0013/60 0.01 ng/ml IL-1B   24 CYP3A4       3
+85:     AS0013     IL-1B     5 AS0013/58   10 ng/ml IL-1B   24 CYP3A4       2
+86:     AS0013     IL-1B     5 AS0013/67  0.1 ng/ml IL-1B   72 CYP3A4       1
+87:     AS0013     IL-1B     5 AS0013/79   10 ng/ml IL-1B   72 CYP3A4       3
+88:     AS0013     IL-1B     5 AS0013/88  0.1 ng/ml IL-1B  120 CYP3A4       2
+89:     AS0013     IL-1B     5 AS0013/51  0.1 ng/ml IL-1B   24 CYP3A4       1
+90:     AS0013     IL-1B     5 AS0013/63   10 ng/ml IL-1B   24 CYP3A4       3
+91:     AS0013     IL-1B     5 AS0013/72  0.1 ng/ml IL-1B   72 CYP3A4       2
+92:     AS0013     IL-1B     5 AS0013/93  0.1 ng/ml IL-1B  120 CYP3A4       3
+93:     AS0013     IL-1B     5 AS0013/56  0.1 ng/ml IL-1B   24 CYP3A4       2
+94:     AS0013     IL-1B     5 AS0013/77  0.1 ng/ml IL-1B   72 CYP3A4       3
+95:     AS0013     IL-1B     5 AS0013/84    1 ng/ml IL-1B  120 CYP3A4       1
+    experiment condition plate    sample        treatment time target rep_bio
+    control ref_goi       cq  mean_cq calibrator_mean_cq    delta_cq         rq
+ 1:   FALSE     goi 28.36146 28.17018                 NA -4.28834279 0.05117763
+ 2:   FALSE     goi 27.85851 28.17018                 NA -3.78539594 0.07252409
+ 3:   FALSE     goi 24.62856 24.75819                 NA -0.55543645 0.68045117
+ 4:   FALSE     goi 28.29057 28.17018                 NA -4.21744665 0.05375539
+ 5:   FALSE     goi 24.76518 24.75819                 NA -0.69205983 0.61896947
+ 6:   FALSE     goi 26.05177 26.00221                 NA -1.97865613 0.25372611
+ 7:   FALSE     goi 24.88083 24.75819                 NA -0.80771573 0.57128568
+ 8:   FALSE     goi 25.99076 26.00221                 NA -1.91763814 0.26468748
+ 9:   FALSE     goi 23.73186 24.05659                 NA  0.34125773 1.26686055
+10:   FALSE     goi 25.96411 26.00221                 NA -1.89099058 0.26962187
+11:   FALSE     goi 24.31024 24.05659                 NA -0.23712095 0.84843677
+12:   FALSE     goi 24.12766 24.05659                 NA -0.05454000 0.96290141
+13:   FALSE     goi 26.92864 26.98142                 NA -2.65226046 0.15907065
+14:   FALSE     goi 27.63969 26.98142                 NA -3.36331050 0.09717234
+15:   FALSE     goi 23.85661 24.42679                 NA  0.41976484 1.33770949
+16:   FALSE     goi 26.37595 26.98142                 NA -2.09956996 0.23332779
+17:   FALSE     goi 24.60869 24.42679                 NA -0.33231036 0.79426352
+18:   FALSE     goi 25.15902 25.50218                 NA -0.88263957 0.54237419
+19:   FALSE     goi 24.81507 24.42679                 NA -0.53869692 0.68839240
+20:   FALSE     goi 25.76757 25.50218                 NA -1.49119059 0.35571887
+21:   FALSE     goi 26.41196 25.24821                 NA -2.13558451 0.22757524
+22:   FALSE     goi 25.57994 25.50218                 NA -1.30356661 0.40512342
+23:   FALSE     goi 24.54466 25.24821                 NA -0.26828067 0.83030848
+24:   FALSE     goi 24.78802 25.24821                 NA -0.51164691 0.70142127
+25:   FALSE     goi 24.28221 24.82957                 NA -1.03333219 0.48858037
+26:   FALSE     goi 23.63880 23.44366                 NA -0.60726738 0.65643889
+27:   FALSE     goi 24.14157 24.31415                 NA -1.11004066 0.46328098
+28:   FALSE     goi 23.85270 23.92016                 NA -0.22032420 0.85837252
+29:   FALSE     goi 25.15982 25.27953                 NA -1.91094716 0.26591791
+30:   FALSE     goi 23.09037 23.13849                 NA -0.05883789 0.96003713
+31:   FALSE     goi 24.08215 24.46955                 NA -0.44977443 0.73215732
+32:   FALSE     goi 23.74675 23.85663                 NA -0.11436717 0.92378744
+33:   FALSE     goi 25.35994 25.27953                 NA -2.11106427 0.23147619
+34:   FALSE     goi 24.14639 24.46078                 NA -1.11486053 0.46173579
+35:   FALSE     goi 22.90082 23.44366                 NA  0.13070869 1.09483138
+36:   FALSE     goi 25.94083 25.53397                 NA -2.30844943 0.20187730
+37:   FALSE     goi 24.04547 23.92016                 NA -0.41309039 0.75101291
+38:   FALSE     goi 23.41003 23.25586                 NA -0.16115697 0.89430759
+39:   FALSE     goi 25.31881 25.27953                 NA -2.06993230 0.23817068
+40:   FALSE     goi 24.21921 24.31415                 NA -1.18768311 0.43900732
+41:   FALSE     goi 23.01110 23.13849                 NA  0.02042961 1.01426147
+42:   FALSE     goi 24.83899 24.46955                 NA -1.20661037 0.43328543
+43:   FALSE     goi 23.35176 23.25586                 NA -0.10288556 0.93116868
+44:   FALSE     goi 26.65638 26.30543                 NA -3.40750249 0.09424093
+45:   FALSE     goi 24.96650 24.46078                 NA -1.93497276 0.26152617
+46:   FALSE     goi 23.72055 23.85663                 NA -0.08816974 0.94071542
+47:   FALSE     goi 25.18897 25.53397                 NA -1.55659168 0.33995326
+48:   FALSE     goi 23.00578 23.25586                 NA  0.24309794 1.18353137
+49:   FALSE     goi 26.16567 26.30543                 NA -2.91679509 0.13242110
+50:   FALSE     goi 23.79137 23.44366                 NA -0.75984383 0.59056026
+51:   FALSE     goi 24.58167 24.31415                 NA -1.55013466 0.34147819
+52:   FALSE     goi 23.86229 23.92016                 NA -0.22991435 0.85268551
+53:   FALSE     goi 24.24318 24.82957                 NA -0.99430211 0.50197864
+54:   FALSE     goi 26.09425 26.30543                 NA -2.84537061 0.13914195
+55:   FALSE     goi 23.31399 23.13849                 NA -0.28246307 0.82218613
+56:   FALSE     goi 24.48752 24.46955                 NA -0.85514133 0.55281117
+57:   FALSE     goi 25.96331 24.82957                 NA -2.71443685 0.15236074
+58:   FALSE     goi 24.26946 24.46078                 NA -1.23793030 0.42398047
+59:   FALSE     goi 24.10259 23.85663                 NA -0.47021167 0.72185868
+60:   FALSE     goi 25.47213 25.53397                 NA -1.83974712 0.27937075
+61:   FALSE     goi 23.57284 24.05784                 NA -0.69565392 0.61742940
+62:   FALSE     goi 24.53199 24.57339                 NA -1.75760142 0.29573944
+63:   FALSE     goi 28.97668 29.76361                 NA -0.17980576 0.88282185
+64:   FALSE     goi 26.02992 25.51157                 NA -3.15274239 0.11244237
+65:   FALSE     goi 24.13873 24.57339                 NA -1.36434619 0.38841042
+66:   FALSE     goi 28.47567 28.42947                 NA  0.32121086 1.24937872
+67:   FALSE     goi 29.33994 29.76361                 NA -0.54305649 0.68631534
+68:   FALSE     goi 24.48823 25.51157                 NA -1.61104584 0.32736095
+69:   FALSE     goi 22.79753 22.79718                 NA -0.02314059 0.98408812
+70:   FALSE     goi 25.04944 24.57339                 NA -2.27505557 0.20660462
+71:   FALSE     goi 28.84394 28.42947                 NA -0.04705811 0.96790804
+72:   FALSE     goi 30.68981 29.94344                 NA -1.89293289 0.26925912
+73:   FALSE     goi 24.05548 22.94784                 NA -1.17830276 0.44187102
+74:   FALSE     goi 26.01656 25.51157                 NA -3.13938141 0.11348855
+75:   FALSE     goi 22.80834 22.79718                 NA -0.03394763 0.97674399
+76:   FALSE     goi 25.18380 25.48517                 NA -2.40941493 0.18823216
+77:   FALSE     goi 27.96880 28.42947                 NA  0.82808113 1.77532251
+78:   FALSE     goi 28.99235 29.94344                 NA -0.19546700 0.87329017
+79:   FALSE     goi 22.36511 22.94784                 NA  0.51207161 1.42609650
+80:   FALSE     goi 22.78567 22.79718                 NA -0.01127688 0.99221393
+81:   FALSE     goi 25.48738 25.48517                 NA -2.71299235 0.15251337
+82:   FALSE     goi 29.50263 29.54844                 NA -0.70575333 0.61312225
+83:   FALSE     goi 30.14816 29.94344                 NA -1.35128212 0.39194357
+84:   FALSE     goi 22.42292 22.94784                 NA  0.45426369 1.37008337
+85:   FALSE     goi 26.92354 26.40057                 NA -4.04636192 0.06052345
+86:   FALSE     goi 23.82953 23.70677                 NA -1.05514590 0.48124855
+87:   FALSE     goi 25.78433 25.48517                 NA -3.00993792 0.12414190
+88:   FALSE     goi 29.61670 29.54844                 NA -0.81982613 0.56651021
+89:   FALSE     goi 24.36526 24.05784                 NA -1.48808289 0.35648595
+90:   FALSE     goi 25.87759 26.40057                 NA -3.00040627 0.12496480
+91:   FALSE     goi 23.37297 23.70677                 NA -0.59858576 0.66040101
+92:   FALSE     goi 29.52600 29.54844                 NA -0.72911644 0.60327327
+93:   FALSE     goi 24.23543 24.05784                 NA -1.35824776 0.39005575
+94:   FALSE     goi 23.91781 23.70677                 NA -1.14341990 0.45268522
+95:   FALSE     goi 30.97420 29.76361                 NA -2.17731857 0.22108628
+    control ref_goi       cq  mean_cq calibrator_mean_cq    delta_cq         rq
+    normalized_expression bio_group_mean_expression time_means
+ 1:            0.04525895                0.05141159  0.1237925
+ 2:            0.05900605                0.05141159  0.1237925
+ 3:            0.42172121                0.40723794  0.5816616
+ 4:            0.05088411                0.05141159  0.1237925
+ 5:            0.42491066                0.40723794  0.5816616
+ 6:            0.19634956                0.21263911  0.2531637
+ 7:            0.37689609                0.40723794  0.5816616
+ 8:            0.24373477                0.21263911  0.2531637
+ 9:            0.79000955                0.72892309  0.7882647
+10:            0.20090095                0.21263911  0.2531637
+11:            0.68124449                0.72892309  0.7882647
+12:            0.71963086                0.72892309  0.7882647
+13:            0.11926569                0.14755583  0.2261748
+14:            0.09001457                0.14755583  0.2261748
+15:            0.85795879                0.77330411  0.6934883
+16:            0.29925457                0.14755583  0.2261748
+17:            0.70698152                0.77330411  0.6934883
+18:            0.42341415                0.40271078  0.4254550
+19:            0.76238874                0.77330411  0.6934883
+20:            0.34874436                0.40271078  0.4254550
+21:            1.12999266                0.91020227  0.9076737
+22:            0.44229008                0.40271078  0.4254550
+23:            0.83033299                0.91020227  0.9076737
+24:            0.80368492                0.91020227  0.9076737
+25:            0.35295637                0.41966443  0.5031200
+26:            0.60524329                0.73572649  0.7882647
+27:            0.37156334                0.31487215  0.1237925
+28:            0.85788468                0.85252996  0.6934883
+29:            0.17720014                0.17661792  0.1739520
+30:            0.74956898                0.80630940  0.5816616
+31:            0.67696814                0.56146356  0.4254550
+32:            0.94897603                1.08576229  0.9076737
+33:            0.19091739                0.17661792  0.1739520
+34:            0.39623880                0.35421136  0.2531637
+35:            0.91736660                0.73572649  0.7882647
+36:            0.30250471                0.29858708  0.2261748
+37:            0.85279487                0.85252996  0.6934883
+38:            0.70095498                0.83404254  0.8786891
+39:            0.16285262                0.17661792  0.1739520
+40:            0.29869053                0.31487215  0.1237925
+41:            1.06426476                0.80630940  0.5816616
+42:            0.49914579                0.56146356  0.4254550
+43:            0.86266722                0.83404254  0.8786891
+44:            0.07678162                0.09988465  0.1041863
+45:            0.33592218                0.35421136  0.2531637
+46:            0.94052640                1.08576229  0.9076737
+47:            0.30883172                0.29858708  0.2261748
+48:            0.95946952                0.83404254  0.8786891
+49:            0.12930880                0.09988465  0.1041863
+50:            0.71725943                0.73572649  0.7882647
+51:            0.28128620                0.31487215  0.1237925
+52:            0.84694548                0.85252996  0.6934883
+53:            0.43258027                0.41966443  0.5031200
+54:            0.10037162                0.09988465  0.1041863
+55:            0.65711878                0.80630940  0.5816616
+56:            0.52380433                0.56146356  0.4254550
+57:            0.48408179                0.41966443  0.5031200
+58:            0.33388104                0.35421136  0.2531637
+59:            1.43409536                1.08576229  0.9076737
+60:            0.28494367                0.29858708  0.2261748
+61:            0.64263609                0.60317172  0.5031200
+62:            0.22907448                0.21542639  0.2531637
+63:            0.66497376                0.34060123  0.4254550
+64:            0.11691284                0.17132632  0.1739520
+65:            0.25724154                0.21542639  0.2531637
+66:            0.73989551                0.75668745  0.9076737
+67:            0.31787572                0.34060123  0.4254550
+68:            0.32383505                0.17132632  0.1739520
+69:            0.92871592                0.91330981  0.7882647
+70:            0.16965977                0.21542639  0.2531637
+71:            0.79792022                0.75668745  0.9076737
+72:            0.16640616                0.26260635  0.2261748
+73:            0.35631208                0.92572566  0.8786891
+74:            0.13282695                0.17132632  0.1739520
+75:            0.90975553                0.91330981  0.7882647
+76:            0.13370601                0.11718923  0.1237925
+77:            0.73387101                0.75668745  0.9076737
+78:            0.55889690                0.26260635  0.2261748
+79:            1.58437487                0.92572566  0.8786891
+80:            0.90166823                0.91330981  0.7882647
+81:            0.11464981                0.11718923  0.1237925
+82:            0.63898214                0.50589167  0.6934883
+83:            0.19472180                0.26260635  0.2261748
+84:            1.40526559                0.92572566  0.8786891
+85:            0.07952705                0.11098854  0.1041863
+86:            0.53087410                0.59932339  0.5816616
+87:            0.10498780                0.11718923  0.1237925
+88:            0.63158028                0.50589167  0.6934883
+89:            0.48074194                0.60317172  0.5031200
+90:            0.15489643                0.11098854  0.1041863
+91:            0.72788818                0.59932339  0.5816616
+92:            0.32081547                0.50589167  0.6934883
+93:            0.71030650                0.60317172  0.5031200
+94:            0.55709270                0.59932339  0.5816616
+95:            0.18692904                0.34060123  0.4254550
+    normalized_expression bio_group_mean_expression time_means</code></pre>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [13]:</pre></div><div id="cell-fig-restofcypsoverallmean" class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>create_plot_without_time_grouping <span class="ot">&lt;-</span> <span class="cf">function</span>(cyp_data) {</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate mean normalized expression for each combination of CYP enzyme, treatment, and experiment</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  cyp_means <span class="ot">&lt;-</span> cyp_data[, .(<span class="at">mean_normalized_expression =</span> <span class="fu">mean</span>(normalized_expression)),</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                        by <span class="ot">=</span> .(experiment, treatment, target)]</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the overall mean across experiments and time points</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  cyp_overall_means <span class="ot">&lt;-</span> cyp_means[, .(<span class="at">overall_mean_normalized_expression =</span> <span class="fu">mean</span>(mean_normalized_expression)),</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                                 by <span class="ot">=</span> .(treatment, target)]</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create and return the plot</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> cyp_means, <span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> mean_normalized_expression, <span class="at">color =</span> experiment), <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> cyp_overall_means, <span class="fu">aes</span>(<span class="at">x =</span> treatment, <span class="at">y =</span> overall_mean_normalized_expression),</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">8</span>, <span class="at">shape =</span> <span class="dv">18</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="cn">NA</span>)) <span class="sc">+</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> target, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Treatment"</span>, <span class="at">y =</span> <span class="st">"Mean Normalized Expression (Across Time Points)"</span>) <span class="sc">+</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Use this function to create the new plots</span></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>plot_IL6_no_time <span class="ot">&lt;-</span> <span class="fu">create_plot_without_time_grouping</span>(cyp_data_IL6)</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>plot_IL1B_no_time <span class="ot">&lt;-</span> <span class="fu">create_plot_without_time_grouping</span>(cyp_data_IL1B)</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a><span class="co"># View, save, or manipulate these plots as needed</span></span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>plot_IL6_no_time</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>plot_IL1B_no_time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-restofcypsoverallmean-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-restofcypsoverallmean-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="mRNA_files/figure-html/fig-restofcypsoverallmean-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Normalized expression, mean across all time points"><img src="mRNA_files/figure-html/fig-restofcypsoverallmean-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-restofcypsoverallmean-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Normalized expression, mean across all time points
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-restofcypsoverallmean-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-restofcypsoverallmean-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="mRNA_files/figure-html/fig-restofcypsoverallmean-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Normalized expression, mean across all time points"><img src="mRNA_files/figure-html/fig-restofcypsoverallmean-2.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-restofcypsoverallmean-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Normalized expression, mean across all time points
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+</section>
+     </main>
+<!-- /main column -->  <script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","descPosition":"bottom","loop":false,"openEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script> 
+  
+</body></html>
