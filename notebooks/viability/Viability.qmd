@@ -68,8 +68,6 @@ ggplot() +
     name = "Relative viability",
     limits = c(0, NA)
   )
-
-
 ```
 
 ```{r}
@@ -121,9 +119,31 @@ plot_absolute_viability
 
 ```{r}
 #| label: fig-viability-absolute-overall
-#| fig-cap: "Note that the concentration of ATP of donor one on day 5 was to high. Data for this donor/day not trustworthy/viability to high. Omitted. No data for day 16 for donor 1. Data for donor 3 day 9 was measured on day 10"
+#| fig-cap: "Each point is the mean ATP content of 5-8 spheroids/replicates (mean = 7). There is no data for for donor 1 on day 5 and 16. Data for donor 3 day 9 was measured on day 10"
+
 #| 
 plot_absolute_viability
+```
+
+Number of replicates:
+
+```{r}
+data <- readRDS(here("notebooks/viability/data_processed/final_viability.rds"))
+
+# Keep only day 5, 7, 9, 12, 14, and 16 + 10 since donor 3 was measured on that day instead of day 9, also explude donor 1 day 5. 
+# Replicates ranges from 5-8 with a mean of 7. 
+
+data[day %in% c(5, 7, 9, 10, 12, 14, 16) 
+     & !(donor == 1 & day == 5),
+     .(.N),
+     by = .(donor, day)
+     ]
+
+data[day %in% c(5, 7, 9, 10, 12, 14, 16) 
+     & !(donor == 1 & day == 5),
+     .(.N),
+     by = .(donor, day)
+     ][, mean(N)]
 ```
 
 ### Plot individual donors
@@ -203,8 +223,6 @@ plot_donor_relative_viability <-
   wrap_plots(list(plot_donor_1, plot_donor_2, plot_donor_3)) +
   plot_annotation(title = "Individual donor viability relative to day 5")
 
-# ggsave(plot = donor_relative_viability,
-#        filename = here("notebooks/viability/output/donor_relative_viability.png"))
 ```
 
 ```{r}
