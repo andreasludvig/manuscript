@@ -118,4 +118,5 @@ The quantification of human CYP ~~and transporter~~ proteins was performed using
 
 ## Results
 
-![](images/morph.png){fig-morph}
+
+![Morphology for 3 donors](images/morph.png){#fig-morph}
