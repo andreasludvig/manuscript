@@ -130,7 +130,7 @@ We used ATP content as a proxy for viability. Viability and morphology for
 
 ![Morphology for donors one, two, and three. Photos from the same well for each donor throughout the experiment. Scale bars represent 200 µm.](images/morph.png){#fig-morph}
 
-!["Each point is the mean ATP content of 5-8 spheroids/replicates (mean = 7). There is no data for for donor 1 on day 5 and 16. Data for donor 3 day 9 was measured on day 10"](notebooks/viability/output/viability.png){#fig-viability fig-align="center"}
+!["Each point is the mean ATP content of 5-8 spheroids/replicates (mean = 7). There is no data for for donor 1 on day 5 and 16. Data for donor 3 day 9 was measured on day 10"](notebooks/viability/output/viability.png){#fig-viability}
 
 ### Effect of inflammatory cytokines on mRNA expression
 
