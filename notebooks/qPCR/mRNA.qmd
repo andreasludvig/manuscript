@@ -124,6 +124,24 @@ plot_3A4 <-
 plot_3A4
 ```
 
+
+```{r}
+#| label: fig-CYP3A4_supp
+#| fig-cap: "Relative 3A4 expression facetted on treatment condition and time, ie. mean of each experiment/donor"
+
+ggplot(data = data_3A4,
+       aes(x = treatment,
+           y = bio_group_mean_expression,
+           color = experiment)
+       )+
+  geom_point(size = 5, alpha = 0.35) +
+  geom_hline(yintercept = 1, linetype = "dashed") +
+  scale_color_brewer(palette = "Set2") +
+  facet_wrap(facets = vars(condition, time)) +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+```
+
+
 #### 3A4 IL-6
 
 Subset

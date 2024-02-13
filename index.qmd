@@ -148,6 +148,8 @@ The treatments did not have a negative effect on the viability or morphology of 
 
 ### mRNA
 
+{{< embed notebooks/qPCR/mRNA.qmd#fig-CYP3A4_supp >}}
+
 Mødes den 13. klokkwn 10-10.15 eller 8.30.
 
 Send artikel inden frokost.. Tore læser og laver en struktur til diskussion, og sender tilabage idag. Jeg går igang med vulkanplot il-6 vs control.
