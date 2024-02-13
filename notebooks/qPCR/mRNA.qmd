@@ -258,7 +258,7 @@ ggplot(data = cyp3A4_IL1B[time == 120], aes(x = treatment, y = bio_group_mean_ex
 ```
 
 ```{r}
-#| label: fig-rest_of_cyps
+#| label: fig-rest_of_cyps2
 #| fig-cap: "Normalized expression after IL-6 facetted by treatment duration"
 
 
@@ -301,6 +301,53 @@ plot_IL1B
 ```
 
 ```{r}
+
+# Filter for CYP enzymes only, remove lowest concentration
+cyp_data <- plot_data[target %like% "CYP" & !treatment %like% "0.001"]
+
+# Split data based on condition, and remove 3A4 since done separately. 
+cyp_data_IL6 <- cyp_data[condition == "IL-6" & target != "CYP3A4"]
+cyp_data_IL1B <- cyp_data[condition == "IL-1B" & target != "CYP3A4"]
+
+# Define a function to create the plot
+create_plot <- function(cyp_data) {
+ # Calculate mean normalized expression for each combination of CYP enzyme, treatment, and experiment
+ cyp_means <- cyp_data[, .(mean_normalized_expression = mean(normalized_expression)),
+            by = .(experiment, treatment, target, time)]
+
+ # Calculate the overall mean across experiments
+ cyp_overall_means <- cyp_means[, .(overall_mean_normalized_expression = mean(mean_normalized_expression)),
+                 by = .(treatment, target, time)]
+
+ # Create and return the plot
+ ggplot() +
+  geom_point(data = cyp_means, aes(x = treatment, y = mean_normalized_expression, color = experiment), alpha = 0.5, size = 4) +
+  geom_point(data = cyp_overall_means, aes(x = treatment, y = overall_mean_normalized_expression),
+        color = "black", size = 8, shape = 18, alpha = 0.7) +
+  scale_y_continuous(limits = c(0,NA)) +
+  facet_wrap(~ target + time, scales = "free_y") +
+  labs(x = "Treatment", y = "Mean Normalized Expression", title = "Normalized Expression after IL-6/IL-1β (Other CYP Enzymes)") +  
+  theme_bw() + # Base theme
+  theme(axis.text.x = element_text(angle = 30, hjust = 1),
+        axis.title.y = element_text(vjust = 3, face = "bold"),
+        axis.title.x = element_text(vjust = -1.5, face = "bold"),
+        plot.title = element_text(face = "bold"),
+        legend.title = element_text(face = "bold")
+  ) 
+}
+
+# Create plots
+plot_IL6 <- create_plot(cyp_data_IL6)
+plot_IL1B <- create_plot(cyp_data_IL1B)
+
+# You can now view, save, or further manipulate these plots:
+plot_IL6
+plot_IL1B
+```
+
+
+
+```{r}
 cyp_data_IL1B[,
               mean_normalized_expression := mean(normalized_expression, na.rm = TRUE),
               by = .(experiment, treatment, target, time)]
@@ -321,11 +368,11 @@ create_plot_without_time_grouping <- function(cyp_data) {
   # Calculate mean normalized expression for each combination of CYP enzyme, treatment, and experiment
   cyp_means <- cyp_data[, .(mean_normalized_expression = mean(normalized_expression)),
                         by = .(experiment, treatment, target)]
-  
+
   # Calculate the overall mean across experiments and time points
   cyp_overall_means <- cyp_means[, .(overall_mean_normalized_expression = mean(mean_normalized_expression)),
-                                 by = .(treatment, target)]
-  
+                                  by = .(treatment, target)]
+
   # Create and return the plot
   ggplot() +
     geom_point(data = cyp_means, aes(x = treatment, y = mean_normalized_expression, color = experiment), alpha = 0.5, size = 4) +
@@ -333,9 +380,14 @@ create_plot_without_time_grouping <- function(cyp_data) {
                color = "black", size = 8, shape = 18, alpha = 0.7) +
     scale_y_continuous(limits = c(0,NA)) +
     facet_wrap(~ target, scales = "free_y") +
-    labs(x = "Treatment", y = "Mean Normalized Expression (Across Time Points)") +
-    theme_minimal() +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+    labs(x = "Treatment", y = "Mean Normalized Expression (Across Time Points)", title = "Normalized Expression after IL-6/IL-1β") + 
+    theme_bw() + # Base theme 
+    theme(axis.text.x = element_text(angle = 30, hjust = 1),
+          axis.title.y = element_text(vjust = 3, face = "bold"),
+          axis.title.x = element_text(vjust = -1.5, face = "bold"),
+          plot.title = element_text(face = "bold"),
+          legend.title = element_text(face = "bold")
+    ) 
 }
 
 # Use this function to create the new plots
@@ -345,4 +397,88 @@ plot_IL1B_no_time <- create_plot_without_time_grouping(cyp_data_IL1B)
 # View, save, or manipulate these plots as needed
 plot_IL6_no_time
 plot_IL1B_no_time
+
+
 ```
+
+
+
+```{r}
+#| label: fig-rest_of_cyps
+
+
+# Filter for CYP enzymes only, remove lowest concentration
+cyp_data <- plot_data[target %like% "CYP" & !treatment %like% "0.001"]
+
+# Split data based on condition, and remove 3A4 
+cyp_data_IL6 <- cyp_data[condition == "IL-6" & target != "CYP3A4"]
+cyp_data_IL1B <- cyp_data[condition == "IL-1B" & target != "CYP3A4"]
+
+# Combine datasets for single plot
+cyp_data_combined <- rbindlist(list(cyp_data_IL6, cyp_data_IL1B))
+
+# Calculate mean normalized expression (including 'condition' for grouping)
+cyp_means <- cyp_data_combined[, .(mean_normalized_expression = mean(normalized_expression)),
+                               by = .(experiment, treatment, target, time, condition)]
+
+# Calculate overall mean across experiments and time points
+cyp_overall_means <- cyp_means[, .(overall_mean_normalized_expression = mean(mean_normalized_expression)),
+                                by = .(treatment, target, condition)]
+
+# Create the single faceted plot
+ggplot() +
+  geom_point(data = cyp_means, aes(x = treatment, y = mean_normalized_expression, color = experiment), alpha = 0.5, size = 4) +
+  geom_point(data = cyp_overall_means, aes(x = treatment, y = overall_mean_normalized_expression),
+             color = "black", size = 8, shape = 18, alpha = 0.7) +
+  scale_y_continuous(limits = c(0, NA)) +
+  facet_grid(condition ~ target + time, scales = "free_y", ) +
+  labs(x = "Treatment", y = "Mean Normalized Expression", title = "Normalized Expression after IL-6/IL-1β (Other CYP Enzymes)") +  
+  theme_bw() + 
+  theme(axis.text.x = element_text(angle = 30, hjust = 1),
+        axis.title.y = element_text(vjust = 3, face = "bold"),
+        axis.title.x = element_text(vjust = -1.5, face = "bold"),
+        plot.title = element_text(face = "bold"),
+        legend.title = element_text(face = "bold")
+  )
+```
+
+
+
+
+```{r}
+#| label: fig-rest_of_cyps_overall_mean
+#| fig-cap: "Normalized expression, mean across all time points"
+
+# 2. Filtering for CYPs and Removing Low Concentration
+cyp_data <- cyp_data[target %like% "CYP" & !treatment %like% "0.0001% BSA"]
+
+# 3. Splitting by Condition 
+cyp_data_IL6 <- cyp_data[condition == "IL-6" & target != "CYP3A4"]
+cyp_data_IL1B <- cyp_data[condition == "IL-1B" & target != "CYP3A4"]
+
+# 4. Data Preparation (Calculations)
+cyp_data_combined <- rbindlist(list(cyp_data_IL6, cyp_data_IL1B)) 
+
+cyp_means <- cyp_data_combined[, .(mean_normalized_expression = mean(normalized_expression)),
+                               by = .(experiment, treatment, target, condition)]
+
+cyp_overall_means <- cyp_means[, .(overall_mean_normalized_expression = mean(mean_normalized_expression)),
+                                by = .(treatment, target, condition)]
+
+# 5. Plotting (This part remains the same, using ggplot2)
+ggplot() +
+  geom_point(data = cyp_means, aes(x = treatment, y = mean_normalized_expression, color = experiment), alpha = 0.5, size = 4) +
+  geom_point(data = cyp_overall_means, aes(x = treatment, y = overall_mean_normalized_expression),
+             color = "black", size = 8, shape = 18, alpha = 0.7) +
+  scale_y_continuous(limits = c(0, NA)) +
+  facet_grid(condition ~ target, scales = "free_y") +
+  labs(x = "Treatment", y = "Mean Normalized Expression (Across Time Points)", title = "Normalized Expression after IL-6/IL-1β") + 
+  theme_bw() + 
+  theme(axis.text.x = element_text(angle = 30, hjust = 1),
+        axis.title.y = element_text(vjust = 3, face = "bold"),
+        axis.title.x = element_text(vjust = -1.5, face = "bold"),
+        plot.title = element_text(face = "bold"),
+        legend.title = element_text(face = "bold")
+  ) 
+```
+
