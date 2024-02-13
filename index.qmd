@@ -130,17 +130,23 @@ We used ATP content as a proxy for viability. Viability and morphology for
 
 ![Morphology for donors one, two, and three. Photos from the same well for each donor throughout the experiment. Scale bars represent 200 µm.](images/morph.png){#fig-morph}
 
-!["Each point is the mean ATP content of 5-8 spheroids/replicates (mean = 7). There is no data for for donor 1 on day 5 and 16. Data for donor 3 day 9 was measured on day 10"](notebooks/viability/output/viability.png){#fig-viability}
+{{< embed notebooks/viability/Viability.qmd#fig-viability >}}
 
 ### Effect of inflammatory cytokines on mRNA expression
 
 The treatments did not have a negative effect on the viability or morphology of the spheroids.
 
+{{< embed notebooks/qPCR/mRNA.qmd#fig-mRNA-CYP3A4 >}}
+
 ## Supplementary
+
+### Viability
 
 {{< embed notebooks/viability/Viability.qmd#fig-viability-relative-overall >}}
 
 {{< embed notebooks/viability/Viability.qmd#fig-donor-viabilities >}}
+
+### mRNA
 
 Mødes den 13. klokkwn 10-10.15 eller 8.30.
 
