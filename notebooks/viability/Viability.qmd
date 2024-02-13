@@ -102,7 +102,7 @@ plot_viability <-
   scale_color_brewer(palette = "Set2") +
   labs(title = "Absolute ATP content",
        x = "Day",
-       y = "Mean ATP content (pmol/spheroid",
+       y = "Mean ATP content (pmol/spheroid)",
        color = "Donor",  # Rename the legend title
        shape = "Donor") +  # Ensure this is the same as color
   guides(color = guide_legend(), shape = guide_legend()) +  # Combine color and shape legends

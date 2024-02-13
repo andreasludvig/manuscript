@@ -17,7 +17,9 @@ groundhog::meta.groundhog(date = groundhog.date)
 
 pckgs <- c("here",
            "data.table",
-           "ggplot2")
+           "ggplot2",
+           "patchwork",
+           "RColorBrewer")
 
 groundhog.library(pkg = pckgs, date = groundhog.date)
 
@@ -59,6 +61,87 @@ source(here("notebooks/qPCR/custom_functions.R"))
 plot_data <- readRDS(here("notebooks/qPCR/data_final_for_plotting/plot_data.rds"))
 ```
 
+### Main plot CYP3A4 expression after IL-6 and IL-1B
+
+Subset data and get time means
+
+```{r}
+# Subset for 3A4
+data_3A4 <- plot_data[treatment != "0.0001% BSA" & target == "CYP3A4"]
+
+# Get means of all time points
+data_3A4[,
+         time_means := geometric_mean(bio_group_mean_expression),
+         by = .(condition, treatment, time)]
+
+
+overall_means <-
+  data_3A4[,
+           .(overall_mean = mean(time_means)),
+           by = .(condition, treatment)
+           ]
+
+```
+
+Plot
+
+```{r}
+#| label: fig-mRNA-CYP3A4
+#| fig-cap: "Relative CYP3A4 mRNA expression. Small points are mean of three donors for 72 and 120 hours, and two donors for 24 hours (donors two and three)"
+
+
+plot_3A4 <- 
+  ggplot(data = data_3A4,
+         aes(x = treatment,
+             y = time_means,
+             color = factor(time)
+             )
+         ) +
+  facet_wrap(facets = vars(condition)) +
+  geom_point(size = 5) + 
+  scale_color_brewer(palette = "Set2") +
+  geom_point(data = overall_means, 
+             aes(x = treatment,
+                 y = overall_mean),
+             size = 8,
+             color = "black",
+             alpha = 0.7) +
+  theme_bw() +
+  labs(title = "Relative expression of CYP3A4",
+       x = "Treatment",
+       y = "Expression relative to vehicle control",
+       color = "Time"
+       )  +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1),
+        axis.title.y = element_text(vjust = 3, face = "bold"),
+        axis.title.x = element_text(vjust = -1.5, face ="bold"),
+        plot.title = element_text(face = "bold"),
+        legend.title = element_text(face = "bold"),
+        legend.position = "bottom"
+     )
+
+
+plot_3A4
+```
+
+
+```{r}
+#| label: fig-CYP3A4_supp
+#| fig-cap: "Relative 3A4 expression facetted on treatment condition and time, ie. mean of each experiment/donor"
+
+ggplot(data = data_3A4,
+       aes(x = treatment,
+           y = bio_group_mean_expression,
+           color = experiment)
+       )+
+  geom_point(size = 5, alpha = 0.35) +
+  geom_hline(yintercept = 1, linetype = "dashed") +
+  scale_color_brewer(palette = "Set2") +
+  facet_wrap(facets = vars(condition, time)) +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+```
+
+
 #### 3A4 IL-6
 
 Subset
@@ -72,27 +155,41 @@ cyp3A4_IL6[,
            ]
 
 # Get the average downregulation grouped by treatment. Ie, the average of the average grouped by time. 
-cyp3A4_IL6[order(treatment),
+tbl_CYP3A4_IL6 <- 
+  cyp3A4_IL6[order(treatment),
            .(down = mean(time_means),
              down_pct = 100 - mean(time_means) *100),
            by = .(treatment)]
 
+tbl_CYP3A4_IL6
+
 ```
 
-Plot 3a4 il-6
+**Plot 3a4 il-6**
 
 ```{r}
-#| label: fig-mrna-3a4-il6
+#| label: fig-mRNA-CYP3A4-IL6
 #| fig-cap: "Small points are mean of three donors for 72 and 120 hours, and two donors for 24 hours"
 
-ggplot(data = cyp3A4_IL6, aes(x = treatment, y = time_means, color = factor(time))) +
-  geom_point() +
-  stat_summary(fun = "mean", geom = "point", color = "black", size = 5, alpha = 0.5) +
+
+plot_mRNA_3A4_IL6 <- 
+  ggplot(data = cyp3A4_IL6, 
+         aes(x = treatment,
+             y = time_means,
+             color = factor(time)
+             )
+         ) +
+  geom_point(size = 5) +
+  scale_color_brewer(palette = "Set2") +
+  stat_summary(fun = "mean", geom = "point", color = "black", size = 8, alpha = 0.5) +
   geom_hline(yintercept = 1, linetype = "dashed") +
-  labs(title = "CYP3A4 mRNA expression relative to vehicle control after IL-6 treatment") +
-  ylab("Relative mRNA expression") +
-  xlab("Treatment") +
+  labs(title = "CYP3A4 mRNA expression relative to vehicle control after IL-6 treatment",
+       x = "Treatment",
+       y = "Relative mRNA expression",
+       color = "treatment duration") +
   theme_bw()
+
+plot_mRNA_3A4_IL6
 ```
 
 Plot individual means of 120 hour treatment from each donor.
@@ -121,19 +218,23 @@ cyp3A4_IL1B[,
            ]
 
 # Get the average downregulation grouped by treatment. Ie, the average of the average grouped by time. 
-cyp3A4_IL1B[order(treatment),
-           .(down = mean(time_means),
-             down_pct = 100 - mean(time_means) *100),
-           by = .(treatment)]
+tbl_CYP3A4_IL1B <- 
+  cyp3A4_IL1B[order(treatment),
+              .(down = mean(time_means),
+               down_pct = 100 - mean(time_means) *100),
+               by = .(treatment)]
+
+tbl_CYP3A4_IL1B
 
 ```
 
 \
-Plot IL-1B CYP3A4
+**Plot IL-1B CYP3A4**
 
 ```{r}
 #| label: fig-mrna-3a4-il1B
 #| fig-cap: "Small points are mean of three donors for 72 and 120 hours, and two donors for 24 hours"
+
 
 ggplot(data = cyp3A4_IL1B, aes(x = treatment, y = time_means, color = factor(time))) +
   geom_point() +
@@ -159,6 +260,8 @@ ggplot(data = cyp3A4_IL1B[time == 120], aes(x = treatment, y = bio_group_mean_ex
 ```{r}
 #| label: fig-rest_of_cyps
 #| fig-cap: "Normalized expression after IL-6 facetted by treatment duration"
+
+
 # Filter for CYP enzymes only, remove lowest concentration
 cyp_data <- plot_data[target %like% "CYP" & !treatment %like% "0.001"]
 
@@ -212,6 +315,8 @@ cyp3A4_IL1B[]
 ```{r}
 #| label: fig-restofcypsoverallmean
 #| fig-cap: "Normalized expression, mean across all time points"
+
+
 create_plot_without_time_grouping <- function(cyp_data) {
   # Calculate mean normalized expression for each combination of CYP enzyme, treatment, and experiment
   cyp_means <- cyp_data[, .(mean_normalized_expression = mean(normalized_expression)),
