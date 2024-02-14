@@ -5,7 +5,7 @@ project:
     - "!notebooks/qPCR/old_qPCR_import/"
 
 execute:
-  freeze: true
+  freeze: auto
 
 format:
   html:
