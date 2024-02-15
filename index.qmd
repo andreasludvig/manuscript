@@ -154,6 +154,10 @@ The treatments did not have a negative effect on the viability or morphology of 
 
 {{< embed notebooks/qPCR/mRNA.qmd#fig-rest_of_cyps_overall_mean >}}
 
+### Activity
+
+![Donor 3](notebooks/LCMS/output/3A4_IL_6_AS0013.png)
+
 Mødes den 13. klokkwn 10-10.15 eller 8.30.
 
 Send artikel inden frokost.. Tore læser og laver en struktur til diskussion, og sender tilabage idag. Jeg går igang med vulkanplot il-6 vs control.
