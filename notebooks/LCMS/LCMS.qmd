@@ -1,4 +1,6 @@
-
+---
+title: LCMS
+---
 
 # LCMS
 
@@ -25,5 +27,83 @@ unique(donor_3_data$peak_status)
 # Find any that is not NA
 donor_3_data[!is.na(peak_status)] |> knitr::kable()
 ```
+#### Should this be omitted? It is below the lowest point on our standard curve, but omitting it would make the mean higher, than it really is?
 
+
+### **Plots**
+```{r}
+# Create groups/look up tables for subsetting data
+group_IL6 <- c(#"control", 
+               #"medium", 
+               "0.01 ng/ml IL-6", 
+               "0.1 ng/ml IL-6",
+               "1 ng/ml IL-6", 
+               "10 ng/ml IL-6"
+               )
+
+group_IL1B <- c(#"control", 
+                #"medium", 
+                "0.01 ng/ml IL-1B", 
+                "0.1 ng/ml IL-1B",
+                "1 ng/ml IL-1B",
+                "10 ng/ml IL-1B"
+                )
+```
+
+IL-6 effect on CYP3A4
+```{r}
+
+plot_data <- 
+  donor_3_data[time_incubation == 0.5 
+               & treatment %in% group_IL6
+               ]
+
+
+act_3A4_IL_6_AS0013 <- 
+  ggplot(data = plot_data) +
+  geom_point(aes(x = treatment,
+                 y = mean_relative_amount,
+                 color = factor(time_treatment)
+                 ),
+             size = 8,
+             alpha = 0.7,
+             ) +
+  scale_color_brewer(palette = "Set2") +
+  geom_point(aes(x = treatment,
+                 y = relative_amount
+                 ),
+             size = 4,
+             alpha = 0.3
+             ) +
+  geom_hline(yintercept = 1) +
+  scale_y_continuous(
+    name = "OH-midazolam formation relative to vehicle control", 
+    breaks = seq(from = 0, to = 1.5, by= 0.25)
+    ) +
+  facet_wrap(
+    facets = vars(factor(time_treatment))
+    ) +
+  theme_bw() +
+  xlab("Treatment") + 
+  ggtitle("CYP3A4 activity after treatment with IL-6",
+          subtitle = "Facetted on treatment duration in hours"
+          ) +
+  ylab("Metabolite formation relative to vehicle control") +
+  theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
+        axis.title.x = element_text(hjust = 0.5, vjust = 0, face = "bold"),
+        axis.title.y = element_text(face = "bold"),
+        legend.position = "none"
+        )
+
+
+act_3A4_IL_6_AS0013
+
+ggsave(
+  plot = last_plot(),
+  filename = "3A4_IL_6_AS0013.png",
+  device = "png",
+  path = here("notebooks/LCMS/output")
+  )
+
+```
 
