@@ -660,8 +660,76 @@ Figure&nbsp;8: Normalized expression, mean across all time points
 <figcaption>Donor 3</figcaption>
 </figure>
 </div>
-<p>Mødes den 13. klokkwn 10-10.15 eller 8.30.</p>
-<p>Send artikel inden frokost.. Tore læser og laver en struktur til diskussion, og sender tilabage idag. Jeg går igang med vulkanplot il-6 vs control.</p>
+<div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/LCMS/LCMS.qmd" data-notebook-title="LCMS" data-notebook-cellid="cell-fig-act_3A4_IL_6_AS0013">
+<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div id="cell-fig-act_3A4_IL_6_AS0013" class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>plot_data <span class="op">&lt;-</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  donor_3_data[time_incubation <span class="op">==</span> <span class="fl">0.5</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>               <span class="op">&amp;</span> treatment <span class="op">%</span><span class="kw">in</span><span class="op">%</span> group_IL6</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>               ]</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>act_3A4_IL_6_AS0013 <span class="op">&lt;-</span> </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  ggplot(data <span class="op">=</span> plot_data) <span class="op">+</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  geom_point(aes(x <span class="op">=</span> treatment,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                 y <span class="op">=</span> mean_relative_amount,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>                 color <span class="op">=</span> factor(time_treatment)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                 ),</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>             size <span class="op">=</span> <span class="dv">8</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>             alpha <span class="op">=</span> <span class="fl">0.7</span>,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>             ) <span class="op">+</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  scale_color_brewer(palette <span class="op">=</span> <span class="st">"Set2"</span>) <span class="op">+</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  geom_point(aes(x <span class="op">=</span> treatment,</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>                 y <span class="op">=</span> relative_amount</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>                 ),</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>             size <span class="op">=</span> <span class="dv">4</span>,</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>             alpha <span class="op">=</span> <span class="fl">0.3</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>             ) <span class="op">+</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  geom_hline(yintercept <span class="op">=</span> <span class="dv">1</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>) <span class="op">+</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  scale_y_continuous(</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="st">"OH-midazolam formation relative to vehicle control"</span>, </span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    breaks <span class="op">=</span> seq(<span class="im">from</span> <span class="op">=</span> <span class="dv">0</span>, to <span class="op">=</span> <span class="dv">3</span>, by<span class="op">=</span> <span class="fl">0.25</span>)</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">+</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>  facet_wrap(</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>    facets <span class="op">=</span> <span class="bu">vars</span>(factor(time_treatment))</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">+</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>  theme_bw() <span class="op">+</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>  xlab(<span class="st">"Treatment"</span>) <span class="op">+</span> </span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>  ggtitle(<span class="st">"CYP3A4 activity after treatment with IL-6: Donor 3"</span>,</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>          subtitle <span class="op">=</span> <span class="st">"Facetted on treatment duration in hours"</span></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>          ) <span class="op">+</span></span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>  ylab(<span class="st">"Metabolite formation relative to vehicle control"</span>) <span class="op">+</span></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>  theme(axis.text.x <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">10</span>, angle <span class="op">=</span> <span class="dv">45</span>, hjust <span class="op">=</span> <span class="dv">1</span>),</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>        axis.title.x <span class="op">=</span> element_text(hjust <span class="op">=</span> <span class="fl">0.5</span>, vjust <span class="op">=</span> <span class="dv">0</span>, face <span class="op">=</span> <span class="st">"bold"</span>),</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>        axis.title.y <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>),</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>        legend.position <span class="op">=</span> <span class="st">"none"</span></span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>act_3A4_IL_6_AS0013</span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>ggsave(</span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>  plot <span class="op">=</span> last_plot(),</span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>  filename <span class="op">=</span> <span class="st">"3A4_IL_6_AS0013.png"</span>,</span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>  device <span class="op">=</span> <span class="st">"png"</span>,</span>
+<span id="cb13-50"><a href="#cb13-50" aria-hidden="true" tabindex="-1"></a>  path <span class="op">=</span> here(<span class="st">"notebooks/LCMS/output"</span>)</span>
+<span id="cb13-51"><a href="#cb13-51" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Saving 7 x 5 in image</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-act_3a4_il_6_as0013" class="quarto-figure quarto-figure-center quarto-float anchored" height="480" width="672">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-act_3a4_il_6_as0013-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="index_files/figure-html/notebooks-LCMS-LCMS-fig-act_3a4_il_6_as0013-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure&nbsp;9: "><img src="index_files/figure-html/notebooks-LCMS-LCMS-fig-act_3a4_il_6_as0013-output-2.png" id="fig-act_3a4_il_6_as0013" width="672" height="480" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-act_3a4_il_6_as0013-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</div>
 <div id="refs" class="references csl-bib-body" role="list">
 <div id="ref-dunvald" class="csl-entry" role="listitem">
 <div class="csl-left-margin">1. </div><div class="csl-right-inline">Dunvald ACD, Järvinen E, Mortensen C, Stage TB. Clinical and Molecular Perspectives on Inflammation-Mediated Regulation of Drug Metabolism and Transport. Clinical Pharmacology &amp; Therapeutics [Internet]. n/a(n/a). Available from: <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/cpt.2432">https://onlinelibrary.wiley.com/doi/abs/10.1002/cpt.2432</a></div>
@@ -1099,7 +1167,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"loop":false,"descPosition":"bottom","closeEffect":"zoom","selector":".lightbox","openEffect":"zoom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom","loop":false});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
