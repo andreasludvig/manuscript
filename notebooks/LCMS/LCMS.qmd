@@ -19,19 +19,25 @@ library(RColorBrewer)
 ## Donor 3, AS0013B, Midazolam
 Check peak status' for any amounts below what below/above the limit of our standard curve.
 ```{r}
-donor_3_data <- 
-  readRDS(here("notebooks/LCMS/data_processed/AS0013.rds"))
+# Load data
+donor_3_peak_status <- 
+  readRDS(here("notebooks/LCMS/data_processed/AS0013_peak_status.rds"))
 
-# Check peak status'
-unique(donor_3_data$peak_status)
-# Find any that is not NA
-donor_3_data[!is.na(peak_status)] |> knitr::kable()
+donor_3_peak_status
 ```
-#### Should this be omitted? It is below the lowest point on our standard curve, but omitting it would make the mean higher, than it really is?
+#### Should this be omitted? It is below the lowest point on our standard curve, but omitting it would make the mean higher, than it really is? For now it is included in calculated means.
+
+
+
 
 
 ### **Plots**
 ```{r}
+# Load processed data
+donor_3_data <- 
+  readRDS(here("notebooks/LCMS/data_processed/AS0013.rds"))
+
+
 # Create groups/look up tables for subsetting data
 group_IL6 <- c(#"control", 
                #"medium", 
@@ -52,6 +58,7 @@ group_IL1B <- c(#"control",
 
 IL-6 effect on CYP3A4
 ```{r}
+#| label: fig-act_3A4_IL_6_AS0013
 
 plot_data <- 
   donor_3_data[time_incubation == 0.5 
@@ -104,6 +111,71 @@ ggsave(
   device = "png",
   path = here("notebooks/LCMS/output")
   )
-
 ```
+
+IL-1B effect on CYP3A4
+```{r}
+plot_data <- 
+  donor_3_data[time_incubation == 0.5 &
+                 treatment %in% group_IL1B
+               ]
+
+act_3A4_IL_1B_AS0013 <-
+  ggplot(data = plot_data) +
+  geom_point(aes(x = treatment,
+                 y = mean_relative_amount,
+                 color = factor(time_treatment)
+                 ),
+             size = 5,
+             alpha = 0.7
+             ) +
+  geom_point(aes(x = treatment,
+                 y = relative_amount
+                 ),
+             size = 2,
+             alpha = 0.3
+             ) +
+  geom_hline(yintercept = 1) +
+  scale_y_continuous(
+    name = "OH-midazolam formation relative to vehicle control", 
+    breaks = seq(from = 0, to = 1.5, by= 0.25)
+    ) +
+  facet_wrap(
+    facets = vars(factor(time_treatment))
+  ) +
+  theme_bw() +
+  xlab("Treatment") + 
+  ggtitle("CYP3A4 activity after treatment with IL-1B",
+          subtitle = "Facetted on treatment duration in hours") +
+  ylab("Metabolite formation relative to vehicle control") +
+  theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
+        axis.title.x = element_text(hjust = 0.5, vjust = 0, face = "bold"),
+        axis.title.y = element_text(face = "bold"),
+        legend.position = "none"
+  )
+
+act_3A4_IL_1B_AS0013
+
+ggsave(
+  plot = last_plot(),
+  filename = "3A4_IL_1B_AS0013.png",
+  device = "png",
+  path = here("notebooks/LCMS/output")
+  )
+```
+
+## Donor 2, AS0008, midazolam
+Load data
+Check peak status' for any amounts below what below/above the limit of our standard curve.
+```{r}
+donor_2_peak_status <- 
+  readRDS(here("notebooks/LCMS/data_processed/AS0008_peak_status.rds"))
+
+# Check peak status'
+donor_2_peak_status
+```
+Samples 52, 153, 162, 163, 172, and 173 had no baselcocktail added to there wells, and that is why there is no peaks. Sample 171 did not have a spheroid in the well. These samples are removed from the datatable before calculating means. However, there are two samples left with "response low", which are included in calculating means. 
+
+
+
 

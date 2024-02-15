@@ -2,6 +2,7 @@
 library(readxl)
 library(data.table)
 library(ggplot2)
+library(here)
 
 # AS0013B -----------------------------------------------------------------
 ## Load raw data -----------------------------------------------------------
@@ -66,8 +67,12 @@ tidy_data[, time_treatment := factor(time_treatment, ordered = TRUE)]
 # Check peak status'
 unique(tidy_data$peak_status)
 # Find any that is not NA
-tidy_data[!is.na(peak_status)]
+peak_status_data <- tidy_data[!is.na(peak_status)]
 
+
+### Peaks are not removed here! See thought in LCMS.qmd
+# Save the bad peaks for viewing in LCMS.qmd
+saveRDS(peak_status_data, here("notebooks/LCMS/data_processed/AS0013_peak_status.rds"))
 
 ## Mean and relative activity ----------------------------------------------
 # Calculate the mean amount of replicates
@@ -91,7 +96,7 @@ tidy_data[,
 
 ## Save the data -----------------------------------------------------------
 
-# saveRDS(tidy_data, "notebooks/LCMS/data_processed/AS0013.rds")
+saveRDS(tidy_data, "notebooks/LCMS/data_processed/AS0013.rds")
 
 rm(list = ls())
 
@@ -161,12 +166,16 @@ tidy_data[, time_treatment := factor(time_treatment, ordered = TRUE)]
 # Check peak status'
 unique(tidy_data$peak_status)
 # Find any that is not NA
-tidy_data[!is.na(peak_status)]
+peak_status_data <- tidy_data[!is.na(peak_status)]
+
+# Save the bad peaks for viewing in LCMS.qmd
+saveRDS(peak_status_data, here("notebooks/LCMS/data_processed/AS0008_peak_status.rds"))
+
 
 # Remove samples 152, 153, 162, 163, 172, and 173 as no baselcocktail was added
-# to these wells, and that is why there is no peaks
+# to these wells, and that is why there are no peaks
 # Remove sample 171, as there was no spheroid in this well.
-# Note that to are left with "response low".
+# Note that two are left with "response low".
 remove_samples <- tidy_data[!is.na(peak_status)][-c(1, 9)]
 tidy_data <- tidy_data[!remove_samples, on = "sample_name"]
 
@@ -195,27 +204,9 @@ tidy_data[,
           ]
 
 
-# Create groups/look up tables for subsetting data
-group_IL6 <- c("control", 
-               #"medium", 
-               "0.01 ng/ml IL-6", 
-               "0.1 ng/ml IL-6",
-               "1 ng/ml IL-6", 
-               "10 ng/ml IL-6"
-)
-
-group_IL1B <- c("control", 
-                #"medium", 
-                "0.01 ng/ml IL-1B", 
-                "0.1 ng/ml IL-1B",
-                "1 ng/ml IL-1B",
-                "10 ng/ml IL-1B"
-)
-
 
 # Save the data -----------------------------------------------------------
-saveRDS(tidy_data, "notebooks/LCMS/data_processed/AS0013.rds")
+saveRDS(tidy_data, "notebooks/LCMS/data_processed/AS0008.rds")
 
 rm(list = ls())
-
 
