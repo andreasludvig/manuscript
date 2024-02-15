@@ -421,28 +421,135 @@
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"notebooks/LCMS/data_processed/AS0008_peak_status.rds"</span>))</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check peak status'</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>donor_2_peak_status</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   sample_name     amount  peak_status       metabolite donor       treatment
-1:  AS0008_135  0.9118640 Response Low Hydroxymidazolam     2   10 ng/ml IL-6
-2:  AS0008_152         NA    Not Found Hydroxymidazolam     2   1 ng/ml IL-1B
-3:  AS0008_153         NA    Not Found Hydroxymidazolam     2  10 ng/ml IL-1B
-4:  AS0008_162         NA    Not Found Hydroxymidazolam     2   1 ng/ml IL-1B
-5:  AS0008_163         NA    Not Found Hydroxymidazolam     2  10 ng/ml IL-1B
-6:  AS0008_171 -0.2901863 Response Low Hydroxymidazolam     2 0.1 ng/ml IL-1B
-7:  AS0008_172         NA    Not Found Hydroxymidazolam     2   1 ng/ml IL-1B
-8:  AS0008_173         NA    Not Found Hydroxymidazolam     2  10 ng/ml IL-1B
-9:  AS0008_197  0.8381536 Response Low Hydroxymidazolam     2   10 ng/ml IL-6
-   time_treatment time_incubation rep
-1:             72             0.5   3
-2:             72             8.0   1
-3:             72             8.0   1
-4:             72             8.0   2
-5:             72             8.0   2
-6:             72             8.0   3
-7:             72             8.0   3
-8:             72             8.0   3
-9:            120             0.5   1</code></pre>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>donor_2_peak_status <span class="sc">|&gt;</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 15%">
+<col style="width: 5%">
+<col style="width: 14%">
+<col style="width: 13%">
+<col style="width: 14%">
+<col style="width: 3%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">sample_name</th>
+<th style="text-align: right;">amount</th>
+<th style="text-align: left;">peak_status</th>
+<th style="text-align: left;">metabolite</th>
+<th style="text-align: right;">donor</th>
+<th style="text-align: left;">treatment</th>
+<th style="text-align: left;">time_treatment</th>
+<th style="text-align: right;">time_incubation</th>
+<th style="text-align: right;">rep</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">AS0008_135</td>
+<td style="text-align: right;">0.9118640</td>
+<td style="text-align: left;">Response Low</td>
+<td style="text-align: left;">Hydroxymidazolam</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">10 ng/ml IL-6</td>
+<td style="text-align: left;">72</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AS0008_152</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">Not Found</td>
+<td style="text-align: left;">Hydroxymidazolam</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">1 ng/ml IL-1B</td>
+<td style="text-align: left;">72</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AS0008_153</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">Not Found</td>
+<td style="text-align: left;">Hydroxymidazolam</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">10 ng/ml IL-1B</td>
+<td style="text-align: left;">72</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AS0008_162</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">Not Found</td>
+<td style="text-align: left;">Hydroxymidazolam</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">1 ng/ml IL-1B</td>
+<td style="text-align: left;">72</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AS0008_163</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">Not Found</td>
+<td style="text-align: left;">Hydroxymidazolam</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">10 ng/ml IL-1B</td>
+<td style="text-align: left;">72</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AS0008_171</td>
+<td style="text-align: right;">-0.2901863</td>
+<td style="text-align: left;">Response Low</td>
+<td style="text-align: left;">Hydroxymidazolam</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">0.1 ng/ml IL-1B</td>
+<td style="text-align: left;">72</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AS0008_172</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">Not Found</td>
+<td style="text-align: left;">Hydroxymidazolam</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">1 ng/ml IL-1B</td>
+<td style="text-align: left;">72</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AS0008_173</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: left;">Not Found</td>
+<td style="text-align: left;">Hydroxymidazolam</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">10 ng/ml IL-1B</td>
+<td style="text-align: left;">72</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AS0008_197</td>
+<td style="text-align: right;">0.8381536</td>
+<td style="text-align: left;">Response Low</td>
+<td style="text-align: left;">Hydroxymidazolam</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">10 ng/ml IL-6</td>
+<td style="text-align: left;">120</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div></div>
 <p>Samples 52, 153, 162, 163, 172, and 173 had no baselcocktail added to there wells, and that is why there is no peaks. Sample 171 did not have a spheroid in the well. These samples are removed from the datatable before calculating means. However, there are two samples left with “response low”, which are included in calculating means.</p>
@@ -835,7 +942,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","loop":false});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"openEffect":"zoom","selector":".lightbox","descPosition":"bottom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

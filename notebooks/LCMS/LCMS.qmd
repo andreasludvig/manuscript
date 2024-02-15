@@ -172,10 +172,8 @@ donor_2_peak_status <-
   readRDS(here("notebooks/LCMS/data_processed/AS0008_peak_status.rds"))
 
 # Check peak status'
-donor_2_peak_status
+donor_2_peak_status |> knitr::kable()
 ```
 Samples 52, 153, 162, 163, 172, and 173 had no baselcocktail added to there wells, and that is why there is no peaks. Sample 171 did not have a spheroid in the well. These samples are removed from the datatable before calculating means. However, there are two samples left with "response low", which are included in calculating means. 
-
-
 
 
