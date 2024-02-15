@@ -23,7 +23,7 @@ donor_3_data <-
 # Check peak status'
 unique(donor_3_data$peak_status)
 # Find any that is not NA
-#donor_3_data[!is.na(peak_status)] |> knitr::kable()
+donor_3_data[!is.na(peak_status)] |> knitr::kable()
 ```
 
 

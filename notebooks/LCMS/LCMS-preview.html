@@ -218,7 +218,75 @@
 <pre><code>[1] NA             "Response Low"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find any that is not NA</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#donor_3_data[!is.na(peak_status)] |&gt; knitr::kable()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>donor_3_data[<span class="sc">!</span><span class="fu">is.na</span>(peak_status)] <span class="sc">|&gt;</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 10%">
+<col style="width: 3%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 2%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 9%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">sample_name</th>
+<th style="text-align: right;">amount</th>
+<th style="text-align: left;">peak_status</th>
+<th style="text-align: left;">metabolite</th>
+<th style="text-align: right;">donor</th>
+<th style="text-align: left;">treatment</th>
+<th style="text-align: left;">time_treatment</th>
+<th style="text-align: right;">time_incubation</th>
+<th style="text-align: right;">rep</th>
+<th style="text-align: right;">mean_amount</th>
+<th style="text-align: right;">control_mean</th>
+<th style="text-align: right;">relative_amount</th>
+<th style="text-align: right;">mean_relative_amount</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">AS0008_135</td>
+<td style="text-align: right;">0.9118640</td>
+<td style="text-align: left;">Response Low</td>
+<td style="text-align: left;">Hydroxymidazolam</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">10 ng/ml IL-6</td>
+<td style="text-align: left;">72</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1.530223</td>
+<td style="text-align: right;">7.625022</td>
+<td style="text-align: right;">0.1195884</td>
+<td style="text-align: right;">0.2006845</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AS0008_197</td>
+<td style="text-align: right;">0.8381536</td>
+<td style="text-align: left;">Response Low</td>
+<td style="text-align: left;">Hydroxymidazolam</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">10 ng/ml IL-6</td>
+<td style="text-align: left;">120</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3.593515</td>
+<td style="text-align: right;">13.685163</td>
+<td style="text-align: right;">0.0612454</td>
+<td style="text-align: right;">0.2625847</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div></div>
 </section>
 </section>
