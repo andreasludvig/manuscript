@@ -2,21 +2,18 @@
 title: LCMS
 ---
 
-# LCMS
-
 ## Setup
 
 ```{r}
-library(readxl)
 library(data.table)
 library(ggplot2)
-library(patchwork)
 library(here)
 library(RColorBrewer)
 ```
 
 
 ## Donor 3, AS0013B, Midazolam
+### Peak status'
 Check peak status' for any amounts below what below/above the limit of our standard curve.
 ```{r}
 # Load data
@@ -25,10 +22,7 @@ donor_3_peak_status <-
 
 donor_3_peak_status
 ```
-#### Should this be omitted? It is below the lowest point on our standard curve, but omitting it would make the mean higher, than it really is? For now it is included in calculated means.
-
-
-
+**Should this be omitted? It is below the lowest point on our standard curve, but omitting it would make the mean higher, than it really is? For now it is included in calculated means.**
 
 
 ### **Plots**
@@ -82,17 +76,17 @@ act_3A4_IL_6_AS0013 <-
              size = 4,
              alpha = 0.3
              ) +
-  geom_hline(yintercept = 1) +
+  geom_hline(yintercept = 1, linetype = "dashed") +
   scale_y_continuous(
     name = "OH-midazolam formation relative to vehicle control", 
-    breaks = seq(from = 0, to = 1.5, by= 0.25)
+    breaks = seq(from = 0, to = 3, by= 0.25)
     ) +
   facet_wrap(
     facets = vars(factor(time_treatment))
     ) +
   theme_bw() +
   xlab("Treatment") + 
-  ggtitle("CYP3A4 activity after treatment with IL-6",
+  ggtitle("CYP3A4 activity after treatment with IL-6: Donor 3",
           subtitle = "Facetted on treatment duration in hours"
           ) +
   ylab("Metabolite formation relative to vehicle control") +
@@ -115,6 +109,9 @@ ggsave(
 
 IL-1B effect on CYP3A4
 ```{r}
+#| label: fig-act_3A4_IL_1B_AS0013
+
+
 plot_data <- 
   donor_3_data[time_incubation == 0.5 &
                  treatment %in% group_IL1B
@@ -126,26 +123,27 @@ act_3A4_IL_1B_AS0013 <-
                  y = mean_relative_amount,
                  color = factor(time_treatment)
                  ),
-             size = 5,
+             size = 8,
              alpha = 0.7
              ) +
+  scale_color_brewer(palette = "Set2") +
   geom_point(aes(x = treatment,
                  y = relative_amount
                  ),
-             size = 2,
+             size = 4,
              alpha = 0.3
              ) +
-  geom_hline(yintercept = 1) +
+  geom_hline(yintercept = 1, linetype = "dashed") +
   scale_y_continuous(
     name = "OH-midazolam formation relative to vehicle control", 
-    breaks = seq(from = 0, to = 1.5, by= 0.25)
+    breaks = seq(from = 0, to = 3, by= 0.25)
     ) +
   facet_wrap(
     facets = vars(factor(time_treatment))
   ) +
   theme_bw() +
   xlab("Treatment") + 
-  ggtitle("CYP3A4 activity after treatment with IL-1B",
+  ggtitle("CYP3A4 activity after treatment with IL-1B: Donor 3",
           subtitle = "Facetted on treatment duration in hours") +
   ylab("Metabolite formation relative to vehicle control") +
   theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
@@ -175,5 +173,144 @@ donor_2_peak_status <-
 donor_2_peak_status |> knitr::kable()
 ```
 Samples 52, 153, 162, 163, 172, and 173 had no baselcocktail added to there wells, and that is why there is no peaks. Sample 171 did not have a spheroid in the well. These samples are removed from the datatable before calculating means. However, there are two samples left with "response low", which are included in calculating means. 
+
+
+
+### **Plots**
+```{r}
+# Load processed data
+donor_2_data <- 
+  readRDS(here("notebooks/LCMS/data_processed/AS0008.rds"))
+
+
+# Create groups/look up tables for subsetting data
+group_IL6 <- c(#"control", 
+               #"medium", 
+               "0.01 ng/ml IL-6", 
+               "0.1 ng/ml IL-6",
+               "1 ng/ml IL-6", 
+               "10 ng/ml IL-6"
+               )
+
+group_IL1B <- c(#"control", 
+                #"medium", 
+                "0.01 ng/ml IL-1B", 
+                "0.1 ng/ml IL-1B",
+                "1 ng/ml IL-1B",
+                "10 ng/ml IL-1B"
+                )
+```
+
+IL-6 effect on CYP3A4
+```{r}
+#| label: fig-act_3A4_IL_6_AS0008
+
+plot_data <- 
+  donor_2_data[time_incubation == 0.5 
+               & treatment %in% group_IL6
+               ]
+
+
+act_3A4_IL_6_AS0008 <- 
+  ggplot(data = plot_data) +
+  geom_point(aes(x = treatment,
+                 y = mean_relative_amount,
+                 color = factor(time_treatment)
+                 ),
+             size = 8,
+             alpha = 0.7,
+             ) +
+  scale_color_brewer(palette = "Set2") +
+  geom_point(aes(x = treatment,
+                 y = relative_amount
+                 ),
+             size = 4,
+             alpha = 0.3
+             ) +
+  geom_hline(yintercept = 1, linetype = "dashed") +
+  scale_y_continuous(
+    name = "OH-midazolam formation relative to vehicle control", 
+    breaks = seq(from = 0, to = 3, by= 0.25)
+    ) +
+  facet_wrap(
+    facets = vars(factor(time_treatment))
+    ) +
+  theme_bw() +
+  xlab("Treatment") + 
+  ggtitle("CYP3A4 activity after treatment with IL-6: Donor 2",
+          subtitle = "Facetted on treatment duration in hours"
+          ) +
+  ylab("Metabolite formation relative to vehicle control") +
+  theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
+        axis.title.x = element_text(hjust = 0.5, vjust = 0, face = "bold"),
+        axis.title.y = element_text(face = "bold"),
+        legend.position = "none"
+        )
+
+
+act_3A4_IL_6_AS0008
+
+ggsave(
+  plot = last_plot(),
+  filename = "3A4_IL_6_AS0008.png",
+  device = "png",
+  path = here("notebooks/LCMS/output")
+  )
+```
+
+IL-1B effect on CYP3A4
+```{r}
+#| label: fig-act_3A4_IL_1B_AS0008
+
+
+plot_data <- 
+  donor_2_data[time_incubation == 0.5 &
+                 treatment %in% group_IL1B
+               ]
+
+act_3A4_IL_1B_AS0008 <-
+  ggplot(data = plot_data) +
+  geom_point(aes(x = treatment,
+                 y = mean_relative_amount,
+                 color = factor(time_treatment)
+                 ),
+             size = 8,
+             alpha = 0.7
+             ) +
+  scale_color_brewer(palette = "Set2") +
+  geom_point(aes(x = treatment,
+                 y = relative_amount
+                 ),
+             size = 4,
+             alpha = 0.3
+             ) +
+  geom_hline(yintercept = 1, linetype = "dashed") +
+  scale_y_continuous(
+    name = "OH-midazolam formation relative to vehicle control", 
+    breaks = seq(from = 0, to = 3, by= 0.25)
+    ) +
+  facet_wrap(
+    facets = vars(factor(time_treatment))
+  ) +
+  theme_bw() +
+  xlab("Treatment") + 
+  ggtitle("CYP3A4 activity after treatment with IL-1B: Donor 2",
+          subtitle = "Facetted on treatment duration in hours") +
+  ylab("Metabolite formation relative to vehicle control") +
+  theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
+        axis.title.x = element_text(hjust = 0.5, vjust = 0, face = "bold"),
+        axis.title.y = element_text(face = "bold"),
+        legend.position = "none"
+  )
+
+act_3A4_IL_1B_AS0008
+
+ggsave(
+  plot = last_plot(),
+  filename = "3A4_IL_1B_AS0008.png",
+  device = "png",
+  path = here("notebooks/LCMS/output")
+  )
+```
 
 
