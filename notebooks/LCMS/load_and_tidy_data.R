@@ -104,7 +104,7 @@ rm(list = ls())
 
 
 # AS0008 -----------------------------------------------------------------
-# Load raw data -----------------------------------------------------------
+## Load raw data -----------------------------------------------------------
 # Ignore warnings. Just NA's as expected
 data <-
   read_excel(
@@ -128,7 +128,7 @@ setDT(data)
 data <- data[grepl("AS", data$sample_name)] # get samples of interest
 
 
-# Merge with sample info --------------------------------------------------
+## Merge with sample info --------------------------------------------------
 sample_info <- read_excel("notebooks/LCMS/data_raw/AS0008_sample_info.xlsx")
 
 tidy_data <- merge.data.table(data, sample_info, by = "sample_name")
@@ -160,7 +160,7 @@ tidy_data[
 tidy_data[, time_treatment := factor(time_treatment, ordered = TRUE)]
 
 
-# Peak status' ------------------------------------------------------------
+## Peak status' ------------------------------------------------------------
 # Check peak status' for any amounts below what below/above the limit of our
 # standard curve.
 # Check peak status'
@@ -180,7 +180,7 @@ remove_samples <- tidy_data[!is.na(peak_status)][-c(1, 9)]
 tidy_data <- tidy_data[!remove_samples, on = "sample_name"]
 
 
-# Mean and relative activity ----------------------------------------------
+## Mean and relative activity ----------------------------------------------
 # Calculate the mean amount of replicates
 tidy_data[,
   mean_amount := mean(amount, na.rm = TRUE),
@@ -205,8 +205,14 @@ tidy_data[,
 
 
 
-# Save the data -----------------------------------------------------------
+## Save the data -----------------------------------------------------------
 saveRDS(tidy_data, "notebooks/LCMS/data_processed/AS0008.rds")
 
 rm(list = ls())
+
+
+
+# Combine data ------------------------------------------------------------
+
+
 
