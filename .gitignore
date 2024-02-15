@@ -20,3 +20,6 @@
 /notebooks/qPCR/data_processed/
 /notebooks/qPCR/old_qPCR_import/
 /notebooks/qPCR/data_final_for_plotting/
+
+/notebooks/LCMS/data_raw/
+/notebooks/LCMS/data_processed/
