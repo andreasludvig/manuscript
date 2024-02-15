@@ -1,0 +1,610 @@
+---
+Title: LCMS 
+Author: Andreas Svendsen
+editor_options: 
+  chunk_output_type: console
+---
+
+# LCMS
+
+## Setup
+
+```{r}
+library(readxl)
+library(data.table)
+library(ggplot2)
+library(patchwork)
+library(here)
+```
+
+## Donor 3, AS0013B, Midazolam
+
+**Load data**
+
+```{r}
+#| output: false
+#| warning: false
+
+# Ignore warnings. Just NA's as expected
+data <-
+  read_excel(
+    path = here("notebooks/LCMS/data_raw/230628RAVERSION_Short.xlsx"),
+    sheet = "Hydroxymidazolam",
+    skip = 4,
+    col_types = c(
+      "text", "skip", "skip", "skip",
+      "skip", "skip", "skip", "skip",
+      "numeric", "skip", "skip", "text",
+      "skip", "skip", "skip", "skip"
+    ),
+    col_names = c("sample_name", "amount", "peak_status")
+  )
+
+metabolite <- "Hydroxymidazolam"
+data$metabolite <- metabolite
+
+# Set as DT, and get only samples
+setDT(data)
+data <- data[grepl("AS", data$sample_name)] # get samples of interest
+```
+
+```{r}
+sample_info <- read_excel(here("notebooks/LCMS/data_raw/AS0013B_sample_info.xlsx"))
+
+tidy_data <- merge.data.table(data, sample_info, by = "sample_name")
+
+# Check dt structure
+str(tidy_data)
+
+# Make treatment a factor
+tidy_data <- 
+  tidy_data[, 
+            treatment := factor(treatment,
+                                levels = c("control",
+                                           "medium",
+                                           "0.01 ng/ml IL-6",
+                                           "0.1 ng/ml IL-6",
+                                           "1 ng/ml IL-6",
+                                           "10 ng/ml IL-6",
+                                           "0.01 ng/ml IL-1B",
+                                           "0.1 ng/ml IL-1B",
+                                           "1 ng/ml IL-1B",
+                                           "10 ng/ml IL-1B"
+                                           ),
+                                ordered = TRUE
+                                )
+            ]
+```
+
+Check peak status' for any amounts below what below/above the limit of our standard curve.
+
+```{r}
+# Check peak status'
+unique(tidy_data$peak_status)
+# Find any that is not NA
+tidy_data[!is.na(peak_status)] |> knitr::kable()
+
+```
+
+#### Should this be omitted? It is below the lowest point on our standard curve, but omitting it would make the mean higher, than it really is?
+
+**Mean of replicates and activity relative to vehicle control**
+
+```{r}
+# Calculate the mean amount of replicates
+tidy_data[, 
+          mean_amount := mean(amount, na.rm = TRUE), 
+          by = .(treatment, time_treatment, time_incubation)
+          ]
+
+
+# Add column with control mean amounts grouped by time_treatment and time_incubation
+tidy_data[,
+          control_mean_amount := mean(mean_amount[treatment == "control"]),
+          by = .(time_treatment, time_incubation)
+          ]
+
+# Calculate both amounts and mean_amounts relative to control
+tidy_data[,
+          `:=`(
+            relative_amount = amount / control_mean_amount,
+            mean_relative_amount = mean_amount / control_mean_amount
+            )
+          ]
+```
+
+**Save the data**
+
+```{r}
+saveRDS(tidy_data, file = here("notebooks/LCMS/data_processed/AS0013.rds"))
+```
+
+#### **Plots**
+
+```{r}
+tidy_data <- readRDS(here("notebooks/LCMS/data_processed/AS0013.rds"))
+```
+
+```{r}
+# Create groups/look up tables for subsetting data
+group_IL6 <- c("control", 
+               #"medium", 
+               "0.01 ng/ml IL-6", 
+               "0.1 ng/ml IL-6",
+               "1 ng/ml IL-6", 
+               "10 ng/ml IL-6"
+               )
+
+group_IL1B <- c("control", 
+                #"medium", 
+                "0.01 ng/ml IL-1B", 
+                "0.1 ng/ml IL-1B",
+                "1 ng/ml IL-1B",
+                "10 ng/ml IL-1B"
+                )
+```
+
+IL-6 effect on CYP3A4
+
+```{r}
+plot_data <- tidy_data[time_incubation == 0.5 &
+  treatment %in% group_IL6]
+
+act_3A4_IL_6_AS0013 <- 
+ggplot(data = plot_data) +
+  geom_point(
+    aes(
+      x = treatment,
+      y = mean_relative_amount,
+      color = factor(time_treatment)
+    ),
+    size = 5,
+    alpha = 0.7
+  ) +
+  geom_point(
+    aes(
+      x = treatment,
+      y = relative_amount
+    ),
+    size = 2,
+    alpha = 0.3
+  ) +
+  geom_hline(yintercept = 1) +
+  scale_y_continuous(
+    name = "OH-midazolam formation relative to vehicle control", 
+    breaks = seq(from = 0, to = 1.5, by= 0.25), limits = c(0, 1.4)
+    ) +
+  facet_wrap(
+    facets = vars(factor(time_treatment))
+  ) +
+  theme_bw() +
+  xlab("Treatment") + 
+  ggtitle("CYP3A4 activity after treatment with IL-6",
+          subtitle = "Facetted on treatment duration in hours") +
+  ylab("Metabolite formation relative to vehicle control") +
+  theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
+        axis.title.x = element_text(hjust = 0.5, vjust = 0, face = "bold"),
+        axis.title.y = element_text(face = "bold"),
+        legend.position = "none"
+  )
+
+act_3A4_IL_6_AS0013
+
+ggsave(
+  plot = last_plot(),
+  filename = "3A4_IL_6_AS0013.svg",
+  device = "svg",
+  path = here("notebooks/LCMS/output")
+  )
+
+```
+
+```{r}
+plot_data <- tidy_data[time_incubation == 0.5 &
+  treatment %in% group_IL1B]
+
+act_3A4_IL_1B_AS0013 <- 
+ggplot(data = plot_data) +
+  geom_point(
+    aes(
+      x = treatment,
+      y = mean_relative_amount,
+      color = factor(time_treatment)
+    ),
+    size = 5,
+    alpha = 0.7
+  ) +
+  geom_point(
+    aes(
+      x = treatment,
+      y = relative_amount
+    ),
+    size = 2,
+    alpha = 0.3
+  ) +
+  geom_hline(yintercept = 1) +
+  scale_y_continuous(
+    name = "OH-midazolam formation relative to vehicle control", 
+    breaks = seq(from = 0, to = 1.5, by= 0.25), limits = c(0, 1.4)
+    ) +
+  facet_wrap(
+    facets = vars(factor(time_treatment))
+  ) +
+  theme_bw() +
+  xlab("Treatment") + 
+  ggtitle("CYP3A4 activity after treatment with IL-1B",
+          subtitle = "Facetted on treatment duration in hours") +
+  ylab("Metabolite formation relative to vehicle control") +
+  theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
+        axis.title.x = element_text(hjust = 0.5, vjust = 0, face = "bold"),
+        axis.title.y = element_text(face = "bold"),
+        legend.position = "none"
+  )
+
+act_3A4_IL_1B_AS0013
+
+ggsave(
+  plot = last_plot(),
+  filename = "3A4_IL_1B_AS0013.svg",
+  device = "svg",
+  path = here("notebooks/LCMS/output")
+  )
+
+```
+
+## Donor 2, AS0008, midazolam
+
+**Load data**
+
+
+```{r}
+#| output: false
+#| warning: false
+
+# Ignore warnings. Just NA's as expected
+data <-
+  read_excel(
+    path = here("notebooks/LCMS/data_raw/220506_AS008_v1_Short.xlsx"),
+    sheet = "Hydroxymidazolam",
+    skip = 4,
+    col_types = c(
+      "text", "skip", "skip", "skip",
+      "skip", "skip", "skip", "skip",
+      "numeric", "skip", "skip", "text",
+      "skip", "skip", "skip", "skip"
+    ),
+    col_names = c("sample_name", "amount", "peak_status")
+  )
+
+metabolite <- "Hydroxymidazolam"
+data$metabolite <- metabolite
+
+# Set as DT, and get only samples
+setDT(data)
+data <- data[grepl("AS", data$sample_name)] # get samples of interest
+```
+
+```{r}
+sample_info <- read_excel(here("notebooks/LCMS/data_raw/AS0008_sample_info.xlsx"))
+
+tidy_data <- merge.data.table(data, sample_info, by = "sample_name")
+
+# Check dt structure
+str(tidy_data)
+
+# Make treatment a factor
+tidy_data <- 
+  tidy_data[, 
+            treatment := factor(treatment,
+                                levels = c("control",
+                                           "medium",
+                                           "0.01 ng/ml IL-6",
+                                           "0.1 ng/ml IL-6",
+                                           "1 ng/ml IL-6",
+                                           "10 ng/ml IL-6",
+                                           "0.01 ng/ml IL-1B",
+                                           "0.1 ng/ml IL-1B",
+                                           "1 ng/ml IL-1B",
+                                           "10 ng/ml IL-1B"
+                                           ),
+                                ordered = TRUE
+                                )
+            ]
+```
+
+Check peak status' for any amounts below what below/above the limit of our standard curve.
+
+```{r}
+# Check peak status'
+unique(tidy_data$peak_status)
+# Find any that is not NA
+tidy_data[!is.na(peak_status)]
+
+# Remove samples 152, 153, 162, 163, 172, and 173 as no baselcocktail was added to there wells, and that is why there is no peaks
+# Remove sample 171, as there was no spheroid in this. 
+# Note that to are left with "response low". 
+remove_samples <- tidy_data[!is.na(peak_status)][-c(1, 9)]
+remove_samples |> knitr::kable()
+
+tidy_data <- tidy_data[!remove_samples, ]
+
+```
+
+#### Same as for other donor, should the response low samples be removed? It is below the lowest point on our standard curve, but omitting it would make the mean higher, than it really is?
+
+**Mean of replicates and activity relative to vehicle control**
+
+```{r}
+# Calculate the mean amount of replicates
+tidy_data[, 
+          mean_amount := mean(amount, na.rm = TRUE), 
+          by = .(treatment, time_treatment, time_incubation)
+          ]
+
+
+# Add column with control mean amounts grouped by time_treatment and time_incubation
+tidy_data[,
+          control_mean_amount := mean(mean_amount[treatment == "control"]),
+          by = .(time_treatment, time_incubation)
+          ]
+
+# Calculate both amounts and mean_amounts relative to control
+tidy_data[,
+          `:=`(
+            relative_amount = amount / control_mean_amount,
+            mean_relative_amount = mean_amount / control_mean_amount
+            )
+          ]
+```
+
+**Save the data**
+
+```{r}
+saveRDS(tidy_data, file = here("notebooks/LCMS/data_processed/AS0008.rds"))
+```
+
+#### **Plots**
+
+```{r}
+tidy_data <- readRDS(here("notebooks/LCMS/data_processed/AS0008.rds"))
+```
+
+```{r}
+# Create groups/look up tables for subsetting data
+group_IL6 <- c("control", 
+               #"medium", 
+               "0.01 ng/ml IL-6", 
+               "0.1 ng/ml IL-6",
+               "1 ng/ml IL-6", 
+               "10 ng/ml IL-6"
+               )
+
+group_IL1B <- c("control", 
+                #"medium", 
+                "0.01 ng/ml IL-1B", 
+                "0.1 ng/ml IL-1B",
+                "1 ng/ml IL-1B",
+                "10 ng/ml IL-1B"
+                )
+
+```
+
+```{r}
+plot_data <- tidy_data[time_incubation == 0.5 &
+  treatment %in% group_IL6]
+
+act_3A4_IL_6_AS008 <- 
+ggplot(data = plot_data) +
+  geom_point(
+    aes(
+      x = treatment,
+      y = mean_relative_amount,
+      color = factor(time_treatment)
+    ),
+    size = 5,
+    alpha = 0.7
+  ) +
+  geom_point(
+    aes(
+      x = treatment,
+      y = relative_amount
+    ),
+    size = 2,
+    alpha = 0.3
+  ) +
+  geom_hline(yintercept = 1) +
+  scale_y_continuous(
+    name = "OH-midazolam formation relative to vehicle control", 
+    breaks = seq(from = 0, to = 1.5, by= 0.25), limits = c(0, NA)
+    ) +
+  facet_wrap(
+    facets = vars(factor(time_treatment))
+  ) +
+  theme_bw() +
+  xlab("Treatment") + 
+  ggtitle("CYP3A4 activity after treatment with IL-6",
+          subtitle = "Facetted on treatment duration in hours") +
+  ylab("Metabolite formation relative to vehicle control") +
+  theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
+        axis.title.x = element_text(hjust = 0.5, vjust = 0, face = "bold"),
+        axis.title.y = element_text(face = "bold"),
+        legend.position = "none"
+  )
+
+act_3A4_IL_6_AS008
+
+ggsave(
+  plot = last_plot(),
+  filename = "3A4_IL_6_AS0008.svg",
+  device = "svg",
+  path = here("notebooks/LCMS/output")
+  )
+```
+
+```{r}
+plot_data <- tidy_data[time_incubation == 0.5 &
+  treatment %in% group_IL1B]
+
+act_3A4_IL_1B_AS008 <- 
+ggplot(data = plot_data) +
+  geom_point(
+    aes(
+      x = treatment,
+      y = mean_relative_amount,
+      color = factor(time_treatment)
+    ),
+    size = 5,
+    alpha = 0.7
+  ) +
+  geom_point(
+    aes(
+      x = treatment,
+      y = relative_amount
+    ),
+    size = 2,
+    alpha = 0.3
+  ) +
+  geom_hline(yintercept = 1) +
+  scale_y_continuous(
+    name = "OH-midazolam formation relative to vehicle control", 
+    breaks = seq(from = 0, to = 1.5, by= 0.25), limits = c(0, NA)
+    ) +
+  facet_wrap(
+    facets = vars(factor(time_treatment))
+  ) +
+  theme_bw() +
+  xlab("Treatment") + 
+  ggtitle("CYP3A4 activity after treatment with IL-1B",
+          subtitle = "Facetted on treatment duration in hours") +
+  ylab("Metabolite formation relative to vehicle control") +
+  theme(axis.text.x = element_text(size = 10, angle = 45, hjust = 1),
+        axis.title.x = element_text(hjust = 0.5, vjust = 0, face = "bold"),
+        axis.title.y = element_text(face = "bold"),
+        legend.position = "none"
+  )
+
+act_3A4_IL_1B_AS008
+
+ggsave(
+  plot = last_plot(),
+  filename = "3A4_IL_1B_AS0008.svg",
+  device = "svg",
+  path = here("notebooks/LCMS/output")
+  )
+
+```
+
+## Combine and save final dataframe
+
+
+```{r}
+files <- fs::dir_ls(here("notebooks/LCMS/data_processed"), regexp = "AS")
+
+data <- lapply(files, readRDS)
+
+final_data <- rbindlist(data, idcol = "file")
+final_data[, file := gsub(pattern = "notebooks/LCMS/data_processed/", replacement = "", file)]
+
+saveRDS(final_data, file = here("notebooks/LCMS/data_processed/final_data.rds"))
+```
+
+## Main plots
+load data
+
+```{r}
+data <- readRDS(here("notebooks/LCMS/data_processed/final_data.rds"))
+```
+
+```{r}
+# Create groups/look up tables for subsetting data
+group_IL6 <- c("control", 
+               #"medium", 
+               "0.01 ng/ml IL-6", 
+               "0.1 ng/ml IL-6",
+               "1 ng/ml IL-6", 
+               "10 ng/ml IL-6"
+               )
+
+group_IL1B <- c("control", 
+                #"medium", 
+                "0.01 ng/ml IL-1B", 
+                "0.1 ng/ml IL-1B",
+                "1 ng/ml IL-1B",
+                "10 ng/ml IL-1B"
+                )
+```
+
+IL-6
+
+```{r}
+plot_data_IL6 <- data[time_incubation == 0.5 
+                      & treatment %in% group_IL6
+                      & time_treatment != 24]
+
+
+act_3A4_IL6 <- ggplot(data = plot_data_IL6) +
+  geom_point(
+    mapping = aes(x = treatment, y = mean_relative_amount, color = factor(time_treatment)),
+    size = 3.5
+  ) +
+  stat_summary(
+    fun = "mean",
+    geom = "point",
+    mapping = aes(x = treatment, y = mean_relative_amount),
+    size = 5
+  ) +
+  facet_wrap(~ time_treatment, labeller = labeller(time_treatment = paste("time", as.character()))) +
+  labs(title = "CYP3A4 activity relative to vehicle control after IL-6 treatment") + 
+  xlab("Treatment") + 
+  ylab("Relative activity") +
+  scale_y_continuous(limits = c(0, NA))
+
+```
+
+```{r}
+#| label: fig-act-cyp3A4-IL6
+#| fig-width: 10
+#| fig-height: 5
+
+act_3A4_IL6
+```
+
+CONSIDER REMOVING THE OUTLIER IN 120 hour IL-6 and IL1B. See the individual plots above.
+
+IL-1B
+
+```{r}
+#| label: fig-act-cyp3A4-IL1B
+#| fig-width: 10
+#| fig-height: 5
+
+
+plot_data_I1B <- data[time_incubation == 0.5 
+                      & treatment %in% group_IL1B
+                      & time_treatment != 24]
+
+
+ggplot(data = plot_data_I1B) +
+  geom_point(
+    mapping = aes(x = treatment, y = mean_relative_amount, color = factor(time_treatment)),
+    size = 3.5
+  ) +
+  stat_summary(
+    fun = "mean",
+    geom = "point",
+    mapping = aes(x = treatment, y = mean_relative_amount),
+    size = 5
+  ) +
+  facet_wrap(facets = vars(time_treatment)) +
+  labs(title = "CYP3A4 activity relative to vehicle control after IL-1B treatment") + 
+  xlab("Treatment") + 
+  ylab("Relative activity")  +
+  scale_y_continuous(limits = c(0, NA))
+```
+
+## EC50
+
+
+
+
+
