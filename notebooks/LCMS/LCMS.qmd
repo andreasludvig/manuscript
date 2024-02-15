@@ -1,0 +1,29 @@
+
+
+# LCMS
+
+## Setup
+
+```{r}
+library(readxl)
+library(data.table)
+library(ggplot2)
+library(patchwork)
+library(here)
+library(RColorBrewer)
+```
+
+
+## Donor 3, AS0013B, Midazolam
+Check peak status' for any amounts below what below/above the limit of our standard curve.
+```{r}
+donor_3_data <- 
+  readRDS(here("notebooks/LCMS/data_processed/AS0013.rds"))
+
+# Check peak status'
+unique(donor_3_data$peak_status)
+# Find any that is not NA
+#donor_3_data[!is.na(peak_status)] |> knitr::kable()
+```
+
+
