@@ -99,12 +99,12 @@ act_3A4_IL_6_AS0013 <-
 
 act_3A4_IL_6_AS0013
 
-ggsave(
-  plot = last_plot(),
-  filename = "3A4_IL_6_AS0013.png",
-  device = "png",
-  path = here("notebooks/LCMS/output")
-  )
+# ggsave(
+#   plot = last_plot(),
+#   filename = "3A4_IL_6_AS0013.png",
+#   device = "png",
+#   path = here("notebooks/LCMS/output")
+#   )
 ```
 
 IL-1B effect on CYP3A4
@@ -154,12 +154,12 @@ act_3A4_IL_1B_AS0013 <-
 
 act_3A4_IL_1B_AS0013
 
-ggsave(
-  plot = last_plot(),
-  filename = "3A4_IL_1B_AS0013.png",
-  device = "png",
-  path = here("notebooks/LCMS/output")
-  )
+# ggsave(
+#   plot = last_plot(),
+#   filename = "3A4_IL_1B_AS0013.png",
+#   device = "png",
+#   path = here("notebooks/LCMS/output")
+#   )
 ```
 
 ## Donor 2, AS0008, midazolam
@@ -250,12 +250,12 @@ act_3A4_IL_6_AS0008 <-
 
 act_3A4_IL_6_AS0008
 
-ggsave(
-  plot = last_plot(),
-  filename = "3A4_IL_6_AS0008.png",
-  device = "png",
-  path = here("notebooks/LCMS/output")
-  )
+# ggsave(
+#   plot = last_plot(),
+#   filename = "3A4_IL_6_AS0008.png",
+#   device = "png",
+#   path = here("notebooks/LCMS/output")
+#   )
 ```
 
 IL-1B effect on CYP3A4
@@ -305,12 +305,12 @@ act_3A4_IL_1B_AS0008 <-
 
 act_3A4_IL_1B_AS0008
 
-ggsave(
-  plot = last_plot(),
-  filename = "3A4_IL_1B_AS0008.png",
-  device = "png",
-  path = here("notebooks/LCMS/output")
-  )
+# ggsave(
+#   plot = last_plot(),
+#   filename = "3A4_IL_1B_AS0008.png",
+#   device = "png",
+#   path = here("notebooks/LCMS/output")
+#   )
 ```
 
 
