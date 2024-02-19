@@ -538,9 +538,111 @@ ggplot(data = IL1B_combined_data) +
 ## EC50
 
 
+```{r}
+EC50_data <- readRDS(here("notebooks/LCMS/data_processed/final_data.rds"))
+
+# Create groups/look up tables for subsetting data
+group_IL6 <- c("control", 
+               #"medium", 
+               "0.01 ng/ml IL-6", 
+               "0.1 ng/ml IL-6",
+               "1 ng/ml IL-6", 
+               "10 ng/ml IL-6"
+               )
+
+group_IL1B <- c("control", 
+                #"medium", 
+                "0.01 ng/ml IL-1B", 
+                "0.1 ng/ml IL-1B",
+                "1 ng/ml IL-1B",
+                "10 ng/ml IL-1B"
+                )
+
+```
+
+```{r}
+EC50_IL6 <- EC50_data[treatment %in% group_IL6]
+
+#fwrite(EC50_IL6, file = here("notebooks/LCMS/EC50_IL6.csv"))
+```
 
 
 
+
+```{r}
+library(tidyverse)
+library(minpack.lm)
+```
+
+```{r}
+EC50_IL6 <- EC50_IL6 %>%
+  mutate(Concentration = case_when(
+    treatment == "control" ~ 0, # Assign 0 to control
+    TRUE ~ as.numeric(gsub(".*?(\\d+\\.?\\d*).*", "\\1", treatment)) # Extract numeric values
+  ))
+
+# Check for NAs in Concentration to ensure parsing was successful
+sum(is.na(EC50_IL6$Concentration))
+
+```
+
+```{r}
+
+# The 4-parameter logistic model function remains the same
+fourPL <- function(x, Top, Bottom, IC50, HillSlope) {
+  Bottom + (Top - Bottom) / (1 + (x / IC50)^(-HillSlope))
+}
+
+# Ensure EC50_IL6 is filtered and contains no NA values for the fitting
+EC50_IL6_filtered <- EC50_IL6 %>% filter(!is.na(Concentration) & Concentration > 0 & !is.na(relative_amount))
+
+# Adjust initial parameter estimates
+Top_est <- max(EC50_IL6_filtered$relative_amount, na.rm = TRUE)
+Bottom_est <- min(EC50_IL6_filtered$relative_amount, na.rm = TRUE)
+IC50_est <- median(EC50_IL6_filtered$Concentration, na.rm = TRUE) # Assuming this is a reasonable estimate
+HillSlope_est <- 1 # Starting with a neutral slope
+
+# Fit the model with adjusted initial estimates
+model <- tryCatch({
+  nlsLM(relative_amount ~ fourPL(Concentration, Top, Bottom, IC50, HillSlope), 
+        data = EC50_IL6_filtered, 
+        start = list(Top = Top_est, Bottom = Bottom_est, IC50 = IC50_est, HillSlope = HillSlope_est))
+}, error = function(e) e)
+
+# Check if model fitting was successful
+if(inherits(model, "error")) {
+  print("Model fitting encountered an error:")
+  print(model$message)
+} else {
+  print("Model fitted successfully.")
+}
+
+```
+
+```{r}
+#| label: fig-dose-response-act-il6
+
+
+# Generate predictions from the model across a range of concentrations
+new_data <- data.frame(Concentration = seq(min(EC50_IL6_filtered$Concentration, na.rm = TRUE), 
+                                           max(EC50_IL6_filtered$Concentration, na.rm = TRUE), length.out = 100))
+new_data$Predicted <- predict(model, newdata = new_data)
+
+# Plot the dose-response curve
+ggplot() +
+  geom_point(data = EC50_IL6_filtered, aes(x = Concentration, y = relative_amount), color = "blue") +
+  geom_line(data = new_data, aes(x = Concentration, y = Predicted), color = "red") +
+  labs(title = "Dose-response curve", x = "Concentration", y = "Relative Activity") +
+  theme_minimal() +
+  scale_x_log10()
+```
+
+
+
+```{r}
+# Print the summary of the fitted model to see parameter estimates
+summary(model)
+```
 
 
 

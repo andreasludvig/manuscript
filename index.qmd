@@ -144,6 +144,14 @@ The treatments did not have a negative effect on the viability or morphology of 
 
 {{< embed notebooks/LCMS/LCMS.qmd#fig-act-il1b-combined >}}
 
+#### EC50
+
+{{< embed notebooks/LCMS/LCMS.qmd#fig-dose-response-act-il6 >}}
+
+```         
+IC50:      9.447e-01 
+```
+
 ### Sequencing
 
 Volcano plot of IL-6 vs vehicle
