@@ -89,7 +89,8 @@ il6_10_data <- read_xlsx(file, sheet = 1)
 
 ```{r}
 #| label: fig-volcano-il6-10
-#| fig-cap: "Volcano plot. IL-6 10 ng/ml vs. vehicle control"
+#| fig-cap: "Volcano plot. IL-6 10 ng/ml vs. vehicle control. Vertical lines for fold change thresholds"
+#| warning: false
 
 # Create a new column for labeling differential gene expression
 il6_10_data$diffexpressed <- "NO" # Default value for genes not differentially expressed
@@ -112,20 +113,59 @@ il6_10_data$delabel[il6_10_data$diffexpressed != "NO"] <- il6_10_data$genes[il6_
 plot_volcano_il6_10 <- 
   ggplot(data=il6_10_data, aes(x=logFC, y=-log10(FDR), col=diffexpressed, label=delabel)) + 
     theme_minimal() + # Use a minimal theme for the plot
-    geom_text_repel(max.overlaps = 7) + # Use repelling text to avoid label overlap
+    geom_text_repel(max.overlaps = 10) + # Use repelling text to avoid label overlap
     scale_color_manual(values=c("blue", "black", "red")) + # Custom colors for differential expression
-    geom_vline(xintercept=c(-1, 1), col="dark grey") + # Vertical lines for fold change thresholds
-    geom_hline(yintercept=-log10(0.05), col="dark grey") + # Horizontal line for FDR threshold
+    geom_vline(xintercept=c(-1, 1), col="dark grey", linetype = "dashed") + # Vertical lines for fold change thresholds
+    geom_hline(yintercept=-log10(0.05), col="dark grey", linetype = "dashed") + # Horizontal line for FDR threshold
     geom_point() + # Add points for each gene
     labs(color = 'Direction of gene expression', # Customize legend title
          x = expression("log"[2]*"FC (IL6 vs Vehicle)"), # Customize x-axis label
          y = expression("-log"[10]*"FDR")) + # Customize y-axis label
-    #scale_x_continuous(breaks = seq(-11, 9, 2)) + # Customize x-axis breaks
-    #scale_y_continuous(breaks = seq(0, 90, 10)) + # Customize y-axis breaks
-    theme(panel.grid.minor.y = element_blank(), panel.grid.minor.x = element_blank())+ # Adjust minor grid lines
-    ggtitle('Volcano Plot: IL6 vs Vehicle') # Add a title to the plot
+    scale_x_continuous(limits = c(-8, 10)) + # Customize x-axis breaks
+    scale_y_continuous(limits = c(0, 320)) + # Customize y-axis breaks
+    theme(panel.grid.minor.y = element_blank(),# Remove minor grid lines
+          panel.grid.minor.x = element_blank(),# Remove minor grid lines
+          legend.position = "bottom" 
+          )+ 
+    ggtitle('Volcano Plot: IL6 10 ng/ml vs Vehicle') # Add a title to the plot
 
 
 plot_volcano_il6_10
 ```
+
+
+
+Trying to ad a box around the out of bounds data points. They have a smaller FDR than can be handled.
+```{r}
+# # Adjusting the dataset to include points with FDR of 0
+# il6_10_data$adjusted_FDR <- ifelse(il6_10_data$FDR == 0, 340, -log10(il6_10_data$FDR))
+# 
+# # Create the volcano plot using ggplot2
+# plot_volcano_il6_10 <- 
+#   ggplot(data=il6_10_data, aes(x=logFC, y=adjusted_FDR, col=diffexpressed, label=delabel)) + 
+#     theme_minimal() +
+#     geom_text_repel(max.overlaps = 10) +
+#     scale_color_manual(values=c("blue", "black", "red")) +
+#     geom_vline(xintercept=c(-1, 1), col="dark grey", linetype = "dashed") +
+#     geom_hline(yintercept=-log10(0.05), col="dark grey", linetype = "dashed") + # Use the new adjusted value
+#     geom_point() +
+#     labs(color = 'Direction of gene expression',
+#          x = expression("log"[2]*"FC (IL6 vs Vehicle)"),
+#          y = expression("-log"[10]*"Adjusted FDR")) +
+#     scale_x_continuous(limits = c(-8, 10)) +
+#     scale_y_continuous(limits = c(0, 450)) +
+#     theme(
+#       panel.grid.minor.y = element_blank(),
+#       panel.grid.minor.x = element_blank(),
+#       legend.position = "bottom"
+#     ) +
+#     annotate("rect", xmin = 1, xmax = 10, ymin = 320, ymax = 340, alpha = .2, color = "black") +
+#     ggtitle('Volcano Plot: IL6 10 ng/ml vs Vehicle')
+# 
+# # Display the plot
+# plot_volcano_il6_10
+
+
+```
+
 

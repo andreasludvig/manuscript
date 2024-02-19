@@ -625,33 +625,36 @@ Figure&nbsp;5: Overall mean CYP3A4 activity relative to vehicle control after IL
 <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>plot_volcano_il6_10 <span class="op">&lt;-</span> </span>
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  ggplot(data<span class="op">=</span>il6_10_data, aes(x<span class="op">=</span>logFC, y<span class="op">=-</span>log10(FDR), col<span class="op">=</span>diffexpressed, label<span class="op">=</span>delabel)) <span class="op">+</span> </span>
 <span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    theme_minimal() <span class="op">+</span> <span class="co"># Use a minimal theme for the plot</span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    geom_text_repel(<span class="bu">max</span>.overlaps <span class="op">=</span> <span class="dv">7</span>) <span class="op">+</span> <span class="co"># Use repelling text to avoid label overlap</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    geom_text_repel(<span class="bu">max</span>.overlaps <span class="op">=</span> <span class="dv">10</span>) <span class="op">+</span> <span class="co"># Use repelling text to avoid label overlap</span></span>
 <span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    scale_color_manual(values<span class="op">=</span>c(<span class="st">"blue"</span>, <span class="st">"black"</span>, <span class="st">"red"</span>)) <span class="op">+</span> <span class="co"># Custom colors for differential expression</span></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    geom_vline(xintercept<span class="op">=</span>c(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), col<span class="op">=</span><span class="st">"dark grey"</span>) <span class="op">+</span> <span class="co"># Vertical lines for fold change thresholds</span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    geom_hline(yintercept<span class="op">=-</span>log10(<span class="fl">0.05</span>), col<span class="op">=</span><span class="st">"dark grey"</span>) <span class="op">+</span> <span class="co"># Horizontal line for FDR threshold</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    geom_vline(xintercept<span class="op">=</span>c(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), col<span class="op">=</span><span class="st">"dark grey"</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>) <span class="op">+</span> <span class="co"># Vertical lines for fold change thresholds</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    geom_hline(yintercept<span class="op">=-</span>log10(<span class="fl">0.05</span>), col<span class="op">=</span><span class="st">"dark grey"</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>) <span class="op">+</span> <span class="co"># Horizontal line for FDR threshold</span></span>
 <span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    geom_point() <span class="op">+</span> <span class="co"># Add points for each gene</span></span>
 <span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    labs(color <span class="op">=</span> <span class="st">'Direction of gene expression'</span>, <span class="co"># Customize legend title</span></span>
 <span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>         x <span class="op">=</span> expression(<span class="st">"log"</span>[<span class="dv">2</span>]<span class="op">*</span><span class="st">"FC (IL6 vs Vehicle)"</span>), <span class="co"># Customize x-axis label</span></span>
 <span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>         y <span class="op">=</span> expression(<span class="st">"-log"</span>[<span class="dv">10</span>]<span class="op">*</span><span class="st">"FDR"</span>)) <span class="op">+</span> <span class="co"># Customize y-axis label</span></span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_x_continuous(breaks = seq(-11, 9, 2)) + # Customize x-axis breaks</span></span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_y_continuous(breaks = seq(0, 90, 10)) + # Customize y-axis breaks</span></span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    theme(panel.grid.minor.y <span class="op">=</span> element_blank(), panel.grid.minor.x <span class="op">=</span> element_blank())<span class="op">+</span> <span class="co"># Adjust minor grid lines</span></span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    ggtitle(<span class="st">'Volcano Plot: IL6 vs Vehicle'</span>) <span class="co"># Add a title to the plot</span></span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>plot_volcano_il6_10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    scale_x_continuous(limits <span class="op">=</span> c(<span class="op">-</span><span class="dv">8</span>, <span class="dv">10</span>)) <span class="op">+</span> <span class="co"># Customize x-axis breaks</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    scale_y_continuous(limits <span class="op">=</span> c(<span class="dv">0</span>, <span class="dv">320</span>)) <span class="op">+</span> <span class="co"># Customize y-axis breaks</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    theme(panel.grid.minor.y <span class="op">=</span> element_blank(),<span class="co"># Remove minor grid lines</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>          panel.grid.minor.x <span class="op">=</span> element_blank(),<span class="co"># Remove minor grid lines</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>          legend.position <span class="op">=</span> <span class="st">"bottom"</span> </span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>          )<span class="op">+</span> </span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>    ggtitle(<span class="st">'Volcano Plot: IL6 10 ng/ml vs Vehicle'</span>) <span class="co"># Add a title to the plot</span></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>plot_volcano_il6_10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 11730 rows containing missing values (`geom_text_repel()`).Warning: ggrepel: 856 unlabeled data points (too many overlaps). Consider
+<pre><code>Warning: Removed 11731 rows containing missing values (`geom_text_repel()`).Warning: Removed 2 rows containing missing values (`geom_point()`).Warning: ggrepel: 838 unlabeled data points (too many overlaps). Consider
 increasing max.overlaps</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div id="fig-volcano-il6-10" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-volcano-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/notebooks-seq-seq-fig-volcano-il6-10-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: Volcano plot. IL-6 10 ng/ml vs.&nbsp;vehicle control"><img src="index_files/figure-html/notebooks-seq-seq-fig-volcano-il6-10-output-2.png" width="672" height="480" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-seq-seq-fig-volcano-il6-10-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: Volcano plot. IL-6 10 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold change thresholds"><img src="index_files/figure-html/notebooks-seq-seq-fig-volcano-il6-10-output-2.png" width="672" height="480" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-volcano-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Volcano plot. IL-6 10 ng/ml vs.&nbsp;vehicle control
+Figure&nbsp;6: Volcano plot. IL-6 10 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold change thresholds
 </figcaption>
 </figure>
 </div>
@@ -688,7 +691,7 @@ Figure&nbsp;7: Note that the concentration of ATP of donor one on day 5 was to h
 <pre><code>Warning: Removed 5 rows containing missing values (`geom_segment()`).Warning: Removed 6 rows containing missing values (`geom_segment()`).Warning: Removed 9 rows containing missing values (`geom_segment()`).</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<div id="fig-donor-viabilities" class="quarto-figure quarto-figure-center quarto-float anchored" width="960" height="480">
+<div id="fig-donor-viabilities" class="quarto-figure quarto-figure-center quarto-float anchored" height="480" width="960">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-donor-viabilities-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
 <a href="index_files/figure-html/notebooks-viability-Viability-fig-donor-viabilities-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;8: "><img src="index_files/figure-html/notebooks-viability-Viability-fig-donor-viabilities-output-2.png" id="fig-donor-viabilities" width="960" height="480" class="figure-img"></a>
@@ -1635,7 +1638,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"descPosition":"bottom","openEffect":"zoom","selector":".lightbox"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
