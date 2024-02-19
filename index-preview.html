@@ -312,6 +312,7 @@
   <li><a href="#viability-and-morphology" id="toc-viability-and-morphology" class="nav-link" data-scroll-target="#viability-and-morphology">Viability and morphology</a></li>
   <li><a href="#effect-of-inflammatory-cytokines-on-mrna-expression" id="toc-effect-of-inflammatory-cytokines-on-mrna-expression" class="nav-link" data-scroll-target="#effect-of-inflammatory-cytokines-on-mrna-expression">Effect of inflammatory cytokines on mRNA expression</a></li>
   <li><a href="#activity-1" id="toc-activity-1" class="nav-link" data-scroll-target="#activity-1">Activity</a></li>
+  <li><a href="#sequencing" id="toc-sequencing" class="nav-link" data-scroll-target="#sequencing">Sequencing</a></li>
   </ul></li>
   <li><a href="#supplementary" id="toc-supplementary" class="nav-link" data-scroll-target="#supplementary">Supplementary</a>
   <ul class="collapse">
@@ -598,22 +599,82 @@ Figure&nbsp;5: Overall mean CYP3A4 activity relative to vehicle control after IL
 </div></div>
 </div>
 </section>
+<section id="sequencing" class="level3">
+<h3 class="anchored" data-anchor-id="sequencing">Sequencing</h3>
+<p>Volcano plot of IL-6 vs vehicle</p>
+<div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/seq/seq.qmd" data-notebook-title="Seqeuncing" data-notebook-cellid="cell-fig-volcano-il6-10">
+<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-fig-volcano-il6-10" class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new column for labeling differential gene expression</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>il6_10_data$diffexpressed <span class="op">&lt;-</span> <span class="st">"NO"</span> <span class="co"># Default value for genes not differentially expressed</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify and label upregulated genes</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Genes with log2FoldChange &gt; 1, FDR &lt; 0.05, and logCPM &gt; 1 are labeled as "UP"</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>il6_10_data$diffexpressed[il6_10_data$logFC <span class="op">&gt;</span> <span class="dv">1</span> <span class="op">&amp;</span> il6_10_data$FDR <span class="op">&lt;</span> <span class="fl">0.05</span> <span class="op">&amp;</span> il6_10_data$logCPM <span class="op">&gt;</span> <span class="dv">1</span>] <span class="op">&lt;-</span> <span class="st">"UP"</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify and label downregulated genes</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Genes with log2FoldChange &lt; -1, FDR &lt; 0.05, and logCPM &gt; 1 are labeled as "DOWN"</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>il6_10_data$diffexpressed[il6_10_data$logFC <span class="op">&lt;</span> <span class="op">-</span><span class="dv">1</span> <span class="op">&amp;</span> il6_10_data$FDR <span class="op">&lt;</span> <span class="fl">0.05</span> <span class="op">&amp;</span> il6_10_data$logCPM <span class="op">&gt;</span> <span class="dv">1</span>] <span class="op">&lt;-</span> <span class="st">"DOWN"</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize 'delabel' column to NA for all rows to create the column</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>il6_10_data$delabel <span class="op">&lt;-</span> NA</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Now, you can safely assign gene names to the 'delabel' column for differentially expressed genes</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>il6_10_data$delabel[il6_10_data$diffexpressed <span class="op">!=</span> <span class="st">"NO"</span>] <span class="op">&lt;-</span> il6_10_data$genes[il6_10_data$diffexpressed <span class="op">!=</span> <span class="st">"NO"</span>]</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the volcano plot using ggplot2</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>plot_volcano_il6_10 <span class="op">&lt;-</span> </span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  ggplot(data<span class="op">=</span>il6_10_data, aes(x<span class="op">=</span>logFC, y<span class="op">=-</span>log10(FDR), col<span class="op">=</span>diffexpressed, label<span class="op">=</span>delabel)) <span class="op">+</span> </span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    theme_minimal() <span class="op">+</span> <span class="co"># Use a minimal theme for the plot</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    geom_text_repel(<span class="bu">max</span>.overlaps <span class="op">=</span> <span class="dv">7</span>) <span class="op">+</span> <span class="co"># Use repelling text to avoid label overlap</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    scale_color_manual(values<span class="op">=</span>c(<span class="st">"blue"</span>, <span class="st">"black"</span>, <span class="st">"red"</span>)) <span class="op">+</span> <span class="co"># Custom colors for differential expression</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    geom_vline(xintercept<span class="op">=</span>c(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>), col<span class="op">=</span><span class="st">"dark grey"</span>) <span class="op">+</span> <span class="co"># Vertical lines for fold change thresholds</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    geom_hline(yintercept<span class="op">=-</span>log10(<span class="fl">0.05</span>), col<span class="op">=</span><span class="st">"dark grey"</span>) <span class="op">+</span> <span class="co"># Horizontal line for FDR threshold</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    geom_point() <span class="op">+</span> <span class="co"># Add points for each gene</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    labs(color <span class="op">=</span> <span class="st">'Direction of gene expression'</span>, <span class="co"># Customize legend title</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>         x <span class="op">=</span> expression(<span class="st">"log"</span>[<span class="dv">2</span>]<span class="op">*</span><span class="st">"FC (IL6 vs Vehicle)"</span>), <span class="co"># Customize x-axis label</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>         y <span class="op">=</span> expression(<span class="st">"-log"</span>[<span class="dv">10</span>]<span class="op">*</span><span class="st">"FDR"</span>)) <span class="op">+</span> <span class="co"># Customize y-axis label</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_x_continuous(breaks = seq(-11, 9, 2)) + # Customize x-axis breaks</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_y_continuous(breaks = seq(0, 90, 10)) + # Customize y-axis breaks</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    theme(panel.grid.minor.y <span class="op">=</span> element_blank(), panel.grid.minor.x <span class="op">=</span> element_blank())<span class="op">+</span> <span class="co"># Adjust minor grid lines</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    ggtitle(<span class="st">'Volcano Plot: IL6 vs Vehicle'</span>) <span class="co"># Add a title to the plot</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>plot_volcano_il6_10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 11730 rows containing missing values (`geom_text_repel()`).Warning: ggrepel: 856 unlabeled data points (too many overlaps). Consider
+increasing max.overlaps</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-volcano-il6-10" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-volcano-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="index_files/figure-html/notebooks-seq-seq-fig-volcano-il6-10-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: Volcano plot. IL-6 10 ng/ml vs.&nbsp;vehicle control"><img src="index_files/figure-html/notebooks-seq-seq-fig-volcano-il6-10-output-2.png" width="672" height="480" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-volcano-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Volcano plot. IL-6 10 ng/ml vs.&nbsp;vehicle control
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</div>
+</section>
 </section>
 <section id="supplementary" class="level2">
 <h2 class="anchored" data-anchor-id="supplementary">Supplementary</h2>
 <section id="viability" class="level3">
 <h3 class="anchored" data-anchor-id="viability">Viability</h3>
 <div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/viability/Viability.qmd" data-notebook-title="Viability" data-notebook-cellid="cell-fig-viability-relative-overall">
-<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-fig-viability-relative-overall" class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plot_relative_viability</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div id="cell-fig-viability-relative-overall" class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plot_relative_viability</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-viability-relative-overall" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-viability-relative-overall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/notebooks-viability-Viability-fig-viability-relative-overall-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: Note that the concentration of ATP of donor one on day 5 was to high. Data for this donor/day not trustworthy/viability to high. This yields a steep fall from day 5 to 7"><img src="index_files/figure-html/notebooks-viability-Viability-fig-viability-relative-overall-output-1.png" width="672" height="480" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-viability-Viability-fig-viability-relative-overall-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: Note that the concentration of ATP of donor one on day 5 was to high. Data for this donor/day not trustworthy/viability to high. This yields a steep fall from day 5 to 7"><img src="index_files/figure-html/notebooks-viability-Viability-fig-viability-relative-overall-output-1.png" width="672" height="480" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-viability-relative-overall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Note that the concentration of ATP of donor one on day 5 was to high. Data for this donor/day not trustworthy/viability to high. This yields a steep fall from day 5 to 7
+Figure&nbsp;7: Note that the concentration of ATP of donor one on day 5 was to high. Data for this donor/day not trustworthy/viability to high. This yields a steep fall from day 5 to 7
 </figcaption>
 </figure>
 </div>
@@ -621,8 +682,8 @@ Figure&nbsp;6: Note that the concentration of ATP of donor one on day 5 was to h
 </div></div>
 </div>
 <div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/viability/Viability.qmd" data-notebook-title="Viability" data-notebook-cellid="cell-fig-donor-viabilities">
-<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div id="cell-fig-donor-viabilities" class="cell" data-fig-width="10" data-fig-height="5">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plot_donor_relative_viability</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="cell-fig-donor-viabilities" class="cell" data-fig-width="10" data-fig-height="5">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot_donor_relative_viability</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 5 rows containing missing values (`geom_segment()`).Warning: Removed 6 rows containing missing values (`geom_segment()`).Warning: Removed 9 rows containing missing values (`geom_segment()`).</code></pre>
 </div>
@@ -630,10 +691,10 @@ Figure&nbsp;6: Note that the concentration of ATP of donor one on day 5 was to h
 <div id="fig-donor-viabilities" class="quarto-figure quarto-figure-center quarto-float anchored" width="960" height="480">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-donor-viabilities-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/notebooks-viability-Viability-fig-donor-viabilities-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure&nbsp;7: "><img src="index_files/figure-html/notebooks-viability-Viability-fig-donor-viabilities-output-2.png" id="fig-donor-viabilities" width="960" height="480" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-viability-Viability-fig-donor-viabilities-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;8: "><img src="index_files/figure-html/notebooks-viability-Viability-fig-donor-viabilities-output-2.png" id="fig-donor-viabilities" width="960" height="480" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-donor-viabilities-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7
+Figure&nbsp;8
 </figcaption>
 </figure>
 </div>
@@ -644,25 +705,25 @@ Figure&nbsp;7
 <section id="mrna" class="level3">
 <h3 class="anchored" data-anchor-id="mrna">mRNA</h3>
 <div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/qPCR/mRNA.qmd" data-notebook-title="mRNA" data-notebook-cellid="cell-fig-CYP3A4_supp">
-<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="cell-fig-CYP3A4_supp" class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ggplot(data <span class="op">=</span> data_3A4,</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>       aes(x <span class="op">=</span> treatment,</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>           y <span class="op">=</span> bio_group_mean_expression,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>           color <span class="op">=</span> experiment)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>       )<span class="op">+</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  geom_point(size <span class="op">=</span> <span class="dv">5</span>, alpha <span class="op">=</span> <span class="fl">0.35</span>) <span class="op">+</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  geom_hline(yintercept <span class="op">=</span> <span class="dv">1</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>) <span class="op">+</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  scale_color_brewer(palette <span class="op">=</span> <span class="st">"Set2"</span>) <span class="op">+</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  facet_wrap(facets <span class="op">=</span> <span class="bu">vars</span>(condition, time)) <span class="op">+</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  theme(axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">30</span>, hjust <span class="op">=</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div id="cell-fig-CYP3A4_supp" class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ggplot(data <span class="op">=</span> data_3A4,</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>       aes(x <span class="op">=</span> treatment,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>           y <span class="op">=</span> bio_group_mean_expression,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>           color <span class="op">=</span> experiment)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>       )<span class="op">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  geom_point(size <span class="op">=</span> <span class="dv">5</span>, alpha <span class="op">=</span> <span class="fl">0.35</span>) <span class="op">+</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  geom_hline(yintercept <span class="op">=</span> <span class="dv">1</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>) <span class="op">+</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  scale_color_brewer(palette <span class="op">=</span> <span class="st">"Set2"</span>) <span class="op">+</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  facet_wrap(facets <span class="op">=</span> <span class="bu">vars</span>(condition, time)) <span class="op">+</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  theme(axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">30</span>, hjust <span class="op">=</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-cyp3a4_supp" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cyp3a4_supp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/notebooks-qPCR-mRNA-fig-cyp3a4_supp-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;8: Relative 3A4 expression facetted on treatment condition and time, ie. mean of each experiment/donor"><img src="index_files/figure-html/notebooks-qPCR-mRNA-fig-cyp3a4_supp-output-1.png" width="672" height="480" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-qPCR-mRNA-fig-cyp3a4_supp-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;9: Relative 3A4 expression facetted on treatment condition and time, ie. mean of each experiment/donor"><img src="index_files/figure-html/notebooks-qPCR-mRNA-fig-cyp3a4_supp-output-1.png" width="672" height="480" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cyp3a4_supp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8: Relative 3A4 expression facetted on treatment condition and time, ie. mean of each experiment/donor
+Figure&nbsp;9: Relative 3A4 expression facetted on treatment condition and time, ie. mean of each experiment/donor
 </figcaption>
 </figure>
 </div>
@@ -670,48 +731,48 @@ Figure&nbsp;8: Relative 3A4 expression facetted on treatment condition and time,
 </div></div>
 </div>
 <div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/qPCR/mRNA.qmd" data-notebook-title="mRNA" data-notebook-cellid="cell-fig-rest_of_cyps">
-<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div id="cell-fig-rest_of_cyps" class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for CYP enzymes only, remove lowest concentration</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>cyp_data <span class="op">&lt;-</span> plot_data[target <span class="op">%</span>like<span class="op">%</span> <span class="st">"CYP"</span> <span class="op">&amp;</span> <span class="op">!</span>treatment <span class="op">%</span>like<span class="op">%</span> <span class="st">"0.001"</span>]</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Split data based on condition, and remove 3A4 </span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>cyp_data_IL6 <span class="op">&lt;-</span> cyp_data[condition <span class="op">==</span> <span class="st">"IL-6"</span> <span class="op">&amp;</span> target <span class="op">!=</span> <span class="st">"CYP3A4"</span>]</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>cyp_data_IL1B <span class="op">&lt;-</span> cyp_data[condition <span class="op">==</span> <span class="st">"IL-1B"</span> <span class="op">&amp;</span> target <span class="op">!=</span> <span class="st">"CYP3A4"</span>]</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine datasets for single plot</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>cyp_data_combined <span class="op">&lt;-</span> rbindlist(<span class="bu">list</span>(cyp_data_IL6, cyp_data_IL1B))</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate mean normalized expression (including 'condition' for grouping)</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>cyp_means <span class="op">&lt;-</span> cyp_data_combined[, .(mean_normalized_expression <span class="op">=</span> mean(normalized_expression)),</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>                               by <span class="op">=</span> .(experiment, treatment, target, time, condition)]</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate overall mean across experiments and time points</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>cyp_overall_means <span class="op">&lt;-</span> cyp_means[, .(overall_mean_normalized_expression <span class="op">=</span> mean(mean_normalized_expression)),</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>                                by <span class="op">=</span> .(treatment, target, condition)]</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the single faceted plot</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>ggplot() <span class="op">+</span></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  geom_point(data <span class="op">=</span> cyp_means, aes(x <span class="op">=</span> treatment, y <span class="op">=</span> mean_normalized_expression, color <span class="op">=</span> experiment), alpha <span class="op">=</span> <span class="fl">0.5</span>, size <span class="op">=</span> <span class="dv">4</span>) <span class="op">+</span></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>  geom_point(data <span class="op">=</span> cyp_overall_means, aes(x <span class="op">=</span> treatment, y <span class="op">=</span> overall_mean_normalized_expression),</span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>             color <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="dv">8</span>, shape <span class="op">=</span> <span class="dv">18</span>, alpha <span class="op">=</span> <span class="fl">0.7</span>) <span class="op">+</span></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  scale_y_continuous(limits <span class="op">=</span> c(<span class="dv">0</span>, NA)) <span class="op">+</span></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>  facet_grid(condition <span class="op">~</span> target <span class="op">+</span> time, scales <span class="op">=</span> <span class="st">"free_y"</span>, ) <span class="op">+</span></span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>  labs(x <span class="op">=</span> <span class="st">"Treatment"</span>, y <span class="op">=</span> <span class="st">"Mean Normalized Expression"</span>, title <span class="op">=</span> <span class="st">"Normalized Expression after IL-6/IL-1β (Other CYP Enzymes)"</span>) <span class="op">+</span>  </span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>  theme_bw() <span class="op">+</span> </span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>  theme(axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">30</span>, hjust <span class="op">=</span> <span class="dv">1</span>),</span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>        axis.title.y <span class="op">=</span> element_text(vjust <span class="op">=</span> <span class="dv">3</span>, face <span class="op">=</span> <span class="st">"bold"</span>),</span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>        axis.title.x <span class="op">=</span> element_text(vjust <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, face <span class="op">=</span> <span class="st">"bold"</span>),</span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>        plot.title <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>),</span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>        legend.title <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>)</span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="cell-fig-rest_of_cyps" class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for CYP enzymes only, remove lowest concentration</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>cyp_data <span class="op">&lt;-</span> plot_data[target <span class="op">%</span>like<span class="op">%</span> <span class="st">"CYP"</span> <span class="op">&amp;</span> <span class="op">!</span>treatment <span class="op">%</span>like<span class="op">%</span> <span class="st">"0.001"</span>]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Split data based on condition, and remove 3A4 </span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>cyp_data_IL6 <span class="op">&lt;-</span> cyp_data[condition <span class="op">==</span> <span class="st">"IL-6"</span> <span class="op">&amp;</span> target <span class="op">!=</span> <span class="st">"CYP3A4"</span>]</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>cyp_data_IL1B <span class="op">&lt;-</span> cyp_data[condition <span class="op">==</span> <span class="st">"IL-1B"</span> <span class="op">&amp;</span> target <span class="op">!=</span> <span class="st">"CYP3A4"</span>]</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine datasets for single plot</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>cyp_data_combined <span class="op">&lt;-</span> rbindlist(<span class="bu">list</span>(cyp_data_IL6, cyp_data_IL1B))</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate mean normalized expression (including 'condition' for grouping)</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>cyp_means <span class="op">&lt;-</span> cyp_data_combined[, .(mean_normalized_expression <span class="op">=</span> mean(normalized_expression)),</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>                               by <span class="op">=</span> .(experiment, treatment, target, time, condition)]</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate overall mean across experiments and time points</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>cyp_overall_means <span class="op">&lt;-</span> cyp_means[, .(overall_mean_normalized_expression <span class="op">=</span> mean(mean_normalized_expression)),</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>                                by <span class="op">=</span> .(treatment, target, condition)]</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the single faceted plot</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>ggplot() <span class="op">+</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>  geom_point(data <span class="op">=</span> cyp_means, aes(x <span class="op">=</span> treatment, y <span class="op">=</span> mean_normalized_expression, color <span class="op">=</span> experiment), alpha <span class="op">=</span> <span class="fl">0.5</span>, size <span class="op">=</span> <span class="dv">4</span>) <span class="op">+</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>  geom_point(data <span class="op">=</span> cyp_overall_means, aes(x <span class="op">=</span> treatment, y <span class="op">=</span> overall_mean_normalized_expression),</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>             color <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="dv">8</span>, shape <span class="op">=</span> <span class="dv">18</span>, alpha <span class="op">=</span> <span class="fl">0.7</span>) <span class="op">+</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>  scale_y_continuous(limits <span class="op">=</span> c(<span class="dv">0</span>, NA)) <span class="op">+</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>  facet_grid(condition <span class="op">~</span> target <span class="op">+</span> time, scales <span class="op">=</span> <span class="st">"free_y"</span>, ) <span class="op">+</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>  labs(x <span class="op">=</span> <span class="st">"Treatment"</span>, y <span class="op">=</span> <span class="st">"Mean Normalized Expression"</span>, title <span class="op">=</span> <span class="st">"Normalized Expression after IL-6/IL-1β (Other CYP Enzymes)"</span>) <span class="op">+</span>  </span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>  theme_bw() <span class="op">+</span> </span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>  theme(axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">30</span>, hjust <span class="op">=</span> <span class="dv">1</span>),</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>        axis.title.y <span class="op">=</span> element_text(vjust <span class="op">=</span> <span class="dv">3</span>, face <span class="op">=</span> <span class="st">"bold"</span>),</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>        axis.title.x <span class="op">=</span> element_text(vjust <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, face <span class="op">=</span> <span class="st">"bold"</span>),</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>        plot.title <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>),</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>        legend.title <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>)</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-rest_of_cyps" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rest_of_cyps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/notebooks-qPCR-mRNA-fig-rest_of_cyps-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;9: just a fig cap"><img src="index_files/figure-html/notebooks-qPCR-mRNA-fig-rest_of_cyps-output-1.png" width="672" height="480" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-qPCR-mRNA-fig-rest_of_cyps-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure&nbsp;10: just a fig cap"><img src="index_files/figure-html/notebooks-qPCR-mRNA-fig-rest_of_cyps-output-1.png" width="672" height="480" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rest_of_cyps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9: just a fig cap
+Figure&nbsp;10: just a fig cap
 </figcaption>
 </figure>
 </div>
@@ -719,46 +780,46 @@ Figure&nbsp;9: just a fig cap
 </div></div>
 </div>
 <div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/qPCR/mRNA.qmd" data-notebook-title="mRNA" data-notebook-cellid="cell-fig-rest_of_cyps_overall_mean">
-<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="cell-fig-rest_of_cyps_overall_mean" class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Filtering for CYPs and Removing Low Concentration</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>cyp_data <span class="op">&lt;-</span> cyp_data[target <span class="op">%</span>like<span class="op">%</span> <span class="st">"CYP"</span> <span class="op">&amp;</span> <span class="op">!</span>treatment <span class="op">%</span>like<span class="op">%</span> <span class="st">"0.0001% BSA"</span>]</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Splitting by Condition </span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>cyp_data_IL6 <span class="op">&lt;-</span> cyp_data[condition <span class="op">==</span> <span class="st">"IL-6"</span> <span class="op">&amp;</span> target <span class="op">!=</span> <span class="st">"CYP3A4"</span>]</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>cyp_data_IL1B <span class="op">&lt;-</span> cyp_data[condition <span class="op">==</span> <span class="st">"IL-1B"</span> <span class="op">&amp;</span> target <span class="op">!=</span> <span class="st">"CYP3A4"</span>]</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Data Preparation (Calculations)</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>cyp_data_combined <span class="op">&lt;-</span> rbindlist(<span class="bu">list</span>(cyp_data_IL6, cyp_data_IL1B)) </span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>cyp_means <span class="op">&lt;-</span> cyp_data_combined[, .(mean_normalized_expression <span class="op">=</span> mean(normalized_expression)),</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>                               by <span class="op">=</span> .(experiment, treatment, target, condition)]</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>cyp_overall_means <span class="op">&lt;-</span> cyp_means[, .(overall_mean_normalized_expression <span class="op">=</span> mean(mean_normalized_expression)),</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>                                by <span class="op">=</span> .(treatment, target, condition)]</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Plotting (This part remains the same, using ggplot2)</span></span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>ggplot() <span class="op">+</span></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  geom_point(data <span class="op">=</span> cyp_means, aes(x <span class="op">=</span> treatment, y <span class="op">=</span> mean_normalized_expression, color <span class="op">=</span> experiment), alpha <span class="op">=</span> <span class="fl">0.5</span>, size <span class="op">=</span> <span class="dv">4</span>) <span class="op">+</span></span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>  geom_point(data <span class="op">=</span> cyp_overall_means, aes(x <span class="op">=</span> treatment, y <span class="op">=</span> overall_mean_normalized_expression),</span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>             color <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="dv">8</span>, shape <span class="op">=</span> <span class="dv">18</span>, alpha <span class="op">=</span> <span class="fl">0.7</span>) <span class="op">+</span></span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  scale_y_continuous(limits <span class="op">=</span> c(<span class="dv">0</span>, NA)) <span class="op">+</span></span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>  facet_grid(condition <span class="op">~</span> target, scales <span class="op">=</span> <span class="st">"free_y"</span>) <span class="op">+</span></span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>  labs(x <span class="op">=</span> <span class="st">"Treatment"</span>, y <span class="op">=</span> <span class="st">"Mean Normalized Expression (Across Time Points)"</span>, title <span class="op">=</span> <span class="st">"Normalized Expression after IL-6/IL-1β"</span>) <span class="op">+</span> </span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>  theme_bw() <span class="op">+</span> </span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>  theme(axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">30</span>, hjust <span class="op">=</span> <span class="dv">1</span>),</span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>        axis.title.y <span class="op">=</span> element_text(vjust <span class="op">=</span> <span class="dv">3</span>, face <span class="op">=</span> <span class="st">"bold"</span>),</span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>        axis.title.x <span class="op">=</span> element_text(vjust <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, face <span class="op">=</span> <span class="st">"bold"</span>),</span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>        plot.title <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>),</span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>        legend.title <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>)</span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="cell-fig-rest_of_cyps_overall_mean" class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Filtering for CYPs and Removing Low Concentration</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>cyp_data <span class="op">&lt;-</span> cyp_data[target <span class="op">%</span>like<span class="op">%</span> <span class="st">"CYP"</span> <span class="op">&amp;</span> <span class="op">!</span>treatment <span class="op">%</span>like<span class="op">%</span> <span class="st">"0.0001% BSA"</span>]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Splitting by Condition </span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>cyp_data_IL6 <span class="op">&lt;-</span> cyp_data[condition <span class="op">==</span> <span class="st">"IL-6"</span> <span class="op">&amp;</span> target <span class="op">!=</span> <span class="st">"CYP3A4"</span>]</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>cyp_data_IL1B <span class="op">&lt;-</span> cyp_data[condition <span class="op">==</span> <span class="st">"IL-1B"</span> <span class="op">&amp;</span> target <span class="op">!=</span> <span class="st">"CYP3A4"</span>]</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Data Preparation (Calculations)</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>cyp_data_combined <span class="op">&lt;-</span> rbindlist(<span class="bu">list</span>(cyp_data_IL6, cyp_data_IL1B)) </span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>cyp_means <span class="op">&lt;-</span> cyp_data_combined[, .(mean_normalized_expression <span class="op">=</span> mean(normalized_expression)),</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>                               by <span class="op">=</span> .(experiment, treatment, target, condition)]</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>cyp_overall_means <span class="op">&lt;-</span> cyp_means[, .(overall_mean_normalized_expression <span class="op">=</span> mean(mean_normalized_expression)),</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>                                by <span class="op">=</span> .(treatment, target, condition)]</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Plotting (This part remains the same, using ggplot2)</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>ggplot() <span class="op">+</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>  geom_point(data <span class="op">=</span> cyp_means, aes(x <span class="op">=</span> treatment, y <span class="op">=</span> mean_normalized_expression, color <span class="op">=</span> experiment), alpha <span class="op">=</span> <span class="fl">0.5</span>, size <span class="op">=</span> <span class="dv">4</span>) <span class="op">+</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>  geom_point(data <span class="op">=</span> cyp_overall_means, aes(x <span class="op">=</span> treatment, y <span class="op">=</span> overall_mean_normalized_expression),</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>             color <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="dv">8</span>, shape <span class="op">=</span> <span class="dv">18</span>, alpha <span class="op">=</span> <span class="fl">0.7</span>) <span class="op">+</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>  scale_y_continuous(limits <span class="op">=</span> c(<span class="dv">0</span>, NA)) <span class="op">+</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>  facet_grid(condition <span class="op">~</span> target, scales <span class="op">=</span> <span class="st">"free_y"</span>) <span class="op">+</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>  labs(x <span class="op">=</span> <span class="st">"Treatment"</span>, y <span class="op">=</span> <span class="st">"Mean Normalized Expression (Across Time Points)"</span>, title <span class="op">=</span> <span class="st">"Normalized Expression after IL-6/IL-1β"</span>) <span class="op">+</span> </span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>  theme_bw() <span class="op">+</span> </span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>  theme(axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">30</span>, hjust <span class="op">=</span> <span class="dv">1</span>),</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>        axis.title.y <span class="op">=</span> element_text(vjust <span class="op">=</span> <span class="dv">3</span>, face <span class="op">=</span> <span class="st">"bold"</span>),</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>        axis.title.x <span class="op">=</span> element_text(vjust <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, face <span class="op">=</span> <span class="st">"bold"</span>),</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>        plot.title <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>),</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>        legend.title <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>)</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-rest_of_cyps_overall_mean" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rest_of_cyps_overall_mean-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/notebooks-qPCR-mRNA-fig-rest_of_cyps_overall_mean-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure&nbsp;10: Normalized expression, mean across all time points"><img src="index_files/figure-html/notebooks-qPCR-mRNA-fig-rest_of_cyps_overall_mean-output-1.png" width="672" height="480" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-qPCR-mRNA-fig-rest_of_cyps_overall_mean-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;11: Normalized expression, mean across all time points"><img src="index_files/figure-html/notebooks-qPCR-mRNA-fig-rest_of_cyps_overall_mean-output-1.png" width="672" height="480" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rest_of_cyps_overall_mean-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10: Normalized expression, mean across all time points
+Figure&nbsp;11: Normalized expression, mean across all time points
 </figcaption>
 </figure>
 </div>
@@ -770,51 +831,51 @@ Figure&nbsp;10: Normalized expression, mean across all time points
 <h3 class="anchored" data-anchor-id="activity-2">Activity</h3>
 <p>Below are the mean activity faceted on time (timepoints combined, 24 hour omitted)</p>
 <div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/LCMS/LCMS.qmd" data-notebook-title="LCMS" data-notebook-cellid="cell-fig-act-cyp3A4-IL6">
-<div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="cell-fig-act-cyp3A4-IL6" class="cell" data-fig-width="10" data-fig-height="5">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plot_data_IL6 <span class="op">&lt;-</span> data[time_incubation <span class="op">==</span> <span class="fl">0.5</span> </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                      <span class="op">&amp;</span> treatment <span class="op">%</span><span class="kw">in</span><span class="op">%</span> group_IL6</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                      <span class="op">&amp;</span> time_treatment <span class="op">!=</span> <span class="dv">24</span>]</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>act_3A4_IL6 <span class="op">&lt;-</span> ggplot(data <span class="op">=</span> plot_data_IL6) <span class="op">+</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  geom_point(</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    mapping <span class="op">=</span> aes(x <span class="op">=</span> treatment, y <span class="op">=</span> mean_relative_amount, color <span class="op">=</span> factor(time_treatment)),</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    size <span class="op">=</span> <span class="fl">3.5</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="op">+</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  stat_summary(</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    fun <span class="op">=</span> <span class="st">"mean"</span>,</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    geom <span class="op">=</span> <span class="st">"point"</span>,</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    mapping <span class="op">=</span> aes(x <span class="op">=</span> treatment, y <span class="op">=</span> mean_relative_amount),</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    size <span class="op">=</span> <span class="dv">5</span></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="op">+</span></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  scale_color_brewer(palette <span class="op">=</span> <span class="st">"Set2"</span>) <span class="op">+</span></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  facet_wrap(<span class="op">~</span> time_treatment, ) <span class="op">+</span></span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  labs(title <span class="op">=</span> <span class="st">"CYP3A4 activity relative to vehicle control after IL-6 treatment"</span>,</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>       x <span class="op">=</span> <span class="st">"Treatment"</span>,</span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>       y <span class="op">=</span> <span class="st">"Expression relative to vehicle control"</span>,</span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>       color <span class="op">=</span> <span class="st">"Treatment duration"</span>) <span class="op">+</span> </span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>  scale_y_continuous(limits <span class="op">=</span> c(<span class="dv">0</span>, NA)) <span class="op">+</span></span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>  theme_bw() <span class="op">+</span></span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>  theme(axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">30</span>, hjust <span class="op">=</span> <span class="dv">1</span>),</span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>        axis.title.y <span class="op">=</span> element_text(vjust <span class="op">=</span> <span class="dv">3</span>, face <span class="op">=</span> <span class="st">"bold"</span>),</span>
-<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>        axis.title.x <span class="op">=</span> element_text(vjust <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, face <span class="op">=</span><span class="st">"bold"</span>),</span>
-<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>        plot.title <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>),</span>
-<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>        legend.title <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>),</span>
-<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>        legend.position <span class="op">=</span> <span class="st">"bottom"</span></span>
-<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>     ) <span class="op">+</span></span>
-<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>  geom_hline(yintercept <span class="op">=</span> <span class="dv">1</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>)</span>
-<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>act_3A4_IL6</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [12]:</pre></div><div id="cell-fig-act-cyp3A4-IL6" class="cell" data-fig-width="10" data-fig-height="5">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plot_data_IL6 <span class="op">&lt;-</span> data[time_incubation <span class="op">==</span> <span class="fl">0.5</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                      <span class="op">&amp;</span> treatment <span class="op">%</span><span class="kw">in</span><span class="op">%</span> group_IL6</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                      <span class="op">&amp;</span> time_treatment <span class="op">!=</span> <span class="dv">24</span>]</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>act_3A4_IL6 <span class="op">&lt;-</span> ggplot(data <span class="op">=</span> plot_data_IL6) <span class="op">+</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  geom_point(</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    mapping <span class="op">=</span> aes(x <span class="op">=</span> treatment, y <span class="op">=</span> mean_relative_amount, color <span class="op">=</span> factor(time_treatment)),</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    size <span class="op">=</span> <span class="fl">3.5</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="op">+</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  stat_summary(</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    fun <span class="op">=</span> <span class="st">"mean"</span>,</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    geom <span class="op">=</span> <span class="st">"point"</span>,</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    mapping <span class="op">=</span> aes(x <span class="op">=</span> treatment, y <span class="op">=</span> mean_relative_amount),</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    size <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="op">+</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>  scale_color_brewer(palette <span class="op">=</span> <span class="st">"Set2"</span>) <span class="op">+</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>  facet_wrap(<span class="op">~</span> time_treatment, ) <span class="op">+</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>  labs(title <span class="op">=</span> <span class="st">"CYP3A4 activity relative to vehicle control after IL-6 treatment"</span>,</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>       x <span class="op">=</span> <span class="st">"Treatment"</span>,</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>       y <span class="op">=</span> <span class="st">"Expression relative to vehicle control"</span>,</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>       color <span class="op">=</span> <span class="st">"Treatment duration"</span>) <span class="op">+</span> </span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>  scale_y_continuous(limits <span class="op">=</span> c(<span class="dv">0</span>, NA)) <span class="op">+</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>  theme_bw() <span class="op">+</span></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>  theme(axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">30</span>, hjust <span class="op">=</span> <span class="dv">1</span>),</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>        axis.title.y <span class="op">=</span> element_text(vjust <span class="op">=</span> <span class="dv">3</span>, face <span class="op">=</span> <span class="st">"bold"</span>),</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>        axis.title.x <span class="op">=</span> element_text(vjust <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, face <span class="op">=</span><span class="st">"bold"</span>),</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>        plot.title <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>),</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>        legend.title <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>),</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>        legend.position <span class="op">=</span> <span class="st">"bottom"</span></span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>     ) <span class="op">+</span></span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>  geom_hline(yintercept <span class="op">=</span> <span class="dv">1</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>)</span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>act_3A4_IL6</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-act-cyp3a4-il6" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-act-cyp3a4-il6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/notebooks-LCMS-LCMS-fig-act-cyp3a4-il6-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure&nbsp;11: Mean CYP3A4 activity relative to vehicle control after IL-6 treatment. Facetted on time. 24 hour timepoints removed"><img src="index_files/figure-html/notebooks-LCMS-LCMS-fig-act-cyp3a4-il6-output-1.png" width="960" height="480" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-LCMS-LCMS-fig-act-cyp3a4-il6-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure&nbsp;12: Mean CYP3A4 activity relative to vehicle control after IL-6 treatment. Facetted on time. 24 hour timepoints removed"><img src="index_files/figure-html/notebooks-LCMS-LCMS-fig-act-cyp3a4-il6-output-1.png" width="960" height="480" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-act-cyp3a4-il6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11: Mean CYP3A4 activity relative to vehicle control after IL-6 treatment. Facetted on time. 24 hour timepoints removed
+Figure&nbsp;12: Mean CYP3A4 activity relative to vehicle control after IL-6 treatment. Facetted on time. 24 hour timepoints removed
 </figcaption>
 </figure>
 </div>
@@ -822,51 +883,51 @@ Figure&nbsp;11: Mean CYP3A4 activity relative to vehicle control after IL-6 trea
 </div></div>
 </div>
 <div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/LCMS/LCMS.qmd" data-notebook-title="LCMS" data-notebook-cellid="cell-fig-act-cyp3A4-IL1B">
-<div class="cell-container"><div class="cell-decorator"><pre>In [12]:</pre></div><div id="cell-fig-act-cyp3A4-IL1B" class="cell" data-fig-width="10" data-fig-height="5">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>plot_data_I1B <span class="op">&lt;-</span> data[time_incubation <span class="op">==</span> <span class="fl">0.5</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                      <span class="op">&amp;</span> treatment <span class="op">%</span><span class="kw">in</span><span class="op">%</span> group_IL1B</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                      <span class="op">&amp;</span> time_treatment <span class="op">!=</span> <span class="dv">24</span>]</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>act_3A4_IL1B <span class="op">&lt;-</span> </span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  ggplot(data <span class="op">=</span> plot_data_I1B) <span class="op">+</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    geom_point(</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>      mapping <span class="op">=</span> aes(x <span class="op">=</span> treatment, y <span class="op">=</span> mean_relative_amount, color <span class="op">=</span> factor(time_treatment)),</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>      size <span class="op">=</span> <span class="fl">3.5</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">+</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    stat_summary(</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>      fun <span class="op">=</span> <span class="st">"mean"</span>,</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>      geom <span class="op">=</span> <span class="st">"point"</span>,</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>      mapping <span class="op">=</span> aes(x <span class="op">=</span> treatment, y <span class="op">=</span> mean_relative_amount),</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>      size <span class="op">=</span> <span class="dv">5</span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">+</span></span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    scale_color_brewer(palette <span class="op">=</span> <span class="st">"Set2"</span>) <span class="op">+</span></span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    facet_wrap(facets <span class="op">=</span> <span class="bu">vars</span>(time_treatment)) <span class="op">+</span></span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    labs(title <span class="op">=</span> <span class="st">"CYP3A4 activity relative to vehicle control after IL-1B treatment"</span>,</span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>         x <span class="op">=</span> <span class="st">"Treatment"</span>,</span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>         y <span class="op">=</span> <span class="st">"Expression relative to vehicle control"</span>,</span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>         color <span class="op">=</span> <span class="st">"Treatment duration"</span></span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>         ) <span class="op">+</span> </span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    scale_y_continuous(limits <span class="op">=</span> c(<span class="dv">0</span>, NA)) <span class="op">+</span></span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    theme_bw() <span class="op">+</span></span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>    theme(axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">30</span>, hjust <span class="op">=</span> <span class="dv">1</span>),</span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>          axis.title.y <span class="op">=</span> element_text(vjust <span class="op">=</span> <span class="dv">3</span>, face <span class="op">=</span> <span class="st">"bold"</span>),</span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>          axis.title.x <span class="op">=</span> element_text(vjust <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, face <span class="op">=</span><span class="st">"bold"</span>),</span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>          plot.title <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>),</span>
-<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>          legend.title <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>),</span>
-<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>          legend.position <span class="op">=</span> <span class="st">"bottom"</span></span>
-<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>       ) <span class="op">+</span></span>
-<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>    geom_hline(yintercept <span class="op">=</span> <span class="dv">1</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>)</span>
-<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>act_3A4_IL1B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [13]:</pre></div><div id="cell-fig-act-cyp3A4-IL1B" class="cell" data-fig-width="10" data-fig-height="5">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plot_data_I1B <span class="op">&lt;-</span> data[time_incubation <span class="op">==</span> <span class="fl">0.5</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                      <span class="op">&amp;</span> treatment <span class="op">%</span><span class="kw">in</span><span class="op">%</span> group_IL1B</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                      <span class="op">&amp;</span> time_treatment <span class="op">!=</span> <span class="dv">24</span>]</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>act_3A4_IL1B <span class="op">&lt;-</span> </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  ggplot(data <span class="op">=</span> plot_data_I1B) <span class="op">+</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    geom_point(</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>      mapping <span class="op">=</span> aes(x <span class="op">=</span> treatment, y <span class="op">=</span> mean_relative_amount, color <span class="op">=</span> factor(time_treatment)),</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>      size <span class="op">=</span> <span class="fl">3.5</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">+</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    stat_summary(</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>      fun <span class="op">=</span> <span class="st">"mean"</span>,</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>      geom <span class="op">=</span> <span class="st">"point"</span>,</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>      mapping <span class="op">=</span> aes(x <span class="op">=</span> treatment, y <span class="op">=</span> mean_relative_amount),</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>      size <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">+</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    scale_color_brewer(palette <span class="op">=</span> <span class="st">"Set2"</span>) <span class="op">+</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    facet_wrap(facets <span class="op">=</span> <span class="bu">vars</span>(time_treatment)) <span class="op">+</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    labs(title <span class="op">=</span> <span class="st">"CYP3A4 activity relative to vehicle control after IL-1B treatment"</span>,</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>         x <span class="op">=</span> <span class="st">"Treatment"</span>,</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>         y <span class="op">=</span> <span class="st">"Expression relative to vehicle control"</span>,</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>         color <span class="op">=</span> <span class="st">"Treatment duration"</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>         ) <span class="op">+</span> </span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>    scale_y_continuous(limits <span class="op">=</span> c(<span class="dv">0</span>, NA)) <span class="op">+</span></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>    theme_bw() <span class="op">+</span></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>    theme(axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">30</span>, hjust <span class="op">=</span> <span class="dv">1</span>),</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>          axis.title.y <span class="op">=</span> element_text(vjust <span class="op">=</span> <span class="dv">3</span>, face <span class="op">=</span> <span class="st">"bold"</span>),</span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>          axis.title.x <span class="op">=</span> element_text(vjust <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>, face <span class="op">=</span><span class="st">"bold"</span>),</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>          plot.title <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>),</span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>          legend.title <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>),</span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>          legend.position <span class="op">=</span> <span class="st">"bottom"</span></span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>       ) <span class="op">+</span></span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>    geom_hline(yintercept <span class="op">=</span> <span class="dv">1</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>)</span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>act_3A4_IL1B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-act-cyp3a4-il1b" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-act-cyp3a4-il1b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/notebooks-LCMS-LCMS-fig-act-cyp3a4-il1b-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure&nbsp;12: Mean CYP3A4 activity relative to vehicle control after IL-1B treatment. Facetted on time. 24 hour timepoints removed"><img src="index_files/figure-html/notebooks-LCMS-LCMS-fig-act-cyp3a4-il1b-output-1.png" width="960" height="480" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-LCMS-LCMS-fig-act-cyp3a4-il1b-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure&nbsp;13: Mean CYP3A4 activity relative to vehicle control after IL-1B treatment. Facetted on time. 24 hour timepoints removed"><img src="index_files/figure-html/notebooks-LCMS-LCMS-fig-act-cyp3a4-il1b-output-1.png" width="960" height="480" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-act-cyp3a4-il1b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12: Mean CYP3A4 activity relative to vehicle control after IL-1B treatment. Facetted on time. 24 hour timepoints removed
+Figure&nbsp;13: Mean CYP3A4 activity relative to vehicle control after IL-1B treatment. Facetted on time. 24 hour timepoints removed
 </figcaption>
 </figure>
 </div>
@@ -875,146 +936,14 @@ Figure&nbsp;12: Mean CYP3A4 activity relative to vehicle control after IL-1B tre
 </div>
 <p>Below are individual donor 3 plots</p>
 <div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/LCMS/LCMS.qmd" data-notebook-title="LCMS" data-notebook-cellid="cell-fig-act_3A4_IL_6_AS0013">
-<div class="cell-container"><div class="cell-decorator"><pre>In [13]:</pre></div><div id="cell-fig-act_3A4_IL_6_AS0013" class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plot_data <span class="op">&lt;-</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  donor_3_data[time_incubation <span class="op">==</span> <span class="fl">0.5</span> </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>               <span class="op">&amp;</span> treatment <span class="op">%</span><span class="kw">in</span><span class="op">%</span> group_IL6</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>               ]</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>act_3A4_IL_6_AS0013 <span class="op">&lt;-</span> </span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  ggplot(data <span class="op">=</span> plot_data) <span class="op">+</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  geom_point(aes(x <span class="op">=</span> treatment,</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>                 y <span class="op">=</span> mean_relative_amount,</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>                 color <span class="op">=</span> factor(time_treatment)</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>                 ),</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>             size <span class="op">=</span> <span class="dv">8</span>,</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>             alpha <span class="op">=</span> <span class="fl">0.7</span>,</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>             ) <span class="op">+</span></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  scale_color_brewer(palette <span class="op">=</span> <span class="st">"Set2"</span>) <span class="op">+</span></span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>  geom_point(aes(x <span class="op">=</span> treatment,</span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>                 y <span class="op">=</span> relative_amount</span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>                 ),</span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>             size <span class="op">=</span> <span class="dv">4</span>,</span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>             alpha <span class="op">=</span> <span class="fl">0.3</span></span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>             ) <span class="op">+</span></span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>  geom_hline(yintercept <span class="op">=</span> <span class="dv">1</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>) <span class="op">+</span></span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>  scale_y_continuous(</span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="st">"OH-midazolam formation relative to vehicle control"</span>, </span>
-<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>    breaks <span class="op">=</span> seq(<span class="im">from</span> <span class="op">=</span> <span class="dv">0</span>, to <span class="op">=</span> <span class="dv">3</span>, by<span class="op">=</span> <span class="fl">0.25</span>)</span>
-<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">+</span></span>
-<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>  facet_wrap(</span>
-<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>    facets <span class="op">=</span> <span class="bu">vars</span>(factor(time_treatment))</span>
-<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">+</span></span>
-<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>  theme_bw() <span class="op">+</span></span>
-<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>  xlab(<span class="st">"Treatment"</span>) <span class="op">+</span> </span>
-<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>  ggtitle(<span class="st">"CYP3A4 activity after treatment with IL-6: Donor 3"</span>,</span>
-<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>          subtitle <span class="op">=</span> <span class="st">"Facetted on treatment duration in hours"</span></span>
-<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>          ) <span class="op">+</span></span>
-<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>  ylab(<span class="st">"Metabolite formation relative to vehicle control"</span>) <span class="op">+</span></span>
-<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>  theme(axis.text.x <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">10</span>, angle <span class="op">=</span> <span class="dv">45</span>, hjust <span class="op">=</span> <span class="dv">1</span>),</span>
-<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a>        axis.title.x <span class="op">=</span> element_text(hjust <span class="op">=</span> <span class="fl">0.5</span>, vjust <span class="op">=</span> <span class="dv">0</span>, face <span class="op">=</span> <span class="st">"bold"</span>),</span>
-<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a>        axis.title.y <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>),</span>
-<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a>        legend.position <span class="op">=</span> <span class="st">"none"</span></span>
-<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a>act_3A4_IL_6_AS0013</span>
-<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(</span></span>
-<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a><span class="co">#   plot = last_plot(),</span></span>
-<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a><span class="co">#   filename = "3A4_IL_6_AS0013.png",</span></span>
-<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a><span class="co">#   device = "png",</span></span>
-<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a><span class="co">#   path = here("notebooks/LCMS/output")</span></span>
-<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a><span class="co">#   )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div id="fig-act_3a4_il_6_as0013" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-act_3a4_il_6_as0013-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/notebooks-LCMS-LCMS-fig-act_3a4_il_6_as0013-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure&nbsp;13: Donor 3: Activity, IL-6"><img src="index_files/figure-html/notebooks-LCMS-LCMS-fig-act_3a4_il_6_as0013-output-1.png" width="672" height="480" class="figure-img"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-act_3a4_il_6_as0013-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13: Donor 3: Activity, IL-6
-</figcaption>
-</figure>
-</div>
-</div>
-</div></div>
-</div>
-<div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/LCMS/LCMS.qmd" data-notebook-title="LCMS" data-notebook-cellid="cell-fig-act_3A4_IL_1B_AS0013">
-<div class="cell-container"><div class="cell-decorator"><pre>In [14]:</pre></div><div id="cell-fig-act_3A4_IL_1B_AS0013" class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plot_data <span class="op">&lt;-</span> </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  donor_3_data[time_incubation <span class="op">==</span> <span class="fl">0.5</span> <span class="op">&amp;</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                 treatment <span class="op">%</span><span class="kw">in</span><span class="op">%</span> group_IL1B</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>               ]</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>act_3A4_IL_1B_AS0013 <span class="op">&lt;-</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  ggplot(data <span class="op">=</span> plot_data) <span class="op">+</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  geom_point(aes(x <span class="op">=</span> treatment,</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>                 y <span class="op">=</span> mean_relative_amount,</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>                 color <span class="op">=</span> factor(time_treatment)</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>                 ),</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>             size <span class="op">=</span> <span class="dv">8</span>,</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>             alpha <span class="op">=</span> <span class="fl">0.7</span></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>             ) <span class="op">+</span></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  scale_color_brewer(palette <span class="op">=</span> <span class="st">"Set2"</span>) <span class="op">+</span></span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  geom_point(aes(x <span class="op">=</span> treatment,</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>                 y <span class="op">=</span> relative_amount</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>                 ),</span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>             size <span class="op">=</span> <span class="dv">4</span>,</span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>             alpha <span class="op">=</span> <span class="fl">0.3</span></span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>             ) <span class="op">+</span></span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>  geom_hline(yintercept <span class="op">=</span> <span class="dv">1</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>) <span class="op">+</span></span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>  scale_y_continuous(</span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="st">"OH-midazolam formation relative to vehicle control"</span>, </span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>    breaks <span class="op">=</span> seq(<span class="im">from</span> <span class="op">=</span> <span class="dv">0</span>, to <span class="op">=</span> <span class="dv">3</span>, by<span class="op">=</span> <span class="fl">0.25</span>)</span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">+</span></span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>  facet_wrap(</span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>    facets <span class="op">=</span> <span class="bu">vars</span>(factor(time_treatment))</span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>  ) <span class="op">+</span></span>
-<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>  theme_bw() <span class="op">+</span></span>
-<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>  xlab(<span class="st">"Treatment"</span>) <span class="op">+</span> </span>
-<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>  ggtitle(<span class="st">"CYP3A4 activity after treatment with IL-1B: Donor 3"</span>,</span>
-<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>          subtitle <span class="op">=</span> <span class="st">"Facetted on treatment duration in hours"</span>) <span class="op">+</span></span>
-<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>  ylab(<span class="st">"Metabolite formation relative to vehicle control"</span>) <span class="op">+</span></span>
-<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>  theme(axis.text.x <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">10</span>, angle <span class="op">=</span> <span class="dv">45</span>, hjust <span class="op">=</span> <span class="dv">1</span>),</span>
-<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>        axis.title.x <span class="op">=</span> element_text(hjust <span class="op">=</span> <span class="fl">0.5</span>, vjust <span class="op">=</span> <span class="dv">0</span>, face <span class="op">=</span> <span class="st">"bold"</span>),</span>
-<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a>        axis.title.y <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>),</span>
-<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a>        legend.position <span class="op">=</span> <span class="st">"none"</span></span>
-<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a>act_3A4_IL_1B_AS0013</span>
-<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(</span></span>
-<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a><span class="co">#   plot = last_plot(),</span></span>
-<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a><span class="co">#   filename = "3A4_IL_1B_AS0013.png",</span></span>
-<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a><span class="co">#   device = "png",</span></span>
-<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a><span class="co">#   path = here("notebooks/LCMS/output")</span></span>
-<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a><span class="co">#   )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div id="fig-act_3a4_il_1b_as0013" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-act_3a4_il_1b_as0013-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/notebooks-LCMS-LCMS-fig-act_3a4_il_1b_as0013-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Figure&nbsp;14: Donor 3: Activity, IL-1B"><img src="index_files/figure-html/notebooks-LCMS-LCMS-fig-act_3a4_il_1b_as0013-output-1.png" width="672" height="480" class="figure-img"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-act_3a4_il_1b_as0013-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14: Donor 3: Activity, IL-1B
-</figcaption>
-</figure>
-</div>
-</div>
-</div></div>
-</div>
-<p>Below are individual donor 2 plots</p>
-<div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/LCMS/LCMS.qmd" data-notebook-title="LCMS" data-notebook-cellid="cell-fig-act_3A4_IL_6_AS0008">
-<div class="cell-container"><div class="cell-decorator"><pre>In [15]:</pre></div><div id="cell-fig-act_3A4_IL_6_AS0008" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [14]:</pre></div><div id="cell-fig-act_3A4_IL_6_AS0013" class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plot_data <span class="op">&lt;-</span> </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  donor_2_data[time_incubation <span class="op">==</span> <span class="fl">0.5</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  donor_3_data[time_incubation <span class="op">==</span> <span class="fl">0.5</span> </span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>               <span class="op">&amp;</span> treatment <span class="op">%</span><span class="kw">in</span><span class="op">%</span> group_IL6</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>               ]</span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>act_3A4_IL_6_AS0008 <span class="op">&lt;-</span> </span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>act_3A4_IL_6_AS0013 <span class="op">&lt;-</span> </span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  ggplot(data <span class="op">=</span> plot_data) <span class="op">+</span></span>
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  geom_point(aes(x <span class="op">=</span> treatment,</span>
 <span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>                 y <span class="op">=</span> mean_relative_amount,</span>
@@ -1040,7 +969,7 @@ Figure&nbsp;14: Donor 3: Activity, IL-1B
 <span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">+</span></span>
 <span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>  theme_bw() <span class="op">+</span></span>
 <span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>  xlab(<span class="st">"Treatment"</span>) <span class="op">+</span> </span>
-<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>  ggtitle(<span class="st">"CYP3A4 activity after treatment with IL-6: Donor 2"</span>,</span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>  ggtitle(<span class="st">"CYP3A4 activity after treatment with IL-6: Donor 3"</span>,</span>
 <span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>          subtitle <span class="op">=</span> <span class="st">"Facetted on treatment duration in hours"</span></span>
 <span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>          ) <span class="op">+</span></span>
 <span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>  ylab(<span class="st">"Metabolite formation relative to vehicle control"</span>) <span class="op">+</span></span>
@@ -1051,36 +980,36 @@ Figure&nbsp;14: Donor 3: Activity, IL-1B
 <span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a>        )</span>
 <span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a>act_3A4_IL_6_AS0008</span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a>act_3A4_IL_6_AS0013</span>
 <span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(</span></span>
 <span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a><span class="co">#   plot = last_plot(),</span></span>
-<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a><span class="co">#   filename = "3A4_IL_6_AS0008.png",</span></span>
+<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a><span class="co">#   filename = "3A4_IL_6_AS0013.png",</span></span>
 <span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a><span class="co">#   device = "png",</span></span>
 <span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a><span class="co">#   path = here("notebooks/LCMS/output")</span></span>
 <span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a><span class="co">#   )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="fig-act_3a4_il_6_as0008" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-act_3a4_il_6_as0013" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-act_3a4_il_6_as0008-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/notebooks-LCMS-LCMS-fig-act_3a4_il_6_as0008-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="Figure&nbsp;15: Donor 2: Activity, IL-6"><img src="index_files/figure-html/notebooks-LCMS-LCMS-fig-act_3a4_il_6_as0008-output-1.png" width="672" height="480" class="figure-img"></a>
+<div aria-describedby="fig-act_3a4_il_6_as0013-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="index_files/figure-html/notebooks-LCMS-LCMS-fig-act_3a4_il_6_as0013-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Figure&nbsp;14: Donor 3: Activity, IL-6"><img src="index_files/figure-html/notebooks-LCMS-LCMS-fig-act_3a4_il_6_as0013-output-1.png" width="672" height="480" class="figure-img"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-act_3a4_il_6_as0008-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15: Donor 2: Activity, IL-6
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-act_3a4_il_6_as0013-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14: Donor 3: Activity, IL-6
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
 </div>
-<div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/LCMS/LCMS.qmd" data-notebook-title="LCMS" data-notebook-cellid="cell-fig-act_3A4_IL_1B_AS0008">
-<div class="cell-container"><div class="cell-decorator"><pre>In [16]:</pre></div><div id="cell-fig-act_3A4_IL_1B_AS0008" class="cell">
+<div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/LCMS/LCMS.qmd" data-notebook-title="LCMS" data-notebook-cellid="cell-fig-act_3A4_IL_1B_AS0013">
+<div class="cell-container"><div class="cell-decorator"><pre>In [15]:</pre></div><div id="cell-fig-act_3A4_IL_1B_AS0013" class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>plot_data <span class="op">&lt;-</span> </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  donor_2_data[time_incubation <span class="op">==</span> <span class="fl">0.5</span> <span class="op">&amp;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  donor_3_data[time_incubation <span class="op">==</span> <span class="fl">0.5</span> <span class="op">&amp;</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                 treatment <span class="op">%</span><span class="kw">in</span><span class="op">%</span> group_IL1B</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>               ]</span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>act_3A4_IL_1B_AS0008 <span class="op">&lt;-</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>act_3A4_IL_1B_AS0013 <span class="op">&lt;-</span></span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  ggplot(data <span class="op">=</span> plot_data) <span class="op">+</span></span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  geom_point(aes(x <span class="op">=</span> treatment,</span>
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>                 y <span class="op">=</span> mean_relative_amount,</span>
@@ -1106,7 +1035,7 @@ Figure&nbsp;15: Donor 2: Activity, IL-6
 <span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>  ) <span class="op">+</span></span>
 <span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>  theme_bw() <span class="op">+</span></span>
 <span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>  xlab(<span class="st">"Treatment"</span>) <span class="op">+</span> </span>
-<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>  ggtitle(<span class="st">"CYP3A4 activity after treatment with IL-1B: Donor 2"</span>,</span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>  ggtitle(<span class="st">"CYP3A4 activity after treatment with IL-1B: Donor 3"</span>,</span>
 <span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>          subtitle <span class="op">=</span> <span class="st">"Facetted on treatment duration in hours"</span>) <span class="op">+</span></span>
 <span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>  ylab(<span class="st">"Metabolite formation relative to vehicle control"</span>) <span class="op">+</span></span>
 <span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>  theme(axis.text.x <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">10</span>, angle <span class="op">=</span> <span class="dv">45</span>, hjust <span class="op">=</span> <span class="dv">1</span>),</span>
@@ -1115,22 +1044,154 @@ Figure&nbsp;15: Donor 2: Activity, IL-6
 <span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>        legend.position <span class="op">=</span> <span class="st">"none"</span></span>
 <span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a>act_3A4_IL_1B_AS0008</span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a>act_3A4_IL_1B_AS0013</span>
 <span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(</span></span>
 <span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a><span class="co">#   plot = last_plot(),</span></span>
-<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a><span class="co">#   filename = "3A4_IL_1B_AS0008.png",</span></span>
+<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a><span class="co">#   filename = "3A4_IL_1B_AS0013.png",</span></span>
 <span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a><span class="co">#   device = "png",</span></span>
 <span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a><span class="co">#   path = here("notebooks/LCMS/output")</span></span>
 <span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a><span class="co">#   )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
+<div id="fig-act_3a4_il_1b_as0013" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-act_3a4_il_1b_as0013-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="index_files/figure-html/notebooks-LCMS-LCMS-fig-act_3a4_il_1b_as0013-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="Figure&nbsp;15: Donor 3: Activity, IL-1B"><img src="index_files/figure-html/notebooks-LCMS-LCMS-fig-act_3a4_il_1b_as0013-output-1.png" width="672" height="480" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-act_3a4_il_1b_as0013-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15: Donor 3: Activity, IL-1B
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</div>
+<p>Below are individual donor 2 plots</p>
+<div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/LCMS/LCMS.qmd" data-notebook-title="LCMS" data-notebook-cellid="cell-fig-act_3A4_IL_6_AS0008">
+<div class="cell-container"><div class="cell-decorator"><pre>In [16]:</pre></div><div id="cell-fig-act_3A4_IL_6_AS0008" class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>plot_data <span class="op">&lt;-</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  donor_2_data[time_incubation <span class="op">==</span> <span class="fl">0.5</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>               <span class="op">&amp;</span> treatment <span class="op">%</span><span class="kw">in</span><span class="op">%</span> group_IL6</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>               ]</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>act_3A4_IL_6_AS0008 <span class="op">&lt;-</span> </span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  ggplot(data <span class="op">=</span> plot_data) <span class="op">+</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  geom_point(aes(x <span class="op">=</span> treatment,</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>                 y <span class="op">=</span> mean_relative_amount,</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>                 color <span class="op">=</span> factor(time_treatment)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>                 ),</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>             size <span class="op">=</span> <span class="dv">8</span>,</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>             alpha <span class="op">=</span> <span class="fl">0.7</span>,</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>             ) <span class="op">+</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>  scale_color_brewer(palette <span class="op">=</span> <span class="st">"Set2"</span>) <span class="op">+</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>  geom_point(aes(x <span class="op">=</span> treatment,</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>                 y <span class="op">=</span> relative_amount</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>                 ),</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>             size <span class="op">=</span> <span class="dv">4</span>,</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>             alpha <span class="op">=</span> <span class="fl">0.3</span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>             ) <span class="op">+</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>  geom_hline(yintercept <span class="op">=</span> <span class="dv">1</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>) <span class="op">+</span></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>  scale_y_continuous(</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="st">"OH-midazolam formation relative to vehicle control"</span>, </span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>    breaks <span class="op">=</span> seq(<span class="im">from</span> <span class="op">=</span> <span class="dv">0</span>, to <span class="op">=</span> <span class="dv">3</span>, by<span class="op">=</span> <span class="fl">0.25</span>)</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">+</span></span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>  facet_wrap(</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>    facets <span class="op">=</span> <span class="bu">vars</span>(factor(time_treatment))</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">+</span></span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>  theme_bw() <span class="op">+</span></span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a>  xlab(<span class="st">"Treatment"</span>) <span class="op">+</span> </span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>  ggtitle(<span class="st">"CYP3A4 activity after treatment with IL-6: Donor 2"</span>,</span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a>          subtitle <span class="op">=</span> <span class="st">"Facetted on treatment duration in hours"</span></span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a>          ) <span class="op">+</span></span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a>  ylab(<span class="st">"Metabolite formation relative to vehicle control"</span>) <span class="op">+</span></span>
+<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a>  theme(axis.text.x <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">10</span>, angle <span class="op">=</span> <span class="dv">45</span>, hjust <span class="op">=</span> <span class="dv">1</span>),</span>
+<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a>        axis.title.x <span class="op">=</span> element_text(hjust <span class="op">=</span> <span class="fl">0.5</span>, vjust <span class="op">=</span> <span class="dv">0</span>, face <span class="op">=</span> <span class="st">"bold"</span>),</span>
+<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a>        axis.title.y <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>),</span>
+<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a>        legend.position <span class="op">=</span> <span class="st">"none"</span></span>
+<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a>act_3A4_IL_6_AS0008</span>
+<span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(</span></span>
+<span id="cb21-47"><a href="#cb21-47" aria-hidden="true" tabindex="-1"></a><span class="co">#   plot = last_plot(),</span></span>
+<span id="cb21-48"><a href="#cb21-48" aria-hidden="true" tabindex="-1"></a><span class="co">#   filename = "3A4_IL_6_AS0008.png",</span></span>
+<span id="cb21-49"><a href="#cb21-49" aria-hidden="true" tabindex="-1"></a><span class="co">#   device = "png",</span></span>
+<span id="cb21-50"><a href="#cb21-50" aria-hidden="true" tabindex="-1"></a><span class="co">#   path = here("notebooks/LCMS/output")</span></span>
+<span id="cb21-51"><a href="#cb21-51" aria-hidden="true" tabindex="-1"></a><span class="co">#   )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-act_3a4_il_6_as0008" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-act_3a4_il_6_as0008-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="index_files/figure-html/notebooks-LCMS-LCMS-fig-act_3a4_il_6_as0008-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16" title="Figure&nbsp;16: Donor 2: Activity, IL-6"><img src="index_files/figure-html/notebooks-LCMS-LCMS-fig-act_3a4_il_6_as0008-output-1.png" width="672" height="480" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-act_3a4_il_6_as0008-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16: Donor 2: Activity, IL-6
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</div>
+<div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/LCMS/LCMS.qmd" data-notebook-title="LCMS" data-notebook-cellid="cell-fig-act_3A4_IL_1B_AS0008">
+<div class="cell-container"><div class="cell-decorator"><pre>In [17]:</pre></div><div id="cell-fig-act_3A4_IL_1B_AS0008" class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>plot_data <span class="op">&lt;-</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  donor_2_data[time_incubation <span class="op">==</span> <span class="fl">0.5</span> <span class="op">&amp;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                 treatment <span class="op">%</span><span class="kw">in</span><span class="op">%</span> group_IL1B</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>               ]</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>act_3A4_IL_1B_AS0008 <span class="op">&lt;-</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  ggplot(data <span class="op">=</span> plot_data) <span class="op">+</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  geom_point(aes(x <span class="op">=</span> treatment,</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>                 y <span class="op">=</span> mean_relative_amount,</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>                 color <span class="op">=</span> factor(time_treatment)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>                 ),</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>             size <span class="op">=</span> <span class="dv">8</span>,</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>             alpha <span class="op">=</span> <span class="fl">0.7</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>             ) <span class="op">+</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>  scale_color_brewer(palette <span class="op">=</span> <span class="st">"Set2"</span>) <span class="op">+</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>  geom_point(aes(x <span class="op">=</span> treatment,</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>                 y <span class="op">=</span> relative_amount</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>                 ),</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>             size <span class="op">=</span> <span class="dv">4</span>,</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>             alpha <span class="op">=</span> <span class="fl">0.3</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>             ) <span class="op">+</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>  geom_hline(yintercept <span class="op">=</span> <span class="dv">1</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>) <span class="op">+</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>  scale_y_continuous(</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="st">"OH-midazolam formation relative to vehicle control"</span>, </span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>    breaks <span class="op">=</span> seq(<span class="im">from</span> <span class="op">=</span> <span class="dv">0</span>, to <span class="op">=</span> <span class="dv">3</span>, by<span class="op">=</span> <span class="fl">0.25</span>)</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">+</span></span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>  facet_wrap(</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>    facets <span class="op">=</span> <span class="bu">vars</span>(factor(time_treatment))</span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>  ) <span class="op">+</span></span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>  theme_bw() <span class="op">+</span></span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>  xlab(<span class="st">"Treatment"</span>) <span class="op">+</span> </span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>  ggtitle(<span class="st">"CYP3A4 activity after treatment with IL-1B: Donor 2"</span>,</span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>          subtitle <span class="op">=</span> <span class="st">"Facetted on treatment duration in hours"</span>) <span class="op">+</span></span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a>  ylab(<span class="st">"Metabolite formation relative to vehicle control"</span>) <span class="op">+</span></span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>  theme(axis.text.x <span class="op">=</span> element_text(size <span class="op">=</span> <span class="dv">10</span>, angle <span class="op">=</span> <span class="dv">45</span>, hjust <span class="op">=</span> <span class="dv">1</span>),</span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a>        axis.title.x <span class="op">=</span> element_text(hjust <span class="op">=</span> <span class="fl">0.5</span>, vjust <span class="op">=</span> <span class="dv">0</span>, face <span class="op">=</span> <span class="st">"bold"</span>),</span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>        axis.title.y <span class="op">=</span> element_text(face <span class="op">=</span> <span class="st">"bold"</span>),</span>
+<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a>        legend.position <span class="op">=</span> <span class="st">"none"</span></span>
+<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a>act_3A4_IL_1B_AS0008</span>
+<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(</span></span>
+<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a><span class="co">#   plot = last_plot(),</span></span>
+<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a><span class="co">#   filename = "3A4_IL_1B_AS0008.png",</span></span>
+<span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a><span class="co">#   device = "png",</span></span>
+<span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a><span class="co">#   path = here("notebooks/LCMS/output")</span></span>
+<span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a><span class="co">#   )</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
 <div id="fig-act_3a4_il_1b_as0008" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-act_3a4_il_1b_as0008-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/notebooks-LCMS-LCMS-fig-act_3a4_il_1b_as0008-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16" title="Figure&nbsp;16: Donor 2: Activity, IL-1B"><img src="index_files/figure-html/notebooks-LCMS-LCMS-fig-act_3a4_il_1b_as0008-output-1.png" width="672" height="480" class="figure-img"></a>
+<a href="index_files/figure-html/notebooks-LCMS-LCMS-fig-act_3a4_il_1b_as0008-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17" title="Figure&nbsp;17: Donor 2: Activity, IL-1B"><img src="index_files/figure-html/notebooks-LCMS-LCMS-fig-act_3a4_il_1b_as0008-output-1.png" width="672" height="480" class="figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-act_3a4_il_1b_as0008-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;16: Donor 2: Activity, IL-1B
+Figure&nbsp;17: Donor 2: Activity, IL-1B
 </figcaption>
 </figure>
 </div>
@@ -1574,7 +1635,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"descPosition":"bottom","selector":".lightbox","openEffect":"zoom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
