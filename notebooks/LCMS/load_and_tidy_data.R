@@ -3,6 +3,7 @@ library(readxl)
 library(data.table)
 library(ggplot2)
 library(here)
+library(fs)
 
 # AS0013B -----------------------------------------------------------------
 ## Load raw data -----------------------------------------------------------
@@ -77,21 +78,26 @@ saveRDS(peak_status_data, here("notebooks/LCMS/data_processed/AS0013_peak_status
 ## Mean and relative activity ----------------------------------------------
 # Calculate the mean amount of replicates
 tidy_data[,
-  mean_amount := mean(amount, na.rm = TRUE),
-  by = .(treatment, time_treatment, time_incubation)
+          mean_amount := mean(amount, na.rm = TRUE),
+          by = .(treatment, time_treatment, time_incubation)
 ]
+
+# Add column with control/calibrator means:
+tidy_data[,
+          control_mean := mean(amount[treatment == "control"], na.rm=TRUE),
+          by = .(time_treatment, time_incubation)]
+
+
 
 # Calculate amounts relative to the control
+tidy_data[, relative_amount := amount / control_mean]
+
+
 tidy_data[,
-  relative_amount := amount / mean_amount[treatment == "control"],
-  by = .(time_treatment, time_incubation)
+          mean_relative_amount := mean(relative_amount, na.rm = TRUE),
+          by = .(treatment, time_treatment, time_incubation)
 ]
 
-# Calculate mean_amounts relative to control
-tidy_data[,
-  mean_relative_amount := mean_amount / mean_amount[treatment == "control"],
-  by = .(time_treatment, time_incubation)
-]
 
 
 ## Save the data -----------------------------------------------------------
@@ -214,5 +220,21 @@ rm(list = ls())
 
 # Combine data ------------------------------------------------------------
 
+files <- dir_ls(here("notebooks/LCMS/data_processed"),
+         regexp = "AS")
+files <- files[!grepl("_peak_status", files)] 
+
+
+
+
+data <- lapply(files, readRDS)
+
+final_data <- rbindlist(data, idcol = "file")
+final_data[, 
+           file := gsub(pattern = "notebooks/LCMS/data_processed/",
+                        replacement = "", file)
+           ]
+
+saveRDS(final_data, file = here("notebooks/LCMS/data_processed/final_data.rds"))
 
 
