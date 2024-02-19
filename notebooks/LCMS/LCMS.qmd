@@ -314,3 +314,229 @@ act_3A4_IL_1B_AS0008
 ```
 
 
+## Main plots
+
+load data
+
+```{r}
+data <- readRDS(here("notebooks/LCMS/data_processed/final_data.rds"))
+```
+
+```{r}
+# Create groups/look up tables for subsetting data
+group_IL6 <- c(#"control", 
+               #"medium", 
+               "0.01 ng/ml IL-6", 
+               "0.1 ng/ml IL-6",
+               "1 ng/ml IL-6", 
+               "10 ng/ml IL-6"
+               )
+
+group_IL1B <- c(#"control", 
+                #"medium", 
+                "0.01 ng/ml IL-1B", 
+                "0.1 ng/ml IL-1B",
+                "1 ng/ml IL-1B",
+                "10 ng/ml IL-1B"
+                )
+```
+
+
+### Facetted on time 
+IL-6
+```{r}
+#| label: fig-act-cyp3A4-IL6
+#| fig-cap: "24 hour timepoints removed"
+#| fig-width: 10
+#| fig-height: 5
+
+plot_data_IL6 <- data[time_incubation == 0.5 
+                      & treatment %in% group_IL6
+                      & time_treatment != 24]
+
+
+act_3A4_IL6 <- ggplot(data = plot_data_IL6) +
+  geom_point(
+    mapping = aes(x = treatment, y = mean_relative_amount, color = factor(time_treatment)),
+    size = 3.5
+  ) +
+  stat_summary(
+    fun = "mean",
+    geom = "point",
+    mapping = aes(x = treatment, y = mean_relative_amount),
+    size = 5
+  ) +
+  scale_color_brewer(palette = "Set2") +
+  facet_wrap(~ time_treatment, ) +
+  labs(title = "CYP3A4 activity relative to vehicle control after IL-6 treatment",
+       x = "Treatment",
+       y = "Expression relative to vehicle control",
+       color = "Treatment duration") + 
+  scale_y_continuous(limits = c(0, NA)) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1),
+        axis.title.y = element_text(vjust = 3, face = "bold"),
+        axis.title.x = element_text(vjust = -1.5, face ="bold"),
+        plot.title = element_text(face = "bold"),
+        legend.title = element_text(face = "bold"),
+        legend.position = "bottom"
+     ) +
+  geom_hline(yintercept = 1, linetype = "dashed")
+
+
+
+act_3A4_IL6
+```
+CONSIDER REMOVING THE OUTLIER IN 120 hour IL-6 and IL1B. See the individual plots above.
+
+
+
+IL-1B
+```{r}
+#| label: fig-act-cyp3A4-IL1B
+#| fig-cap: "24 hour timepoints removed"
+#| fig-width: 10
+#| fig-height: 5
+
+plot_data_I1B <- data[time_incubation == 0.5 
+                      & treatment %in% group_IL1B
+                      & time_treatment != 24]
+
+
+ggplot(data = plot_data_I1B) +
+  geom_point(
+    mapping = aes(x = treatment, y = mean_relative_amount, color = factor(time_treatment)),
+    size = 3.5
+  ) +
+  stat_summary(
+    fun = "mean",
+    geom = "point",
+    mapping = aes(x = treatment, y = mean_relative_amount),
+    size = 5
+  ) +
+  scale_color_brewer(palette = "Set2") +
+  facet_wrap(facets = vars(time_treatment)) +
+  labs(title = "CYP3A4 activity relative to vehicle control after IL-1B treatment",
+       x = "Treatment",
+       y = "Expression relative to vehicle control",
+       color = "Treatment duration"
+       ) + 
+  scale_y_continuous(limits = c(0, NA)) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1),
+        axis.title.y = element_text(vjust = 3, face = "bold"),
+        axis.title.x = element_text(vjust = -1.5, face ="bold"),
+        plot.title = element_text(face = "bold"),
+        legend.title = element_text(face = "bold"),
+        legend.position = "bottom"
+     ) +
+  geom_hline(yintercept = 1, linetype = "dashed")
+
+
+```
+
+### Timepoints combined
+IL-6
+```{r}
+#| label: fig-act-il6-combined
+#| fig-cap: "Overall mean CYP3A4 activity relative to vehicle control after IL-6 treatment. 24 hour timepoints removed"
+
+IL6_combined_data <- 
+  data[time_incubation == 0.5
+       & treatment %in% group_IL6
+       & time_treatment != 24]
+
+IL6_combined_data[,
+                  overall_mean := mean(mean_relative_amount),
+                  by = .(treatment)]
+
+
+ggplot(data = IL6_combined_data) +
+  geom_point(aes(x = treatment,
+                 y = relative_amount,
+                 color = factor(time_treatment)
+                 ),
+             size = 5,
+             alpha = 0.7
+             ) +
+  scale_color_brewer(palette = "Set2") +
+  geom_point(aes(x = treatment,
+                 y = overall_mean),
+             size = 10,
+             alpha = 0.1
+             ) +
+  labs(title = "CYP3A4 activity relative to vehicle control after IL-6 treatment",
+       x = "Treatment",
+       y = "Expression relative to vehicle control",
+       color = "Treatment duration"
+       ) +
+  geom_hline(yintercept = 1, linetype = "dashed") +
+  theme_bw() +
+  theme(#axis.text.x = element_text(angle = 30, hjust = 1),
+        axis.title.y = element_text(vjust = 3, face = "bold"),
+        axis.title.x = element_text(vjust = -1.5, face ="bold"),
+        plot.title = element_text(face = "bold"),
+        legend.title = element_text(face = "bold"),
+        legend.position = "bottom"
+     ) +
+  scale_y_continuous(limits = c(0, NA))
+```
+
+
+IL-1B
+```{r}
+#| label: fig-act-il1b-combined
+#| fig-cap: "Overall mean CYP3A4 activity relative to vehicle control after IL-1B treatment. 24 hour timepoints removed"
+
+IL1B_combined_data <- 
+  data[time_incubation == 0.5
+       & treatment %in% group_IL1B
+       & time_treatment != 24]
+
+IL1B_combined_data[,
+                  overall_mean := mean(mean_relative_amount),
+                  by = .(treatment)]
+
+
+ggplot(data = IL1B_combined_data) +
+  geom_point(aes(x = treatment,
+                 y = relative_amount,
+                 color = factor(time_treatment)
+                 ),
+             size = 5,
+             alpha = 0.7
+             ) +
+  scale_color_brewer(palette = "Set2") +
+  geom_point(aes(x = treatment,
+                 y = overall_mean),
+             size = 10,
+             alpha = 0.1
+             ) +
+  labs(title = "CYP3A4 activity relative to vehicle control after IL-1B treatment",
+       x = "Treatment",
+       y = "Expression relative to vehicle control",
+       color = "Treatment duration"
+       ) +
+  geom_hline(yintercept = 1, linetype = "dashed") +
+  theme_bw() +
+  theme(#axis.text.x = element_text(angle = 30, hjust = 1),
+        axis.title.y = element_text(vjust = 3, face = "bold"),
+        axis.title.x = element_text(vjust = -1.5, face ="bold"),
+        plot.title = element_text(face = "bold"),
+        legend.title = element_text(face = "bold"),
+        legend.position = "bottom"
+     ) +
+  scale_y_continuous(limits = c(0, NA))
+```
+
+
+
+## EC50
+
+
+
+
+
+
+
+
