@@ -1,0 +1,50 @@
+# Parse the concentration from the treatment column and convert to numeric values
+# The concentration unit (ng/ml) will be removed to allow for numeric conversion
+# 'control' treatment will be assigned a concentration of 0
+
+def parse_concentration(treatment):
+    if 'control' in treatment:
+        return 0
+    else:
+        # Extract the concentration and convert to float
+        return float(treatment.split(' ')[0])
+
+# Apply the function to create a new column for concentration
+ec50_data['concentration'] = ec50_data['treatment'].apply(parse_concentration)
+
+# Fit a 4-parameter logistic model
+# The model function
+def logistic4(x, a, b, c, d):
+    """4PL logistic equation."""
+    return ((a-d)/(1.0+((x/c)**b))) + d
+
+# Initial parameter guess, just to kick off the optimization
+guess = [0.5, 1, 1, 0.5]
+
+# Create the curve fit
+popt, pcov = curve_fit(logistic4, 
+                       ec50_data['concentration'], 
+                       ec50_data['mean_relative_amount'], 
+                       p0=guess, 
+                       maxfev=10000)
+
+# Extract the EC50 value
+ec50 = popt[2]
+
+# Plotting the data and the fit
+# Generate enough x values to make the curve smooth
+x_values = np.linspace(min(ec50_data['concentration']), max(ec50_data['concentration']), 100)
+y_values = logistic4(x_values, *popt)
+
+plt.figure(figsize=(10, 6))
+plt.scatter(ec50_data['concentration'], ec50_data['mean_relative_amount'], label='Data')
+plt.plot(x_values, y_values, label='Fit', color='red')
+plt.axvline(x=ec50, color='grey', linestyle='--', label=f'EC50 = {ec50:.2f}')
+plt.title('Dose-response Curve')
+plt.xlabel('Concentration (ng/ml)')
+plt.ylabel('Relative Activity')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+ec50
