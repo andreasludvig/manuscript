@@ -192,6 +192,7 @@ div.csl-indent {
   <li><a href="#mrna" id="toc-mrna" class="nav-link" data-scroll-target="#mrna">mRNA</a></li>
   <li><a href="#activity-2" id="toc-activity-2" class="nav-link" data-scroll-target="#activity-2">Activity</a></li>
   </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 <div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="index-preview.html"><i class="bi bi-journal-code"></i>Article Notebook</a></li><li><a href="notebooks/LCMS/LCMS-preview.html"><i class="bi bi-journal-code"></i>LCMS</a></li><li><a href="notebooks/qPCR/mRNA-preview.html"><i class="bi bi-journal-code"></i>mRNA</a></li><li><a href="notebooks/seq/seq-preview.html"><i class="bi bi-journal-code"></i>Seqeuncing</a></li><li><a href="notebooks/viability/Viability-preview.html"><i class="bi bi-journal-code"></i>Viability</a></li></ul></div></nav>
 </div>
@@ -356,7 +357,7 @@ Figure&nbsp;5: Overall mean CYP3A4 activity relative to vehicle control after IL
 <div class="quarto-embed-nb-cell">
 <div id="cell-fig-dose-response-act-il6" class="cell">
 <div class="cell-output cell-output-display">
-<div id="fig-dose-response-act-il6" class="quarto-figure quarto-figure-center quarto-float anchored" height="480" width="672">
+<div id="fig-dose-response-act-il6" class="quarto-figure quarto-figure-center quarto-float anchored" width="672" height="480">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-dose-response-act-il6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="index_files/figure-html/notebooks-LCMS-LCMS-fig-dose-response-act-il6-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: "><img src="index_files/figure-html/notebooks-LCMS-LCMS-fig-dose-response-act-il6-output-1.png" id="fig-dose-response-act-il6" width="672" height="480" class="figure-img"></a>
@@ -416,7 +417,7 @@ Figure&nbsp;8: Note that the concentration of ATP of donor one on day 5 was to h
 <div class="quarto-embed-nb-cell">
 <div id="cell-fig-donor-viabilities" class="cell" data-fig-width="10" data-fig-height="5">
 <div class="cell-output cell-output-display">
-<div id="fig-donor-viabilities" class="quarto-figure quarto-figure-center quarto-float anchored" height="480" width="960">
+<div id="fig-donor-viabilities" class="quarto-figure quarto-figure-center quarto-float anchored" width="960" height="480">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-donor-viabilities-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <a href="index_files/figure-html/notebooks-viability-Viability-fig-donor-viabilities-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure&nbsp;9: "><img src="index_files/figure-html/notebooks-viability-Viability-fig-donor-viabilities-output-2.png" id="fig-donor-viabilities" width="960" height="480" class="figure-img"></a>
@@ -582,12 +583,11 @@ Figure&nbsp;18: Donor 2: Activity, IL-1B
 </div>
 </div>
 </div>
-
 </section>
 </section>
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" role="list">
+<section id="references" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body" role="list">
 <div id="ref-dunvald" class="csl-entry" role="listitem">
 <div class="csl-left-margin">1. </div><div class="csl-right-inline">Dunvald ACD, Järvinen E, Mortensen C, Stage TB. Clinical and Molecular Perspectives on Inflammation-Mediated Regulation of Drug Metabolism and Transport. Clinical Pharmacology &amp; Therapeutics [Internet]. n/a(n/a). Available from: <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/cpt.2432">https://onlinelibrary.wiley.com/doi/abs/10.1002/cpt.2432</a></div>
 </div>
@@ -633,7 +633,11 @@ Figure&nbsp;18: Donor 2: Activity, IL-1B
 <div id="ref-savaryn2020" class="csl-entry" role="listitem">
 <div class="csl-left-margin">15. </div><div class="csl-right-inline">Savaryn JP, Liu N, Sun J, Ma J, Stresser DM, Jenkins G. Enrichment-free High-throughput Liquid Chromatography<span></span>Multiple-Reaction Monitoring Quantification of Cytochrome P450 Proteins in Plated Human Hepatocytes Direct from 96-Well Plates Enables Routine Protein Induction Measurements. Drug Metabolism and Disposition [Internet]. 2020 Jul 1;48(7):594–602. Available from: <a href="https://dmd.aspetjournals.org/content/48/7/594">https://dmd.aspetjournals.org/content/48/7/594</a></div>
 </div>
-</div></section></div></main>
+</div>
+</section>
+
+
+</main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -1023,7 +1027,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"loop":false,"closeEffect":"zoom","selector":".lightbox","descPosition":"bottom","openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","closeEffect":"zoom","loop":false,"descPosition":"bottom","selector":".lightbox"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

@@ -193,3 +193,12 @@ Below are individual donor 2 plots
 {{< embed notebooks/LCMS/LCMS.qmd#fig-act_3A4_IL_6_AS0008 >}}
 
 {{< embed notebooks/LCMS/LCMS.qmd#fig-act_3A4_IL_1B_AS0008 >}}
+
+
+
+## References {.unnumbered}
+
+:::{#refs}
+
+:::
+
