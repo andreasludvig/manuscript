@@ -12,7 +12,8 @@ format:
     toc: true
     comments:
       hypothesis: true
-  docx: default
+  docx: 
+    reference-doc: custom-reference-doc.docx
   #jats: default
   #pdf: default
   #typst: default
