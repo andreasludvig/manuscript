@@ -162,6 +162,20 @@ The treatments did not have a negative effect on the viability or morphology of 
 
 ### Activity
 
-![Donor 3](notebooks/LCMS/output/3A4_IL_6_AS0013.png)
+Below are the mean activity faceted on time (timepoints combined, 24 hour omitted)
+
+{{< embed notebooks/LCMS/LCMS.qmd#fig-act-cyp3A4-IL6 >}}
+
+{{< embed notebooks/LCMS/LCMS.qmd#fig-act-cyp3A4-IL1B >}}
+
+Below are individual donor 3 plots
 
 {{< embed notebooks/LCMS/LCMS.qmd#fig-act_3A4_IL_6_AS0013 >}}
+
+{{< embed notebooks/LCMS/LCMS.qmd#fig-act_3A4_IL_1B_AS0013 >}}
+
+Below are individual donor 2 plots
+
+{{< embed notebooks/LCMS/LCMS.qmd#fig-act_3A4_IL_6_AS0008 >}}
+
+{{< embed notebooks/LCMS/LCMS.qmd#fig-act_3A4_IL_1B_AS0008 >}}

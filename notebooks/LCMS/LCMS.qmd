@@ -53,6 +53,7 @@ group_IL1B <- c(#"control",
 IL-6 effect on CYP3A4
 ```{r}
 #| label: fig-act_3A4_IL_6_AS0013
+#| fig-cap: "Donor 3: Activity, IL-6"
 
 plot_data <- 
   donor_3_data[time_incubation == 0.5 
@@ -110,6 +111,7 @@ act_3A4_IL_6_AS0013
 IL-1B effect on CYP3A4
 ```{r}
 #| label: fig-act_3A4_IL_1B_AS0013
+#| fig-cap: "Donor 3: Activity, IL-1B"
 
 
 plot_data <- 
@@ -204,6 +206,7 @@ group_IL1B <- c(#"control",
 IL-6 effect on CYP3A4
 ```{r}
 #| label: fig-act_3A4_IL_6_AS0008
+#| fig-cap: "Donor 2: Activity, IL-6"
 
 plot_data <- 
   donor_2_data[time_incubation == 0.5 
@@ -261,6 +264,7 @@ act_3A4_IL_6_AS0008
 IL-1B effect on CYP3A4
 ```{r}
 #| label: fig-act_3A4_IL_1B_AS0008
+#| fig-cap: "Donor 2: Activity, IL-1B"
 
 
 plot_data <- 
@@ -346,7 +350,7 @@ group_IL1B <- c(#"control",
 IL-6
 ```{r}
 #| label: fig-act-cyp3A4-IL6
-#| fig-cap: "24 hour timepoints removed"
+#| fig-cap: "Mean CYP3A4 activity relative to vehicle control after IL-6 treatment. Facetted on time. 24 hour timepoints removed"
 #| fig-width: 10
 #| fig-height: 5
 
@@ -390,11 +394,10 @@ act_3A4_IL6
 CONSIDER REMOVING THE OUTLIER IN 120 hour IL-6 and IL1B. See the individual plots above.
 
 
-
 IL-1B
 ```{r}
 #| label: fig-act-cyp3A4-IL1B
-#| fig-cap: "24 hour timepoints removed"
+#| fig-cap: "Mean CYP3A4 activity relative to vehicle control after IL-1B treatment. Facetted on time. 24 hour timepoints removed"
 #| fig-width: 10
 #| fig-height: 5
 
@@ -403,36 +406,37 @@ plot_data_I1B <- data[time_incubation == 0.5
                       & time_treatment != 24]
 
 
-ggplot(data = plot_data_I1B) +
-  geom_point(
-    mapping = aes(x = treatment, y = mean_relative_amount, color = factor(time_treatment)),
-    size = 3.5
-  ) +
-  stat_summary(
-    fun = "mean",
-    geom = "point",
-    mapping = aes(x = treatment, y = mean_relative_amount),
-    size = 5
-  ) +
-  scale_color_brewer(palette = "Set2") +
-  facet_wrap(facets = vars(time_treatment)) +
-  labs(title = "CYP3A4 activity relative to vehicle control after IL-1B treatment",
-       x = "Treatment",
-       y = "Expression relative to vehicle control",
-       color = "Treatment duration"
-       ) + 
-  scale_y_continuous(limits = c(0, NA)) +
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 30, hjust = 1),
-        axis.title.y = element_text(vjust = 3, face = "bold"),
-        axis.title.x = element_text(vjust = -1.5, face ="bold"),
-        plot.title = element_text(face = "bold"),
-        legend.title = element_text(face = "bold"),
-        legend.position = "bottom"
-     ) +
-  geom_hline(yintercept = 1, linetype = "dashed")
+act_3A4_IL1B <- 
+  ggplot(data = plot_data_I1B) +
+    geom_point(
+      mapping = aes(x = treatment, y = mean_relative_amount, color = factor(time_treatment)),
+      size = 3.5
+    ) +
+    stat_summary(
+      fun = "mean",
+      geom = "point",
+      mapping = aes(x = treatment, y = mean_relative_amount),
+      size = 5
+    ) +
+    scale_color_brewer(palette = "Set2") +
+    facet_wrap(facets = vars(time_treatment)) +
+    labs(title = "CYP3A4 activity relative to vehicle control after IL-1B treatment",
+         x = "Treatment",
+         y = "Expression relative to vehicle control",
+         color = "Treatment duration"
+         ) + 
+    scale_y_continuous(limits = c(0, NA)) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 30, hjust = 1),
+          axis.title.y = element_text(vjust = 3, face = "bold"),
+          axis.title.x = element_text(vjust = -1.5, face ="bold"),
+          plot.title = element_text(face = "bold"),
+          legend.title = element_text(face = "bold"),
+          legend.position = "bottom"
+       ) +
+    geom_hline(yintercept = 1, linetype = "dashed")
 
-
+act_3A4_IL1B
 ```
 
 ### Timepoints combined
