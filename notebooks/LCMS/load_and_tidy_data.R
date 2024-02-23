@@ -224,17 +224,29 @@ files <- dir_ls(here("notebooks/LCMS/data_processed"),
          regexp = "AS")
 files <- files[!grepl("_peak_status", files)] 
 
-
-
-
 data <- lapply(files, readRDS)
 
 final_data <- rbindlist(data, idcol = "file")
+
 final_data[, 
            file := gsub(pattern = "notebooks/LCMS/data_processed/",
                         replacement = "", file)
            ]
 
+# Split treatment column to get a column with concentrations as numeric
+final_data[, c("concentration", "treatment_group") := tstrsplit(treatment, " ng/ml (IL-6|IL-1B|control)", fixed = FALSE, keep = 1L)]
+final_data[, concentration := as.numeric(concentration)]
+final_data[is.na(concentration), concentration := 0]
+
+# Fix the treatment group column
+final_data[, 
+           treatment_group := 
+             fcase(grepl("IL-6", treatment), "IL-6",
+                   grepl("IL-1B", treatment), "IL-1B",
+                   grepl("control", treatment), "control",
+                   grepl("medium", treatment), "medium")]
+
+# Save the final data.frame
 saveRDS(final_data, file = here("notebooks/LCMS/data_processed/final_data.rds"))
 
 

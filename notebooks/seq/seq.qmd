@@ -20,7 +20,7 @@ groundhog.library(pkgs, groundhog.day)
 ```
 
 
-## Pooled IL-6 
+## IL-6 pooled
 No sig up or down regulated genes when pooling IL-6 10 and 0.1 ng/ml
 ```{r}
 # Import raw data from the specified Excel file and sheet
@@ -79,7 +79,6 @@ plot_volcano_il6_combined
 ```
 
 ## IL-6 10 ng/ml
-
 ```{r}
 # Import raw data from the specified Excel file and sheet
 file <- here("notebooks/seq/data_raw/IL6_10_vs_vehicle.xlsx")
@@ -131,9 +130,9 @@ plot_volcano_il6_10 <-
 
 
 plot_volcano_il6_10
+
+# ggsave(filename = here("notebooks/seq/output/IL_6_10ng_volcano.png"))
 ```
-
-
 
 Trying to ad a box around the out of bounds data points. They have a smaller FDR than can be handled.
 ```{r}
@@ -168,4 +167,255 @@ Trying to ad a box around the out of bounds data points. They have a smaller FDR
 
 ```
 
+## IL-6 0.1 ng/ml
+```{r}
+# Import raw data from the specified Excel file and sheet
+file <- here("notebooks/seq/data_raw/IL6_0.1_vs_vehicle.xlsx")
+il6_0.1_data <- read_xlsx(file, sheet = 1)
+
+
+setDT(il6_0.1_data)
+il6_0.1_data[logCPM > 1 & FDR < 0.05 & logFC > 0] |> nrow()
+il6_0.1_data[logCPM > 1 & FDR < 0.05 & logFC < 0] |> nrow()
+```
+Ikke nogen der er signifikant opreguleret når logFC > 1
+Kun to signifikant nedregulerede ved logFC < -1
+
+```{r}
+#| label: fig-volcano-il6-0.1
+#| fig-cap: "Volcano plot. IL-6 0.1 ng/ml vs. vehicle control. Vertical lines for fold change thresholds. Note few significant above 2 fold change"
+#| warning: false
+
+# Create a new column for labeling differential gene expression
+il6_0.1_data$diffexpressed <- "NO" # Default value for genes not differentially expressed
+
+# Identify and label upregulated genes
+# Genes with log2FoldChange > 1, FDR < 0.05, and logCPM > 1 are labeled as "UP"
+il6_0.1_data$diffexpressed[il6_0.1_data$FDR < 0.05 & il6_0.1_data$logCPM > 1 & il6_0.1_data$logFC > 0] <- "UP"
+
+# Identify and label downregulated genes
+# Genes with log2FoldChange < -1, FDR < 0.05, and logCPM > 1 are labeled as "DOWN"
+il6_0.1_data$diffexpressed[il6_0.1_data$FDR < 0.05 & il6_0.1_data$logCPM > 1 & il6_0.1_data$logFC < 0] <- "DOWN"
+
+# Initialize 'delabel' column to NA for all rows to create the column
+il6_0.1_data$delabel <- NA
+
+# Now, you can safely assign gene names to the 'delabel' column for differentially expressed genes
+il6_0.1_data$delabel[il6_0.1_data$diffexpressed != "NO"] <- il6_0.1_data$genes[il6_0.1_data$diffexpressed != "NO"]
+
+# Create the volcano plot using ggplot2
+plot_volcano_il6_0.1 <- 
+  ggplot(data=il6_0.1_data, aes(x=logFC, y=-log10(FDR), col=diffexpressed, label=delabel)) + 
+    theme_minimal() + # Use a minimal theme for the plot
+    geom_text_repel(max.overlaps = 10) + # Use repelling text to avoid label overlap
+    scale_color_manual(values=c("blue", "black", "red")) + # Custom colors for differential expression
+    geom_vline(xintercept=c(-1, 1), col="dark grey", linetype = "dashed") + # Vertical lines for fold change thresholds
+    geom_hline(yintercept=-log10(0.05), col="dark grey", linetype = "dashed") + # Horizontal line for FDR threshold
+    geom_point() + # Add points for each gene
+    labs(color = 'Direction of gene expression', # Customize legend title
+         x = expression("log"[2]*"FC (IL6 vs Vehicle)"), # Customize x-axis label
+         y = expression("-log"[10]*"FDR")) + # Customize y-axis label
+    #scale_x_continuous(limits = c(-8, 10)) + # Customize x-axis breaks
+    #scale_y_continuous(limits = c(0, 320)) + # Customize y-axis breaks
+    theme(panel.grid.minor.y = element_blank(),# Remove minor grid lines
+          panel.grid.minor.x = element_blank(),# Remove minor grid lines
+          legend.position = "bottom" 
+          )+ 
+    ggtitle('Volcano Plot: IL6 0.1 ng/ml vs Vehicle') # Add a title to the plot
+
+
+plot_volcano_il6_0.1
+
+# ggsave(filename = here("notebooks/seq/output/IL_6_01ng_volcano.png"))
+
+```
+
+
+## IL-1B 10 ng/ml
+```{r}
+# Import raw data from the specified Excel file and sheet
+file <- here("notebooks/seq/data_raw/IL1B_10_vs_vehicle.xlsx")
+il1B_10_data <- read_xlsx(file, sheet = 1)
+
+
+setDT(il1B_10_data)
+il1B_10_data[logCPM > 1 & FDR < 0.05 & logFC > 1] 
+il1B_10_data[logCPM > 1 & FDR < 0.05 & logFC < 1] 
+```
+
+
+```{r}
+#| label: fig-volcano-il1B-10
+#| fig-cap: "Volcano plot. IL-1B 10 ng/ml vs. vehicle control. Vertical lines for fold change thresholds"
+#| warning: false
+
+# Create a new column for labeling differential gene expression
+il1B_10_data$diffexpressed <- "NO" # Default value for genes not differentially expressed
+
+# Identify and label upregulated genes
+# Genes with log2FoldChange > 1, FDR < 0.05, and logCPM > 1 are labeled as "UP"
+il1B_10_data$diffexpressed[il1B_10_data$FDR < 0.05 & il1B_10_data$logCPM > 1 & il1B_10_data$logFC > 0] <- "UP"
+
+# Identify and label downregulated genes
+# Genes with log2FoldChange < -1, FDR < 0.05, and logCPM > 1 are labeled as "DOWN"
+il1B_10_data$diffexpressed[il1B_10_data$FDR < 0.05 & il1B_10_data$logCPM > 1 & il1B_10_data$logFC < 0] <- "DOWN"
+
+# Initialize 'delabel' column to NA for all rows to create the column
+il1B_10_data$delabel <- NA
+
+# Now, you can safely assign gene names to the 'delabel' column for differentially expressed genes
+il1B_10_data$delabel[il1B_10_data$diffexpressed != "NO"] <- il1B_10_data$genes[il1B_10_data$diffexpressed != "NO"]
+
+# Create the volcano plot using ggplot2
+plot_volcano_il1B_0.1 <- 
+  ggplot(data=il1B_10_data, aes(x=logFC, y=-log10(FDR), col=diffexpressed, label=delabel)) + 
+    theme_minimal() + # Use a minimal theme for the plot
+    geom_text_repel(max.overlaps = 10) + # Use repelling text to avoid label overlap
+    scale_color_manual(values=c("blue", "black", "red")) + # Custom colors for differential expression
+    geom_vline(xintercept=c(-1, 1), col="dark grey", linetype = "dashed") + # Vertical lines for fold change thresholds
+    geom_hline(yintercept=-log10(0.05), col="dark grey", linetype = "dashed") + # Horizontal line for FDR threshold
+    geom_point() + # Add points for each gene
+    labs(color = 'Direction of gene expression', # Customize legend title
+         x = expression("log"[2]*"FC (IL6 vs Vehicle)"), # Customize x-axis label
+         y = expression("-log"[10]*"FDR")) + # Customize y-axis label
+    #scale_x_continuous(limits = c(-8, 10)) + # Customize x-axis breaks
+    #scale_y_continuous(limits = c(0, 320)) + # Customize y-axis breaks
+    theme(panel.grid.minor.y = element_blank(),# Remove minor grid lines
+          panel.grid.minor.x = element_blank(),# Remove minor grid lines
+          legend.position = "bottom" 
+          )+ 
+    ggtitle('Volcano Plot: IL1B 10 ng/ml vs Vehicle') # Add a title to the plot
+
+
+plot_volcano_il1B_0.1
+
+# ggsave(filename = here("notebooks/seq/output/IL_1B_10ng_volcano.png"))
+
+```
+
+
+## IL-1B 0.1 ng/ml
+```{r}
+# Import raw data from the specified Excel file and sheet
+file <- here("notebooks/seq/data_raw/IL1B_0.1_vs_vehicle.xlsx")
+il1B_0.1_data <- read_xlsx(file, sheet = 1)
+
+
+setDT(il1B_0.1_data)
+il1B_0.1_data[logCPM > 1 & FDR < 0.05 & logFC > 1] 
+il1B_0.1_data[logCPM > 1 & FDR < 0.05 & logFC < 1] 
+```
+
+
+```{r}
+#| label: fig-volcano-il1B-0.1
+#| fig-cap: "Volcano plot. IL-1B 0.1 ng/ml vs. vehicle control. Vertical lines for fold change thresholds"
+#| warning: false
+
+# Create a new column for labeling differential gene expression
+il1B_0.1_data$diffexpressed <- "NO" # Default value for genes not differentially expressed
+
+# Identify and label upregulated genes
+# Genes with log2FoldChange > 1, FDR < 0.05, and logCPM > 1 are labeled as "UP"
+il1B_0.1_data$diffexpressed[il1B_0.1_data$FDR < 0.05 & il1B_0.1_data$logCPM > 1 & il1B_0.1_data$logFC > 0] <- "UP"
+
+# Identify and label downregulated genes
+# Genes with log2FoldChange < -1, FDR < 0.05, and logCPM > 1 are labeled as "DOWN"
+il1B_0.1_data$diffexpressed[il1B_0.1_data$FDR < 0.05 & il1B_0.1_data$logCPM > 1 & il1B_0.1_data$logFC < 0] <- "DOWN"
+
+# Initialize 'delabel' column to NA for all rows to create the column
+il1B_0.1_data$delabel <- NA
+
+# Now, you can safely assign gene names to the 'delabel' column for differentially expressed genes
+il1B_0.1_data$delabel[il1B_0.1_data$diffexpressed != "NO"] <- il1B_0.1_data$genes[il1B_0.1_data$diffexpressed != "NO"]
+
+# Create the volcano plot using ggplot2
+plot_volcano_il1B_0.1 <- 
+  ggplot(data=il1B_0.1_data, aes(x=logFC, y=-log10(FDR), col=diffexpressed, label=delabel)) + 
+    theme_minimal() + # Use a minimal theme for the plot
+    geom_text_repel(max.overlaps = 7) + # Use repelling text to avoid label overlap
+    scale_color_manual(values=c("blue", "black", "red")) + # Custom colors for differential expression
+    geom_vline(xintercept=c(-1, 1), col="dark grey", linetype = "dashed") + # Vertical lines for fold change thresholds
+    geom_hline(yintercept=-log10(0.05), col="dark grey", linetype = "dashed") + # Horizontal line for FDR threshold
+    geom_point() + # Add points for each gene
+    labs(color = 'Direction of gene expression', # Customize legend title
+         x = expression("log"[2]*"FC (IL6 vs Vehicle)"), # Customize x-axis label
+         y = expression("-log"[10]*"FDR")) + # Customize y-axis label
+    #scale_x_continuous(limits = c(-8, 10)) + # Customize x-axis breaks
+    #scale_y_continuous(limits = c(0, 320)) + # Customize y-axis breaks
+    theme(panel.grid.minor.y = element_blank(),# Remove minor grid lines
+          panel.grid.minor.x = element_blank(),# Remove minor grid lines
+          legend.position = "bottom" 
+          )+ 
+    ggtitle('Volcano Plot: IL1B 0.1 ng/ml vs Vehicle') # Add a title to the plot
+
+
+plot_volcano_il1B_0.1
+
+# ggsave(filename = here("notebooks/seq/output/IL_1B_01ng_volcano.png"))
+```
+
+## Abemaciclib 5 µM 
+```{r}
+# Import raw data from the specified Excel file and sheet
+file <- here("notebooks/seq/data_raw/abe_vs_vehicle.xlsx")
+abe_data <- read_xlsx(file, sheet = 1)
+
+
+setDT(abe_data)
+abe_data[logCPM > 1 & FDR < 0.05 & logFC > 1] 
+abe_data[logCPM > 1 & FDR < 0.05 & logFC < 1] 
+```
+
+
+```{r}
+# #| label: fig-abemaceclib
+# #| fig-cap: "Volcano plot. Abemaciclib vs. vehicle control. Vertical lines for fold change thresholds"
+# #| warning: false
+# 
+# # Create a new column for labeling differential gene expression
+# abe_data$diffexpressed <- "NO" # Default value for genes not differentially expressed
+# 
+# # Identify and label upregulated genes
+# # Genes with log2FoldChange > 1, FDR < 0.05, and logCPM > 1 are labeled as "UP"
+# abe_data$diffexpressed[abe_data$FDR < 0.05 & abe_data$logCPM > 1 & abe_data$logFC > 0] <- "UP"
+# 
+# # Identify and label downregulated genes
+# # Genes with log2FoldChange < -1, FDR < 0.05, and logCPM > 1 are labeled as "DOWN"
+# abe_data$diffexpressed[abe_data$FDR < 0.05 & abe_data$logCPM > 1 & abe_data$logFC < 0] <- "DOWN"
+# 
+# # Initialize 'delabel' column to NA for all rows to create the column
+# abe_data$delabel <- NA
+# 
+# # Now, you can safely assign gene names to the 'delabel' column for differentially expressed genes
+# abe_data$delabel[abe_data$diffexpressed != "NO"] <- abe_data$genes[abe_data$diffexpressed != "NO"]
+# 
+# # Create the volcano plot using ggplot2
+# plot_volcano_abe <- 
+#   ggplot(data=abe_data, aes(x=logFC, y=-log10(FDR), col=diffexpressed, label=delabel)) + 
+#     theme_minimal() + # Use a minimal theme for the plot
+#     geom_text_repel() + # Use repelling text to avoid label overlap
+#     scale_color_manual(values=c("blue", "black", "red")) + # Custom colors for differential expression
+#     geom_vline(xintercept=c(-1, 1), col="dark grey", linetype = "dashed") + # Vertical lines for fold change thresholds
+#     geom_hline(yintercept=-log10(0.05), col="dark grey", linetype = "dashed") + # Horizontal line for FDR threshold
+#     geom_point() + # Add points for each gene
+#     labs(color = 'Direction of gene expression', # Customize legend title
+#          x = expression("log"[2]*"FC (IL6 vs Vehicle)"), # Customize x-axis label
+#          y = expression("-log"[10]*"FDR")) + # Customize y-axis label
+#     #scale_x_continuous(limits = c(-8, 10)) + # Customize x-axis breaks
+#     #scale_y_continuous(limits = c(0, 320)) + # Customize y-axis breaks
+#     theme(panel.grid.minor.y = element_blank(),# Remove minor grid lines
+#           panel.grid.minor.x = element_blank(),# Remove minor grid lines
+#           legend.position = "bottom",
+#           panel.background = element_rect(fill = "white")
+#           )+ 
+#   coord_flip() +
+#     ggtitle('Volcano Plot: 5 µM abemaciclib vs Vehicle') # Add a title to the plot 
+# 
+# 
+# 
+# plot_volcano_abe
+# 
+# ggsave(filename = here("notebooks/seq/output/abe_volcano.png"))
+```
 
