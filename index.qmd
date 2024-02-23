@@ -154,9 +154,12 @@ IC50:      9.447e-01
 
 ### Sequencing
 
-Volcano plot of IL-6 vs vehicle
-
+Volcano plot of 10 ng/ml IL-6 vs vehicle
 {{< embed notebooks/seq/seq.qmd#fig-volcano-il6-10 >}}
+
+Volcano plot of 0.1 ng/ml IL-6 vs vehicle
+{{< embed notebooks/seq/seq.qmd#fig-volcano-il6-0.1 >}}
+
 
 ## Supplementary
 
