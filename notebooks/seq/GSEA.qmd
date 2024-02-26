@@ -489,8 +489,11 @@ GO_plot_list[[6]]
 
 ```{r}
 #| label: fig-go-plots7
+#| fig-width: 12
+#| fig-height: 10
 
 GO_plot_list[[7]]
+
 ```
 
 ```{r}
