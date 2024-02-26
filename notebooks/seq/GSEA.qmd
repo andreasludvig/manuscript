@@ -4,9 +4,9 @@ editor_options:
   chunk_output_type: console
 ---
 
-## What is pathway/gene set enrichment analysis?
+## Pathway/gene set enrichment analysis
 
-After differential gene expression (DGE) analysis we have a long list of differentially expressed genes. Pathway enrichment analysis (PEA) is a common approach to smmarise this long list of genes and interpret hundreds of DGEs at once. So instead of having a list of 20 000 genes, we may get a list of 50 or 60 biological pathways.
+After differential gene expression (DGE) analysis we have a long list of differentially expressed genes. Pathway enrichment analysis (PEA) is a common approach to summarise this long list of genes and interpret hundreds of DGEs at once. So instead of having a list of 20 000 genes, we may get a list of 50 or 60 biological pathways.
 
 ![Summarise lists of DGEs to pathways](/images/GSE_analysis/pea.png)
 
@@ -18,11 +18,11 @@ For a pathway enrichment analysis we need 3 ingredients.
 
 1.  Our **gene list** of interest, fx. a list of DGEs which we want to summarise.
 2.  A list of **background genes** - fx all of the genes in the human genome/transcriptome.
-3.  A list of **gene sets**. Gene sets are basically groups of reltead genes. Of course, for the algorithm to know if your list has a lot of genes related to breast cancer, or apoptosis, or cellular respiration, you need to tell it which genes are actually involved in breast cancer, apoptosis, and cellular respiration.
+3.  A list of **gene sets**. Gene sets are basically groups of related genes. Of course, for the algorithm to know if your list has a lot of genes related to breast cancer, or apoptosis, or cellular respiration, you need to tell it which genes are actually involved in breast cancer, apoptosis, and cellular respiration.
 
 ![Components of a pathway enrichment analysis](/images/GSE_analysis/pea_2.png)
 
-PEA essentially compares our gene list to the backgroud list to check if there are certain pathways **overrepresented**
+PEA essentially compares our gene list to the background list to check if there are certain pathways **overrepresented**
 
 One example could be: Alcoholic liver disease is usually involved in inflammatory processes, which often involve pro-inflammatory cytokines like IL-6. So, is there an **association** between our genes differentially expressed in alcoholic liver disease vs healthy cells and IL-6 production.
 
@@ -52,7 +52,7 @@ Then, it gives you a **p-value** which tells you what is the probability that th
 
 ### Our analysis
 
-Mark Burton have done the GSE analysis using four different databases, outlined below.
+Mark Burton have done the GSE analysis using four different databases, outlined below. I think we just use the vehicle control as the list of background genes. Otherwise he must have used some subset of only genes/pathways related to PHHs.
 
 Gene Ontology (GO), KEGG, Reactome, and BioCarta are databases and tools that provide comprehensive information on gene and protein functions, interactions, and pathways. Each has its unique focus and strengths:
 
@@ -96,6 +96,8 @@ path_raw_data <- here("notebooks/seq/data_raw/GSEA/")
 
 #### KEGG
 
+Testing just KEGG. Getting the code to work for one file.
+
 ```{r}
 gsea_data <- read_excel(here(path_raw_data, "KEGG_IL1B_10_vs_vehicle.xlsx"))
 ```
@@ -104,7 +106,7 @@ gsea_data <- read_excel(here(path_raw_data, "KEGG_IL1B_10_vs_vehicle.xlsx"))
 plot_data <- 
   arrange(gsea_data, -abs(NES)) %>% 
     group_by(sign(NES)) %>%
-    slice(1:20) 
+    slice(1:20)
 ```
 
 ```{r}
@@ -127,4 +129,101 @@ ggplot(plot_data, aes(x = NES, y = fct_reorder(pathway, NES), color = padj, size
   scale_color_distiller(type = "seq", palette = "YlOrRd")
 ```
 
-#### GO
+### All KEGG plots
+
+Plot all using a function
+```{r}
+# Get file paths
+kegg_file_paths <- dir(here("notebooks/seq/data_raw/GSEA"), pattern = "KEGG", full.names = TRUE)
+
+# Subset to interleukines if wanted
+#kegg_file_paths[grep(pattern = "IL", kegg_file_paths)]
+```
+
+```{r}
+KEGG_plot_list <- map(kegg_file_paths, function(file_path) {
+  # Read the file
+  plot_data <- read_excel(file_path)
+  
+  # Process the data
+  processed_data <- plot_data %>%
+    arrange(desc(abs(NES))) %>%
+    group_by(sign_NES = sign(NES)) %>%
+    slice_head(n = 20) %>%
+    ungroup() %>%
+    filter(padj <= 0.05)
+  
+  # Generate the plot
+  ggplot(processed_data,
+         aes(x = NES,
+             y = fct_reorder(pathway, NES),
+             color = padj,
+             size = size
+             )
+         ) +
+    geom_point(stat = 'identity') +
+    labs(x = "NES",
+         y = "Pathway",
+         title = paste("Top 20 Pathways for","", basename(file_path))
+         ) +
+    theme_bw() +
+    scale_color_distiller(type = "seq", palette = "YlOrRd") #+
+    #theme(legend.position = "none") # Remove legend to focus on the data
+})
+
+```
+
+```{r}
+#| label: fig-kegg-plots
+
+KEGG_plot_list[[1]]
+```
+
+
+#### BIOCARTA
+
+**Plot all using a function**
+
+Get all file paths related to BIOCARTA
+```{r}
+# Get file paths
+biocarta_file_paths <- dir(here("notebooks/seq/data_raw/GSEA"), pattern = "BIOCARTA", full.names = TRUE)
+
+# Subset to interleukines if wanted
+# kegg_file_paths[grep(pattern = "IL", kegg_file_paths)]
+```
+
+```{r}
+BIOCARTA_plot_list <- map(biocarta_file_paths, function(file_path) {
+  # Read the file
+  plot_data <- read_excel(file_path)
+  
+  # Process the data
+  processed_data <- plot_data %>%
+    arrange(desc(abs(NES))) %>%
+    group_by(sign_NES = sign(NES)) %>%
+    slice_head(n = 20) %>%
+    ungroup() %>%
+    filter(padj <= 0.05)
+  
+  # Generate the plot
+  ggplot(processed_data, aes(x = NES, y = fct_reorder(pathway, NES), color = padj, size = size)) +
+    geom_point(stat = 'identity') +
+    labs(x = "NES", y = "Pathway", title = paste("Top 20 Pathways for","", basename(file_path))) +
+    theme_bw() +
+    scale_color_distiller(type = "seq", palette = "YlOrRd") #+
+    #theme(legend.position = "none") # Remove legend to focus on the data
+})
+
+print(BIOCARTA_plot_list)
+```
+
+### GO
+
+Split data into each of the GO databases:
+
+1.  **Biological Process (BP)**, which describes the biological objectives to which the gene or gene product contributes.
+2.  **Molecular Function (MF**), which describes the elemental activities of a gene product at the molecular level, such as binding or catalysis.
+3.  **Cellular Component (CC)**, which describes where in the cell the gene product is active.
+
+### REACTOME

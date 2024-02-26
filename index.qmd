@@ -155,11 +155,12 @@ IC50:      9.447e-01
 ### Sequencing
 
 Volcano plot of 10 ng/ml IL-6 vs vehicle
+
 {{< embed notebooks/seq/seq.qmd#fig-volcano-il6-10 >}}
 
 Volcano plot of 0.1 ng/ml IL-6 vs vehicle
-{{< embed notebooks/seq/seq.qmd#fig-volcano-il6-0.1 >}}
 
+{{< embed notebooks/seq/seq.qmd#fig-volcano-il6-0.1 >}}
 
 ## Supplementary
 
@@ -197,11 +198,11 @@ Below are individual donor 2 plots
 
 {{< embed notebooks/LCMS/LCMS.qmd#fig-act_3A4_IL_1B_AS0008 >}}
 
+### Sequencing
 
+{{< embed notebooks/seq/GSEA.qmd#fig-kegg-plots >}}
 
 ## References {.unnumbered}
 
-:::{#refs}
-
+::: {#refs}
 :::
-
