@@ -174,9 +174,51 @@ KEGG_plot_list <- map(kegg_file_paths, function(file_path) {
 ```
 
 ```{r}
-#| label: fig-kegg-plots
+#| label: fig-kegg-plots1
 
 KEGG_plot_list[[1]]
+```
+
+```{r}
+#| label: fig-kegg-plots2
+
+KEGG_plot_list[[2]]
+```
+
+```{r}
+#| label: fig-kegg-plots3
+
+KEGG_plot_list[[3]]
+```
+
+```{r}
+#| label: fig-kegg-plots4
+
+KEGG_plot_list[[4]]
+```
+
+```{r}
+#| label: fig-kegg-plots5
+
+KEGG_plot_list[[5]]
+```
+
+```{r}
+#| label: fig-kegg-plots6
+
+KEGG_plot_list[[6]]
+```
+
+```{r}
+#| label: fig-kegg-plots7
+
+KEGG_plot_list[[7]]
+```
+
+```{r}
+#| label: fig-kegg-plots8
+
+KEGG_plot_list[[8]]
 ```
 
 
