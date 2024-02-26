@@ -1,5 +1,7 @@
 ---
 title: "mRNA"
+editor_options: 
+  chunk_output_type: console
 ---
 
 All data manipulation was done before the start of this quarto manuscript project. Code is in: C:/Users/alosvendsen/OneDrive - Syddansk Universitet/PhD/R_code/manuscript_1 And copied to this project: /notebooks/qPCR/old_qPCR_import
@@ -89,6 +91,16 @@ Plot
 #| fig-cap: "Relative CYP3A4 mRNA expression. Small points are mean of three donors for 72 and 120 hours, and two donors for 24 hours (donors two and three)"
 
 
+# ggplot(data_3A4[condition == "IL-6"]) +
+#   geom_point(mapping = aes(x = treatment,
+#                            y = time_means,
+#                            fill = factor(time),
+#                            shape = factor(time)
+#                            ),
+#              shape = c("21", "22", "23")
+#              size = 7)
+#              
+
 plot_3A4 <- 
   ggplot(data = data_3A4,
          aes(x = treatment,
@@ -122,6 +134,11 @@ plot_3A4 <-
 
 plot_3A4
 ```
+
+
+
+
+
 
 ### CYP3A4 supplementary plot facetted on condition time and experiment
 ```{r}
@@ -225,7 +242,6 @@ tbl_CYP3A4_IL1B <-
                by = .(treatment)]
 
 tbl_CYP3A4_IL1B
-
 ```
 
 **Plot IL-1B CYP3A4**

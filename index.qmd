@@ -128,7 +128,7 @@ Within nine days from seeding the spheroid has formed and exhibit a tightly comp
 
 We used ATP content as a proxy for viability. Viability and morphology for
 
-![Morphology for donors one, two, and three. Photos from the same well for each donor throughout the experiment. Scale bars represent 200 µm.](images/morph.png){#fig-morph}
+![Morphology for donors one, two, and three. Photos from the same well for each donor throughout the experiment. Scale bars represent 200 µm.](images/morph.png){#fig-morph width="4500"}
 
 {{< embed notebooks/viability/Viability.qmd#fig-viability >}}
 
