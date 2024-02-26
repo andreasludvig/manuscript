@@ -200,7 +200,25 @@ Below are individual donor 2 plots
 
 ### Sequencing
 
+#### GSEA
+
+**KEGG**
+
 {{< embed notebooks/seq/GSEA.qmd#fig-kegg-plots1 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-kegg-plots2 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-kegg-plots3 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-kegg-plots4 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-kegg-plots5 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-kegg-plots6 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-kegg-plots7 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-kegg-plots8 >}}
 
 ## References {.unnumbered}
 

@@ -617,7 +617,7 @@ Figure&nbsp;5: Overall mean CYP3A4 activity relative to vehicle control after IL
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  theme_minimal() <span class="op">+</span></span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  scale_x_log10()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="fig-dose-response-act-il6" class="quarto-figure quarto-figure-center quarto-float anchored" height="480" width="672">
+<div id="fig-dose-response-act-il6" class="quarto-figure quarto-figure-center quarto-float anchored" width="672" height="480">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-dose-response-act-il6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
 <a href="index_files/figure-html/notebooks-LCMS-LCMS-fig-dose-response-act-il6-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: "><img src="index_files/figure-html/notebooks-LCMS-LCMS-fig-dose-response-act-il6-output-1.png" id="fig-dose-response-act-il6" width="672" height="480" class="figure-img"></a>
@@ -785,7 +785,7 @@ Figure&nbsp;9: Note that the concentration of ATP of donor one on day 5 was to h
 <pre><code>Warning: Removed 5 rows containing missing values (`geom_segment()`).Warning: Removed 6 rows containing missing values (`geom_segment()`).Warning: Removed 9 rows containing missing values (`geom_segment()`).</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<div id="fig-donor-viabilities" class="quarto-figure quarto-figure-center quarto-float anchored" height="480" width="960">
+<div id="fig-donor-viabilities" class="quarto-figure quarto-figure-center quarto-float anchored" width="960" height="480">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-donor-viabilities-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
 <a href="index_files/figure-html/notebooks-viability-Viability-fig-donor-viabilities-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure&nbsp;10: "><img src="index_files/figure-html/notebooks-viability-Viability-fig-donor-viabilities-output-2.png" id="fig-donor-viabilities" width="960" height="480" class="figure-img"></a>
@@ -1298,11 +1298,14 @@ Figure&nbsp;19: Donor 2: Activity, IL-1B
 </section>
 <section id="sequencing-1" class="level3">
 <h3 class="anchored" data-anchor-id="sequencing-1">Sequencing</h3>
+<section id="gsea" class="level4">
+<h4 class="anchored" data-anchor-id="gsea">GSEA</h4>
+<p><strong>KEGG</strong></p>
 <div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/seq/GSEA.qmd" data-notebook-title="Geneset enrichment analysis" data-notebook-cellid="cell-fig-kegg-plots1">
 <div class="cell-container"><div class="cell-decorator"><pre>In [20]:</pre></div><div id="cell-fig-kegg-plots1" class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="fig-kegg-plots1" class="quarto-figure quarto-figure-center quarto-float anchored" height="480" width="672">
+<div id="fig-kegg-plots1" class="quarto-figure quarto-figure-center quarto-float anchored" width="672" height="480">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kegg-plots1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
 <a href="index_files/figure-html/notebooks-seq-GSEA-fig-kegg-plots1-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-20" title="Figure&nbsp;20: "><img src="index_files/figure-html/notebooks-seq-GSEA-fig-kegg-plots1-output-1.png" id="fig-kegg-plots1" width="672" height="480" class="figure-img"></a>
@@ -1315,6 +1318,126 @@ Figure&nbsp;20
 </div>
 </div></div>
 </div>
+<div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/seq/GSEA.qmd" data-notebook-title="Geneset enrichment analysis" data-notebook-cellid="cell-fig-kegg-plots2">
+<div class="cell-container"><div class="cell-decorator"><pre>In [21]:</pre></div><div id="cell-fig-kegg-plots2" class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-kegg-plots2" class="quarto-figure quarto-figure-center quarto-float anchored" width="672" height="480">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kegg-plots2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="index_files/figure-html/notebooks-seq-GSEA-fig-kegg-plots2-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-21" title="Figure&nbsp;21: "><img src="index_files/figure-html/notebooks-seq-GSEA-fig-kegg-plots2-output-1.png" id="fig-kegg-plots2" width="672" height="480" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-kegg-plots2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;21
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</div>
+<div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/seq/GSEA.qmd" data-notebook-title="Geneset enrichment analysis" data-notebook-cellid="cell-fig-kegg-plots3">
+<div class="cell-container"><div class="cell-decorator"><pre>In [22]:</pre></div><div id="cell-fig-kegg-plots3" class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-kegg-plots3" class="quarto-figure quarto-figure-center quarto-float anchored" width="672" height="480">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kegg-plots3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="index_files/figure-html/notebooks-seq-GSEA-fig-kegg-plots3-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-22" title="Figure&nbsp;22: "><img src="index_files/figure-html/notebooks-seq-GSEA-fig-kegg-plots3-output-1.png" id="fig-kegg-plots3" width="672" height="480" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-kegg-plots3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;22
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</div>
+<div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/seq/GSEA.qmd" data-notebook-title="Geneset enrichment analysis" data-notebook-cellid="cell-fig-kegg-plots4">
+<div class="cell-container"><div class="cell-decorator"><pre>In [23]:</pre></div><div id="cell-fig-kegg-plots4" class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">4</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-kegg-plots4" class="quarto-figure quarto-figure-center quarto-float anchored" width="672" height="480">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kegg-plots4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="index_files/figure-html/notebooks-seq-GSEA-fig-kegg-plots4-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-23" title="Figure&nbsp;23: "><img src="index_files/figure-html/notebooks-seq-GSEA-fig-kegg-plots4-output-1.png" id="fig-kegg-plots4" width="672" height="480" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-kegg-plots4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;23
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</div>
+<div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/seq/GSEA.qmd" data-notebook-title="Geneset enrichment analysis" data-notebook-cellid="cell-fig-kegg-plots5">
+<div class="cell-container"><div class="cell-decorator"><pre>In [24]:</pre></div><div id="cell-fig-kegg-plots5" class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">5</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-kegg-plots5" class="quarto-figure quarto-figure-center quarto-float anchored" width="672" height="480">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kegg-plots5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="index_files/figure-html/notebooks-seq-GSEA-fig-kegg-plots5-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-24" title="Figure&nbsp;24: "><img src="index_files/figure-html/notebooks-seq-GSEA-fig-kegg-plots5-output-1.png" id="fig-kegg-plots5" width="672" height="480" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-kegg-plots5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;24
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</div>
+<div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/seq/GSEA.qmd" data-notebook-title="Geneset enrichment analysis" data-notebook-cellid="cell-fig-kegg-plots6">
+<div class="cell-container"><div class="cell-decorator"><pre>In [25]:</pre></div><div id="cell-fig-kegg-plots6" class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">6</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-kegg-plots6" class="quarto-figure quarto-figure-center quarto-float anchored" width="672" height="480">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kegg-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="index_files/figure-html/notebooks-seq-GSEA-fig-kegg-plots6-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-25" title="Figure&nbsp;25: "><img src="index_files/figure-html/notebooks-seq-GSEA-fig-kegg-plots6-output-1.png" id="fig-kegg-plots6" width="672" height="480" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-kegg-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;25
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</div>
+<div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/seq/GSEA.qmd" data-notebook-title="Geneset enrichment analysis" data-notebook-cellid="cell-fig-kegg-plots7">
+<div class="cell-container"><div class="cell-decorator"><pre>In [26]:</pre></div><div id="cell-fig-kegg-plots7" class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">7</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-kegg-plots7" class="quarto-figure quarto-figure-center quarto-float anchored" width="672" height="480">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kegg-plots7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="index_files/figure-html/notebooks-seq-GSEA-fig-kegg-plots7-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-26" title="Figure&nbsp;26: "><img src="index_files/figure-html/notebooks-seq-GSEA-fig-kegg-plots7-output-1.png" id="fig-kegg-plots7" width="672" height="480" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-kegg-plots7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;26
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</div>
+<div class="quarto-embed-nb-cell" data-notebook="/home/runner/work/manuscript/manuscript/notebooks/seq/GSEA.qmd" data-notebook-title="Geneset enrichment analysis" data-notebook-cellid="cell-fig-kegg-plots8">
+<div class="cell-container"><div class="cell-decorator"><pre>In [27]:</pre></div><div id="cell-fig-kegg-plots8" class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">8</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="fig-kegg-plots8" class="quarto-figure quarto-figure-center quarto-float anchored" width="672" height="480">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kegg-plots8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="index_files/figure-html/notebooks-seq-GSEA-fig-kegg-plots8-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-27" title="Figure&nbsp;27: "><img src="index_files/figure-html/notebooks-seq-GSEA-fig-kegg-plots8-output-1.png" id="fig-kegg-plots8" width="672" height="480" class="figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-kegg-plots8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;27
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</div>
+</section>
 </section>
 </section>
 <section id="references" class="level2 unnumbered">
@@ -1777,7 +1900,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","closeEffect":"zoom","openEffect":"zoom","loop":false});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"loop":false,"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
