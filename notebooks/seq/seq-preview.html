@@ -212,6 +212,7 @@
   <li><a href="#il-6-pooled" id="toc-il-6-pooled" class="nav-link" data-scroll-target="#il-6-pooled">IL-6 pooled</a></li>
   <li><a href="#il-6-10-ngml" id="toc-il-6-10-ngml" class="nav-link" data-scroll-target="#il-6-10-ngml">IL-6 10 ng/ml</a></li>
   <li><a href="#il-6-0.1-ngml" id="toc-il-6-0.1-ngml" class="nav-link" data-scroll-target="#il-6-0.1-ngml">IL-6 0.1 ng/ml</a></li>
+  <li><a href="#il-1b-pooled" id="toc-il-1b-pooled" class="nav-link" data-scroll-target="#il-1b-pooled">IL-1B pooled</a></li>
   <li><a href="#il-1b-10-ngml" id="toc-il-1b-10-ngml" class="nav-link" data-scroll-target="#il-1b-10-ngml">IL-1B 10 ng/ml</a></li>
   <li><a href="#il-1b-0.1-ngml" id="toc-il-1b-0.1-ngml" class="nav-link" data-scroll-target="#il-1b-0.1-ngml">IL-1B 0.1 ng/ml</a></li>
   <li><a href="#abemaciclib-5-µm" id="toc-abemaciclib-5-µm" class="nav-link" data-scroll-target="#abemaciclib-5-µm">Abemaciclib 5 µM</a></li>
@@ -265,15 +266,15 @@
 <div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import raw data from the specified Excel file and sheet</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"notebooks/seq/data_raw/IL6_vs_vehicle.xlsx"</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>il6_combined_data <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file, <span class="at">sheet =</span> <span class="dv">1</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>il6_pooled_data <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file, <span class="at">sheet =</span> <span class="dv">1</span>)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">setDT</span>(il6_combined_data)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>il6_combined_data[logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> logFC <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">setDT</span>(il6_pooled_data)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>il6_pooled_data[logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> logFC <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Empty data.table (0 rows and 8 cols): matrixrow,ENSEMBL_ID,genes,logFC,logCPM,LR...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>il6_combined_data[logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> logFC <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">&amp;</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>il6_pooled_data[logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> logFC <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">&amp;</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Empty data.table (0 rows and 8 cols): matrixrow,ENSEMBL_ID,genes,logFC,logCPM,LR...</code></pre>
 </div>
@@ -281,26 +282,26 @@
 <p>As seen in empty dataframes there are no sig up or downregulated. Also seen in the volcano plot</p>
 <div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new column for labeling differential gene expression</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>il6_combined_data<span class="sc">$</span>diffexpressed <span class="ot">&lt;-</span> <span class="st">"NO"</span> <span class="co"># Default value for genes not differentially expressed</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>il6_pooled_data<span class="sc">$</span>diffexpressed <span class="ot">&lt;-</span> <span class="st">"NO"</span> <span class="co"># Default value for genes not differentially expressed</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify and label upregulated genes</span></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Genes with log2FoldChange &gt; 1, FDR &lt; 0.05, and logCPM &gt; 1 are labeled as "UP"</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>il6_combined_data<span class="sc">$</span>diffexpressed[il6_combined_data<span class="sc">$</span>logFC <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> il6_combined_data<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> il6_combined_data<span class="sc">$</span>logCPM <span class="sc">&gt;</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"UP"</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>il6_pooled_data<span class="sc">$</span>diffexpressed[il6_pooled_data<span class="sc">$</span>logFC <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> il6_pooled_data<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> il6_pooled_data<span class="sc">$</span>logCPM <span class="sc">&gt;</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"UP"</span></span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify and label downregulated genes</span></span>
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Genes with log2FoldChange &lt; -1, FDR &lt; 0.05, and logCPM &gt; 1 are labeled as "DOWN"</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>il6_combined_data<span class="sc">$</span>diffexpressed[il6_combined_data<span class="sc">$</span>logFC <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">&amp;</span> il6_combined_data<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> il6_combined_data<span class="sc">$</span>logCPM <span class="sc">&gt;</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"DOWN"</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>il6_pooled_data<span class="sc">$</span>diffexpressed[il6_pooled_data<span class="sc">$</span>logFC <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">&amp;</span> il6_pooled_data<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> il6_pooled_data<span class="sc">$</span>logCPM <span class="sc">&gt;</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"DOWN"</span></span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize 'delabel' column to NA for all rows to create the column</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>il6_combined_data<span class="sc">$</span>delabel <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>il6_pooled_data<span class="sc">$</span>delabel <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Now, you can safely assign gene names to the 'delabel' column for differentially expressed genes</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>il6_combined_data<span class="sc">$</span>delabel[il6_combined_data<span class="sc">$</span>diffexpressed <span class="sc">!=</span> <span class="st">"NO"</span>] <span class="ot">&lt;-</span> il6_combined_data<span class="sc">$</span>genes[il6_combined_data<span class="sc">$</span>diffexpressed <span class="sc">!=</span> <span class="st">"NO"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>il6_pooled_data<span class="sc">$</span>delabel[il6_pooled_data<span class="sc">$</span>diffexpressed <span class="sc">!=</span> <span class="st">"NO"</span>] <span class="ot">&lt;-</span> il6_pooled_data<span class="sc">$</span>genes[il6_pooled_data<span class="sc">$</span>diffexpressed <span class="sc">!=</span> <span class="st">"NO"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the volcano plot using ggplot2</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>plot_volcano_il6_combined <span class="ot">&lt;-</span> </span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data=</span>il6_combined_data, <span class="fu">aes</span>(<span class="at">x=</span>logFC, <span class="at">y=</span><span class="sc">-</span><span class="fu">log10</span>(FDR), <span class="at">col=</span>diffexpressed, <span class="at">label=</span>delabel)) <span class="sc">+</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>plot_volcano_il6_pooled <span class="ot">&lt;-</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data=</span>il6_pooled_data, <span class="fu">aes</span>(<span class="at">x=</span>logFC, <span class="at">y=</span><span class="sc">-</span><span class="fu">log10</span>(FDR), <span class="at">col=</span>diffexpressed, <span class="at">label=</span>delabel)) <span class="sc">+</span> </span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="co"># Use a minimal theme for the plot</span></span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text_repel</span>(<span class="at">max.overlaps =</span> <span class="dv">7</span>) <span class="sc">+</span> <span class="co"># Use repelling text to avoid label overlap</span></span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"black"</span>, <span class="st">"red"</span>)) <span class="sc">+</span> <span class="co"># Custom colors for differential expression</span></span>
@@ -315,7 +316,7 @@
 <span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">panel.grid.minor.y =</span> <span class="fu">element_blank</span>(), <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>())<span class="sc">+</span> <span class="co"># Adjust minor grid lines</span></span>
 <span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">'Volcano Plot: IL6 vs Vehicle'</span>) <span class="co"># Add a title to the plot</span></span>
 <span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>plot_volcano_il6_combined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>plot_volcano_il6_pooled</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 12820 rows containing missing values (`geom_text_repel()`).</code></pre>
 </div>
@@ -515,92 +516,46 @@ Volcano plot. IL-6 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold c
 </div>
 </div></div>
 </section>
-<section id="il-1b-10-ngml" class="level2">
-<h2 class="anchored" data-anchor-id="il-1b-10-ngml">IL-1B 10 ng/ml</h2>
+<section id="il-1b-pooled" class="level2">
+<h2 class="anchored" data-anchor-id="il-1b-pooled">IL-1B pooled</h2>
 <div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import raw data from the specified Excel file and sheet</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"notebooks/seq/data_raw/IL1B_10_vs_vehicle.xlsx"</span>)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>il1B_10_data <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file, <span class="at">sheet =</span> <span class="dv">1</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"notebooks/seq/data_raw/IL1B_vs_vehicle.xlsx"</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>il1B_pooled_data <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file, <span class="at">sheet =</span> <span class="dv">1</span>)</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="fu">setDT</span>(il1B_10_data)</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>il1B_10_data[logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> logFC <span class="sc">&gt;</span> <span class="dv">1</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="fu">setDT</span>(il1B_pooled_data)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>il1B_pooled_data[logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> logFC <span class="sc">&gt;</span> <span class="dv">1</span>] <span class="sc">|&gt;</span> <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     matrixrow      ENSEMBL_ID     genes     logFC   logCPM          LR
-  1:       291 ENSG00000140279     DUOX2 12.790794 8.347320 2277.172140
-  2:       405 ENSG00000124875     CXCL6 12.195921 8.005646 2972.542293
-  3:       791 ENSG00000148346      LCN2 12.009350 7.261156 3806.703723
-  4:       126 ENSG00000162896      PIGR  9.852750 9.434131 3827.211391
-  5:       827 ENSG00000163739     CXCL1  9.440479 7.213577 3272.572792
- ---                                                                   
-644:     10883 ENSG00000043462      LCP2  1.018781 1.283900   14.435759
-645:     10994 ENSG00000171159      BBLN  1.189024 1.180269   14.319229
-646:     10917 ENSG00000224177 LINC00570  1.034877 1.252402   12.987504
-647:     10507 ENSG00000121933    TMIGD3  1.034207 1.588031   10.083778
-648:     11052 ENSG00000197837     H4C16  1.162020 1.135079    9.665593
-           PValue          FDR
-  1: 0.0000000000 0.0000000000
-  2: 0.0000000000 0.0000000000
-  3: 0.0000000000 0.0000000000
-  4: 0.0000000000 0.0000000000
-  5: 0.0000000000 0.0000000000
- ---                          
-644: 0.0001450223 0.0005096406
-645: 0.0001542808 0.0005393741
-646: 0.0003135768 0.0010296025
-647: 0.0014958030 0.0042256107
-648: 0.0018775119 0.0051664753</code></pre>
+<pre><code>[1] 241</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>il1B_10_data[logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> logFC <span class="sc">&lt;</span> <span class="dv">1</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>il1B_pooled_data[logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> logFC <span class="sc">&lt;</span> <span class="dv">1</span>] <span class="sc">|&gt;</span> <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      matrixrow      ENSEMBL_ID    genes      logFC   logCPM          LR
-   1:      3300 ENSG00000244067    GSTA2 -4.5212283 5.772409 1364.247458
-   2:      3059 ENSG00000124713     GNMT -3.6845745 5.874258 1058.149424
-   3:      2357 ENSG00000157514  TSC22D3 -2.9498531 6.228880  908.447863
-   4:      1096 ENSG00000243955    GSTA1 -3.3906387 7.158369  834.560884
-   5:       253 ENSG00000134824    FADS2 -2.6050374 8.772206  662.623216
-  ---                                                                   
-5107:      3981 ENSG00000143337 TOR1AIP1 -0.2131858 5.326484    5.045137
-5108:     10007 ENSG00000166352    IFTAP  0.4827360 1.975639    5.041409
-5109:      4620 ENSG00000173011   TADA2B -0.2281305 5.007984    5.041217
-5110:      6371 ENSG00000105426    PTPRS -0.2735157 4.249032    5.040398
-5111:      3905 ENSG00000108773    KAT2A -0.2416985 5.353290    5.035219
-             PValue           FDR
-   1: 1.234821e-298 1.057666e-295
-   2: 4.121252e-232 2.117994e-229
-   3: 1.430100e-199 5.741850e-197
-   4: 1.652338e-183 6.433101e-181
-   5: 4.016527e-146 1.069140e-143
-  ---                            
-5107:  2.469516e-02  4.970756e-02
-5108:  2.474836e-02  4.980457e-02
-5109:  2.475110e-02  4.980457e-02
-5110:  2.476280e-02  4.982031e-02
-5111:  2.483695e-02  4.996166e-02</code></pre>
+<pre><code>[1] 104</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="cell-fig-volcano-il1B-10" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="cell-fig-volcano-il1B-pooled" class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new column for labeling differential gene expression</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>il1B_10_data<span class="sc">$</span>diffexpressed <span class="ot">&lt;-</span> <span class="st">"NO"</span> <span class="co"># Default value for genes not differentially expressed</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>il1B_pooled_data<span class="sc">$</span>diffexpressed <span class="ot">&lt;-</span> <span class="st">"NO"</span> <span class="co"># Default value for genes not differentially expressed</span></span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify and label upregulated genes</span></span>
 <span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Genes with log2FoldChange &gt; 1, FDR &lt; 0.05, and logCPM &gt; 1 are labeled as "UP"</span></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>il1B_10_data<span class="sc">$</span>diffexpressed[il1B_10_data<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> il1B_10_data<span class="sc">$</span>logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> il1B_10_data<span class="sc">$</span>logFC <span class="sc">&gt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="st">"UP"</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>il1B_pooled_data<span class="sc">$</span>diffexpressed[il1B_pooled_data<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> il1B_pooled_data<span class="sc">$</span>logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> il1B_pooled_data<span class="sc">$</span>logFC <span class="sc">&gt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="st">"UP"</span></span>
 <span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify and label downregulated genes</span></span>
 <span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Genes with log2FoldChange &lt; -1, FDR &lt; 0.05, and logCPM &gt; 1 are labeled as "DOWN"</span></span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>il1B_10_data<span class="sc">$</span>diffexpressed[il1B_10_data<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> il1B_10_data<span class="sc">$</span>logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> il1B_10_data<span class="sc">$</span>logFC <span class="sc">&lt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="st">"DOWN"</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>il1B_pooled_data<span class="sc">$</span>diffexpressed[il1B_pooled_data<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> il1B_pooled_data<span class="sc">$</span>logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> il1B_pooled_data<span class="sc">$</span>logFC <span class="sc">&lt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="st">"DOWN"</span></span>
 <span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize 'delabel' column to NA for all rows to create the column</span></span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>il1B_10_data<span class="sc">$</span>delabel <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>il1B_pooled_data<span class="sc">$</span>delabel <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
 <span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Now, you can safely assign gene names to the 'delabel' column for differentially expressed genes</span></span>
-<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>il1B_10_data<span class="sc">$</span>delabel[il1B_10_data<span class="sc">$</span>diffexpressed <span class="sc">!=</span> <span class="st">"NO"</span>] <span class="ot">&lt;-</span> il1B_10_data<span class="sc">$</span>genes[il1B_10_data<span class="sc">$</span>diffexpressed <span class="sc">!=</span> <span class="st">"NO"</span>]</span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>il1B_pooled_data<span class="sc">$</span>delabel[il1B_pooled_data<span class="sc">$</span>diffexpressed <span class="sc">!=</span> <span class="st">"NO"</span>] <span class="ot">&lt;-</span> il1B_pooled_data<span class="sc">$</span>genes[il1B_pooled_data<span class="sc">$</span>diffexpressed <span class="sc">!=</span> <span class="st">"NO"</span>]</span>
 <span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the volcano plot using ggplot2</span></span>
-<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>plot_volcano_il1B_0<span class="fl">.1</span> <span class="ot">&lt;-</span> </span>
-<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data=</span>il1B_10_data, <span class="fu">aes</span>(<span class="at">x=</span>logFC, <span class="at">y=</span><span class="sc">-</span><span class="fu">log10</span>(FDR), <span class="at">col=</span>diffexpressed, <span class="at">label=</span>delabel)) <span class="sc">+</span> </span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>plot_volcano_il1B_pooled <span class="ot">&lt;-</span> </span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data=</span>il1B_pooled_data, <span class="fu">aes</span>(<span class="at">x=</span>logFC, <span class="at">y=</span><span class="sc">-</span><span class="fu">log10</span>(FDR), <span class="at">col=</span>diffexpressed, <span class="at">label=</span>delabel)) <span class="sc">+</span> </span>
 <span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="co"># Use a minimal theme for the plot</span></span>
 <span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text_repel</span>(<span class="at">max.overlaps =</span> <span class="dv">10</span>) <span class="sc">+</span> <span class="co"># Use repelling text to avoid label overlap</span></span>
 <span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"black"</span>, <span class="st">"red"</span>)) <span class="sc">+</span> <span class="co"># Custom colors for differential expression</span></span>
@@ -619,118 +574,72 @@ Volcano plot. IL-6 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold c
 <span id="cb36-37"><a href="#cb36-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">'Volcano Plot: IL1B 10 ng/ml vs Vehicle'</span>) <span class="co"># Add a title to the plot</span></span>
 <span id="cb36-38"><a href="#cb36-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-39"><a href="#cb36-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-40"><a href="#cb36-40" aria-hidden="true" tabindex="-1"></a>plot_volcano_il1B_0<span class="fl">.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-40"><a href="#cb36-40" aria-hidden="true" tabindex="-1"></a>plot_volcano_il1B_pooled</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 7089 rows containing missing values (`geom_text_repel()`).</code></pre>
+<pre><code>Warning: Removed 12747 rows containing missing values (`geom_text_repel()`).</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: ggrepel: 5707 unlabeled data points (too many overlaps). Consider
+<pre><code>Warning: ggrepel: 318 unlabeled data points (too many overlaps). Consider
 increasing max.overlaps</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(filename = here("notebooks/seq/output/IL_1B_10ng_volcano.png"))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-volcano-il1B-10" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-volcano-il1B-pooled" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-volcano-il1B-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-volcano-il1B-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Volcano plot. IL-1B 10 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold change thresholds"><img src="seq_files/figure-html/fig-volcano-il1B-10-1.png" class="img-fluid figure-img" width="672"></a>
+<div aria-describedby="fig-volcano-il1B-pooled-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="seq_files/figure-html/fig-volcano-il1B-pooled-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Volcano plot. IL-1B pooled vs.&nbsp;vehicle control. Vertical lines for fold change thresholds"><img src="seq_files/figure-html/fig-volcano-il1B-pooled-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-volcano-il1B-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Volcano plot. IL-1B 10 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold change thresholds
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-volcano-il1B-pooled-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Volcano plot. IL-1B pooled vs.&nbsp;vehicle control. Vertical lines for fold change thresholds
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
 </section>
-<section id="il-1b-0.1-ngml" class="level2">
-<h2 class="anchored" data-anchor-id="il-1b-0.1-ngml">IL-1B 0.1 ng/ml</h2>
+<section id="il-1b-10-ngml" class="level2">
+<h2 class="anchored" data-anchor-id="il-1b-10-ngml">IL-1B 10 ng/ml</h2>
 <div class="cell-container"><div class="cell-decorator"><pre>In [12]:</pre></div><div class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import raw data from the specified Excel file and sheet</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"notebooks/seq/data_raw/IL1B_0.1_vs_vehicle.xlsx"</span>)</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>il1B_0<span class="fl">.1</span>_data <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file, <span class="at">sheet =</span> <span class="dv">1</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"notebooks/seq/data_raw/IL1B_10_vs_vehicle.xlsx"</span>)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>il1B_10_data <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file, <span class="at">sheet =</span> <span class="dv">1</span>)</span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="fu">setDT</span>(il1B_0<span class="fl">.1</span>_data)</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>il1B_0<span class="fl">.1</span>_data[logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> logFC <span class="sc">&gt;</span> <span class="dv">1</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="fu">setDT</span>(il1B_10_data)</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>il1B_10_data[logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> logFC <span class="sc">&gt;</span> <span class="dv">1</span>] <span class="sc">|&gt;</span> <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     matrixrow     ENSEMBLE_ID   genes    logFC   logCPM          LR
-  1:      4397 ENSG00000162896    PIGR 5.504563 5.089152 1242.099261
-  2:      1306 ENSG00000144802  NFKBIZ 2.232729 6.815997  627.186283
-  3:       212 ENSG00000173432    SAA1 2.312561 8.923274  563.105943
-  4:      7108 ENSG00000093134   VNN3P 3.896135 3.862222  562.254109
-  5:       192 ENSG00000120738    EGR1 2.014840 9.029642  520.047519
- ---                                                                
-102:     11008 ENSG00000163121  NEURL3 1.082494 1.174285   12.704847
-103:     10703 ENSG00000118596 SLC16A7 1.092780 1.410331   12.522964
-104:     11102 ENSG00000188033  ZNF490 1.048070 1.112634   12.089886
-105:     10323 ENSG00000102109  PCSK1N 1.035666 1.719186   11.035213
-106:     10489 ENSG00000137449   CPEB2 1.371301 1.599855    9.592714
-            PValue           FDR
-  1: 4.325989e-272 5.490978e-268
-  2: 2.045414e-138 1.298122e-134
-  3: 1.774089e-124 7.506169e-121
-  4: 2.718167e-124 8.625424e-121
-  5: 4.132410e-115 1.049054e-111
- ---                            
-102:  3.647091e-04  8.478484e-03
-103:  4.019806e-04  9.146021e-03
-104:  5.069607e-04  1.101858e-02
-105:  8.939739e-04  1.716160e-02
-106:  1.953509e-03  3.279880e-02</code></pre>
+<pre><code>[1] 648</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>il1B_0<span class="fl">.1</span>_data[logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> logFC <span class="sc">&lt;</span> <span class="dv">1</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>il1B_10_data[logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> logFC <span class="sc">&lt;</span> <span class="dv">1</span>] <span class="sc">|&gt;</span> <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     matrixrow     ENSEMBLE_ID     genes      logFC   logCPM         LR
-  1:      1562 ENSG00000157514   TSC22D3 -1.2000653 6.563362 202.478982
-  2:      2865 ENSG00000119771    KLHL29 -1.0615745 5.774822 151.315095
-  3:       754 ENSG00000163660     CCNL1  0.9824179 7.469282 136.558149
-  4:      1961 ENSG00000244067     GSTA2 -0.9740021 6.298584 136.257727
-  5:      3802 ENSG00000162366  PDZK1IP1  0.9960760 5.340007 111.201074
- ---                                                                   
-680:      6476 ENSG00000105810      CDK6  0.3656351 4.141011   8.701521
-681:      4567 ENSG00000204262    COL5A2 -0.3048764 4.972220   8.683207
-682:       998 ENSG00000120889 TNFRSF10B  0.2367904 7.103988   8.633015
-683:      2562 ENSG00000165650     PDZD8  0.2484689 5.952045   8.630485
-684:      5492 ENSG00000129657   SEC14L1 -0.3435409 4.555601   8.621830
-           PValue          FDR
-  1: 6.010061e-46 2.934065e-43
-  2: 8.943743e-35 3.068187e-32
-  3: 1.506371e-31 4.663503e-29
-  4: 1.752424e-31 5.296077e-29
-  5: 5.346355e-26 1.357226e-23
- ---                          
-680: 3.179446e-03 4.775942e-02
-681: 3.211554e-03 4.818470e-02
-682: 3.301248e-03 4.947195e-02
-683: 3.305836e-03 4.948228e-02
-684: 3.321579e-03 4.965936e-02</code></pre>
+<pre><code>[1] 5111</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [13]:</pre></div><div id="cell-fig-volcano-il1B-0.1" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [13]:</pre></div><div id="cell-fig-volcano-il1B-10" class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new column for labeling differential gene expression</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>diffexpressed <span class="ot">&lt;-</span> <span class="st">"NO"</span> <span class="co"># Default value for genes not differentially expressed</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>il1B_10_data<span class="sc">$</span>diffexpressed <span class="ot">&lt;-</span> <span class="st">"NO"</span> <span class="co"># Default value for genes not differentially expressed</span></span>
 <span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify and label upregulated genes</span></span>
 <span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Genes with log2FoldChange &gt; 1, FDR &lt; 0.05, and logCPM &gt; 1 are labeled as "UP"</span></span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>diffexpressed[il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>logFC <span class="sc">&gt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="st">"UP"</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>il1B_10_data<span class="sc">$</span>diffexpressed[il1B_10_data<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> il1B_10_data<span class="sc">$</span>logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> il1B_10_data<span class="sc">$</span>logFC <span class="sc">&gt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="st">"UP"</span></span>
 <span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify and label downregulated genes</span></span>
 <span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Genes with log2FoldChange &lt; -1, FDR &lt; 0.05, and logCPM &gt; 1 are labeled as "DOWN"</span></span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>diffexpressed[il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>logFC <span class="sc">&lt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="st">"DOWN"</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>il1B_10_data<span class="sc">$</span>diffexpressed[il1B_10_data<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> il1B_10_data<span class="sc">$</span>logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> il1B_10_data<span class="sc">$</span>logFC <span class="sc">&lt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="st">"DOWN"</span></span>
 <span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize 'delabel' column to NA for all rows to create the column</span></span>
-<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>delabel <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>il1B_10_data<span class="sc">$</span>delabel <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
 <span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Now, you can safely assign gene names to the 'delabel' column for differentially expressed genes</span></span>
-<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>delabel[il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>diffexpressed <span class="sc">!=</span> <span class="st">"NO"</span>] <span class="ot">&lt;-</span> il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>genes[il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>diffexpressed <span class="sc">!=</span> <span class="st">"NO"</span>]</span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>il1B_10_data<span class="sc">$</span>delabel[il1B_10_data<span class="sc">$</span>diffexpressed <span class="sc">!=</span> <span class="st">"NO"</span>] <span class="ot">&lt;-</span> il1B_10_data<span class="sc">$</span>genes[il1B_10_data<span class="sc">$</span>diffexpressed <span class="sc">!=</span> <span class="st">"NO"</span>]</span>
 <span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the volcano plot using ggplot2</span></span>
 <span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>plot_volcano_il1B_0<span class="fl">.1</span> <span class="ot">&lt;-</span> </span>
-<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data=</span>il1B_0<span class="fl">.1</span>_data, <span class="fu">aes</span>(<span class="at">x=</span>logFC, <span class="at">y=</span><span class="sc">-</span><span class="fu">log10</span>(FDR), <span class="at">col=</span>diffexpressed, <span class="at">label=</span>delabel)) <span class="sc">+</span> </span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data=</span>il1B_10_data, <span class="fu">aes</span>(<span class="at">x=</span>logFC, <span class="at">y=</span><span class="sc">-</span><span class="fu">log10</span>(FDR), <span class="at">col=</span>diffexpressed, <span class="at">label=</span>delabel)) <span class="sc">+</span> </span>
 <span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="co"># Use a minimal theme for the plot</span></span>
-<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text_repel</span>(<span class="at">max.overlaps =</span> <span class="dv">7</span>) <span class="sc">+</span> <span class="co"># Use repelling text to avoid label overlap</span></span>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text_repel</span>(<span class="at">max.overlaps =</span> <span class="dv">10</span>) <span class="sc">+</span> <span class="co"># Use repelling text to avoid label overlap</span></span>
 <span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"black"</span>, <span class="st">"red"</span>)) <span class="sc">+</span> <span class="co"># Custom colors for differential expression</span></span>
 <span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">col=</span><span class="st">"dark grey"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> <span class="co"># Vertical lines for fold change thresholds</span></span>
 <span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="sc">-</span><span class="fu">log10</span>(<span class="fl">0.05</span>), <span class="at">col=</span><span class="st">"dark grey"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> <span class="co"># Horizontal line for FDR threshold</span></span>
@@ -744,10 +653,92 @@ Volcano plot. IL-1B 10 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold c
 <span id="cb44-34"><a href="#cb44-34" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),<span class="co"># Remove minor grid lines</span></span>
 <span id="cb44-35"><a href="#cb44-35" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.position =</span> <span class="st">"bottom"</span> </span>
 <span id="cb44-36"><a href="#cb44-36" aria-hidden="true" tabindex="-1"></a>          )<span class="sc">+</span> </span>
-<span id="cb44-37"><a href="#cb44-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">'Volcano Plot: IL1B 0.1 ng/ml vs Vehicle'</span>) <span class="co"># Add a title to the plot</span></span>
+<span id="cb44-37"><a href="#cb44-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">'Volcano Plot: IL1B 10 ng/ml vs Vehicle'</span>) <span class="co"># Add a title to the plot</span></span>
 <span id="cb44-38"><a href="#cb44-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-39"><a href="#cb44-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-40"><a href="#cb44-40" aria-hidden="true" tabindex="-1"></a>plot_volcano_il1B_0<span class="fl">.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 7089 rows containing missing values (`geom_text_repel()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ggrepel: 5707 unlabeled data points (too many overlaps). Consider
+increasing max.overlaps</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(filename = here("notebooks/seq/output/IL_1B_10ng_volcano.png"))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-volcano-il1B-10" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-volcano-il1B-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="seq_files/figure-html/fig-volcano-il1B-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Volcano plot. IL-1B 10 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold change thresholds"><img src="seq_files/figure-html/fig-volcano-il1B-10-1.png" class="img-fluid figure-img" width="672"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-volcano-il1B-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Volcano plot. IL-1B 10 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold change thresholds
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="il-1b-0.1-ngml" class="level2">
+<h2 class="anchored" data-anchor-id="il-1b-0.1-ngml">IL-1B 0.1 ng/ml</h2>
+<div class="cell-container"><div class="cell-decorator"><pre>In [14]:</pre></div><div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import raw data from the specified Excel file and sheet</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"notebooks/seq/data_raw/IL1B_0.1_vs_vehicle.xlsx"</span>)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>il1B_0<span class="fl">.1</span>_data <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file, <span class="at">sheet =</span> <span class="dv">1</span>)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="fu">setDT</span>(il1B_0<span class="fl">.1</span>_data)</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>il1B_0<span class="fl">.1</span>_data[logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> logFC <span class="sc">&gt;</span> <span class="dv">1</span>] <span class="sc">|&gt;</span> <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 106</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>il1B_0<span class="fl">.1</span>_data[logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> logFC <span class="sc">&lt;</span> <span class="dv">1</span>] <span class="sc">|&gt;</span> <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 684</code></pre>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [15]:</pre></div><div id="cell-fig-volcano-il1B-0.1" class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new column for labeling differential gene expression</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>diffexpressed <span class="ot">&lt;-</span> <span class="st">"NO"</span> <span class="co"># Default value for genes not differentially expressed</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify and label upregulated genes</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Genes with log2FoldChange &gt; 1, FDR &lt; 0.05, and logCPM &gt; 1 are labeled as "UP"</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>diffexpressed[il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>logFC <span class="sc">&gt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="st">"UP"</span></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify and label downregulated genes</span></span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Genes with log2FoldChange &lt; -1, FDR &lt; 0.05, and logCPM &gt; 1 are labeled as "DOWN"</span></span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>diffexpressed[il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>logFC <span class="sc">&lt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="st">"DOWN"</span></span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize 'delabel' column to NA for all rows to create the column</span></span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>delabel <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Now, you can safely assign gene names to the 'delabel' column for differentially expressed genes</span></span>
+<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a>il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>delabel[il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>diffexpressed <span class="sc">!=</span> <span class="st">"NO"</span>] <span class="ot">&lt;-</span> il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>genes[il1B_0<span class="fl">.1</span>_data<span class="sc">$</span>diffexpressed <span class="sc">!=</span> <span class="st">"NO"</span>]</span>
+<span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the volcano plot using ggplot2</span></span>
+<span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a>plot_volcano_il1B_0<span class="fl">.1</span> <span class="ot">&lt;-</span> </span>
+<span id="cb52-21"><a href="#cb52-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data=</span>il1B_0<span class="fl">.1</span>_data, <span class="fu">aes</span>(<span class="at">x=</span>logFC, <span class="at">y=</span><span class="sc">-</span><span class="fu">log10</span>(FDR), <span class="at">col=</span>diffexpressed, <span class="at">label=</span>delabel)) <span class="sc">+</span> </span>
+<span id="cb52-22"><a href="#cb52-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="co"># Use a minimal theme for the plot</span></span>
+<span id="cb52-23"><a href="#cb52-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text_repel</span>(<span class="at">max.overlaps =</span> <span class="dv">7</span>) <span class="sc">+</span> <span class="co"># Use repelling text to avoid label overlap</span></span>
+<span id="cb52-24"><a href="#cb52-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"black"</span>, <span class="st">"red"</span>)) <span class="sc">+</span> <span class="co"># Custom colors for differential expression</span></span>
+<span id="cb52-25"><a href="#cb52-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">col=</span><span class="st">"dark grey"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> <span class="co"># Vertical lines for fold change thresholds</span></span>
+<span id="cb52-26"><a href="#cb52-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="sc">-</span><span class="fu">log10</span>(<span class="fl">0.05</span>), <span class="at">col=</span><span class="st">"dark grey"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> <span class="co"># Horizontal line for FDR threshold</span></span>
+<span id="cb52-27"><a href="#cb52-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="co"># Add points for each gene</span></span>
+<span id="cb52-28"><a href="#cb52-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">'Direction of gene expression'</span>, <span class="co"># Customize legend title</span></span>
+<span id="cb52-29"><a href="#cb52-29" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="fu">expression</span>(<span class="st">"log"</span>[<span class="dv">2</span>]<span class="sc">*</span><span class="st">"FC (IL6 vs Vehicle)"</span>), <span class="co"># Customize x-axis label</span></span>
+<span id="cb52-30"><a href="#cb52-30" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="fu">expression</span>(<span class="st">"-log"</span>[<span class="dv">10</span>]<span class="sc">*</span><span class="st">"FDR"</span>)) <span class="sc">+</span> <span class="co"># Customize y-axis label</span></span>
+<span id="cb52-31"><a href="#cb52-31" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_x_continuous(limits = c(-8, 10)) + # Customize x-axis breaks</span></span>
+<span id="cb52-32"><a href="#cb52-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_y_continuous(limits = c(0, 320)) + # Customize y-axis breaks</span></span>
+<span id="cb52-33"><a href="#cb52-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">panel.grid.minor.y =</span> <span class="fu">element_blank</span>(),<span class="co"># Remove minor grid lines</span></span>
+<span id="cb52-34"><a href="#cb52-34" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),<span class="co"># Remove minor grid lines</span></span>
+<span id="cb52-35"><a href="#cb52-35" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.position =</span> <span class="st">"bottom"</span> </span>
+<span id="cb52-36"><a href="#cb52-36" aria-hidden="true" tabindex="-1"></a>          )<span class="sc">+</span> </span>
+<span id="cb52-37"><a href="#cb52-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">'Volcano Plot: IL1B 0.1 ng/ml vs Vehicle'</span>) <span class="co"># Add a title to the plot</span></span>
+<span id="cb52-38"><a href="#cb52-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-39"><a href="#cb52-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-40"><a href="#cb52-40" aria-hidden="true" tabindex="-1"></a>plot_volcano_il1B_0<span class="fl">.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 11903 rows containing missing values (`geom_text_repel()`).</code></pre>
 </div>
@@ -755,13 +746,13 @@ Volcano plot. IL-1B 10 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold c
 <pre><code>Warning: ggrepel: 771 unlabeled data points (too many overlaps). Consider
 increasing max.overlaps</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(filename = here("notebooks/seq/output/IL_1B_01ng_volcano.png"))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(filename = here("notebooks/seq/output/IL_1B_01ng_volcano.png"))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-volcano-il1B-0.1" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-volcano-il1B-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-volcano-il1B-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold change thresholds"><img src="seq_files/figure-html/fig-volcano-il1B-0.1-1.png" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-volcano-il1B-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold change thresholds"><img src="seq_files/figure-html/fig-volcano-il1B-0.1-1.png" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-volcano-il1B-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold change thresholds
@@ -773,14 +764,14 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 </section>
 <section id="abemaciclib-5-µm" class="level2">
 <h2 class="anchored" data-anchor-id="abemaciclib-5-µm">Abemaciclib 5 µM</h2>
-<div class="cell-container"><div class="cell-decorator"><pre>In [14]:</pre></div><div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import raw data from the specified Excel file and sheet</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"notebooks/seq/data_raw/abe_vs_vehicle.xlsx"</span>)</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>abe_data <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file, <span class="at">sheet =</span> <span class="dv">1</span>)</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="fu">setDT</span>(abe_data)</span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>abe_data[logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> logFC <span class="sc">&gt;</span> <span class="dv">1</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [16]:</pre></div><div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import raw data from the specified Excel file and sheet</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"notebooks/seq/data_raw/abe_vs_vehicle.xlsx"</span>)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>abe_data <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(file, <span class="at">sheet =</span> <span class="dv">1</span>)</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="fu">setDT</span>(abe_data)</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>abe_data[logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> logFC <span class="sc">&gt;</span> <span class="dv">1</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     matrixrow      ENSEMBL_ID           genes    logFC   logCPM         LR
   1:      1656 ENSG00000140470        ADAMTS17 2.736348 6.631470 569.837805
@@ -807,7 +798,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 546:  4.119326e-03  9.029059e-03
 547:  5.668112e-03  1.203318e-02</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>abe_data[logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> logFC <span class="sc">&lt;</span> <span class="dv">1</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>abe_data[logCPM <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> FDR <span class="sc">&lt;</span> <span class="fl">0.05</span> <span class="sc">&amp;</span> logFC <span class="sc">&lt;</span> <span class="dv">1</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      matrixrow      ENSEMBL_ID     genes      logFC    logCPM          LR
    1:       193 ENSG00000124253      PCK1 -7.3910348  8.918734 2613.265382
@@ -835,55 +826,55 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 5916:  2.807330e-02  4.998427e-02</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [15]:</pre></div><div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| label: fig-abemaceclib</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># #| fig-cap: "Volcano plot. Abemaciclib vs. vehicle control. Vertical lines for fold change thresholds"</span></span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co"># #| warning: false</span></span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="co"># # Create a new column for labeling differential gene expression</span></span>
-<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="co"># abe_data$diffexpressed &lt;- "NO" # Default value for genes not differentially expressed</span></span>
-<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="co"># # Identify and label upregulated genes</span></span>
-<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a><span class="co"># # Genes with log2FoldChange &gt; 1, FDR &lt; 0.05, and logCPM &gt; 1 are labeled as "UP"</span></span>
-<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a><span class="co"># abe_data$diffexpressed[abe_data$FDR &lt; 0.05 &amp; abe_data$logCPM &gt; 1 &amp; abe_data$logFC &gt; 0] &lt;- "UP"</span></span>
-<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a><span class="co"># # Identify and label downregulated genes</span></span>
-<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a><span class="co"># # Genes with log2FoldChange &lt; -1, FDR &lt; 0.05, and logCPM &gt; 1 are labeled as "DOWN"</span></span>
-<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a><span class="co"># abe_data$diffexpressed[abe_data$FDR &lt; 0.05 &amp; abe_data$logCPM &gt; 1 &amp; abe_data$logFC &lt; 0] &lt;- "DOWN"</span></span>
-<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a><span class="co"># # Initialize 'delabel' column to NA for all rows to create the column</span></span>
-<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a><span class="co"># abe_data$delabel &lt;- NA</span></span>
-<span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a><span class="co"># # Now, you can safely assign gene names to the 'delabel' column for differentially expressed genes</span></span>
-<span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a><span class="co"># abe_data$delabel[abe_data$diffexpressed != "NO"] &lt;- abe_data$genes[abe_data$diffexpressed != "NO"]</span></span>
-<span id="cb52-21"><a href="#cb52-21" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb52-22"><a href="#cb52-22" aria-hidden="true" tabindex="-1"></a><span class="co"># # Create the volcano plot using ggplot2</span></span>
-<span id="cb52-23"><a href="#cb52-23" aria-hidden="true" tabindex="-1"></a><span class="co"># plot_volcano_abe &lt;- </span></span>
-<span id="cb52-24"><a href="#cb52-24" aria-hidden="true" tabindex="-1"></a><span class="co">#   ggplot(data=abe_data, aes(x=logFC, y=-log10(FDR), col=diffexpressed, label=delabel)) + </span></span>
-<span id="cb52-25"><a href="#cb52-25" aria-hidden="true" tabindex="-1"></a><span class="co">#     theme_minimal() + # Use a minimal theme for the plot</span></span>
-<span id="cb52-26"><a href="#cb52-26" aria-hidden="true" tabindex="-1"></a><span class="co">#     geom_text_repel() + # Use repelling text to avoid label overlap</span></span>
-<span id="cb52-27"><a href="#cb52-27" aria-hidden="true" tabindex="-1"></a><span class="co">#     scale_color_manual(values=c("blue", "black", "red")) + # Custom colors for differential expression</span></span>
-<span id="cb52-28"><a href="#cb52-28" aria-hidden="true" tabindex="-1"></a><span class="co">#     geom_vline(xintercept=c(-1, 1), col="dark grey", linetype = "dashed") + # Vertical lines for fold change thresholds</span></span>
-<span id="cb52-29"><a href="#cb52-29" aria-hidden="true" tabindex="-1"></a><span class="co">#     geom_hline(yintercept=-log10(0.05), col="dark grey", linetype = "dashed") + # Horizontal line for FDR threshold</span></span>
-<span id="cb52-30"><a href="#cb52-30" aria-hidden="true" tabindex="-1"></a><span class="co">#     geom_point() + # Add points for each gene</span></span>
-<span id="cb52-31"><a href="#cb52-31" aria-hidden="true" tabindex="-1"></a><span class="co">#     labs(color = 'Direction of gene expression', # Customize legend title</span></span>
-<span id="cb52-32"><a href="#cb52-32" aria-hidden="true" tabindex="-1"></a><span class="co">#          x = expression("log"[2]*"FC (IL6 vs Vehicle)"), # Customize x-axis label</span></span>
-<span id="cb52-33"><a href="#cb52-33" aria-hidden="true" tabindex="-1"></a><span class="co">#          y = expression("-log"[10]*"FDR")) + # Customize y-axis label</span></span>
-<span id="cb52-34"><a href="#cb52-34" aria-hidden="true" tabindex="-1"></a><span class="co">#     #scale_x_continuous(limits = c(-8, 10)) + # Customize x-axis breaks</span></span>
-<span id="cb52-35"><a href="#cb52-35" aria-hidden="true" tabindex="-1"></a><span class="co">#     #scale_y_continuous(limits = c(0, 320)) + # Customize y-axis breaks</span></span>
-<span id="cb52-36"><a href="#cb52-36" aria-hidden="true" tabindex="-1"></a><span class="co">#     theme(panel.grid.minor.y = element_blank(),# Remove minor grid lines</span></span>
-<span id="cb52-37"><a href="#cb52-37" aria-hidden="true" tabindex="-1"></a><span class="co">#           panel.grid.minor.x = element_blank(),# Remove minor grid lines</span></span>
-<span id="cb52-38"><a href="#cb52-38" aria-hidden="true" tabindex="-1"></a><span class="co">#           legend.position = "bottom",</span></span>
-<span id="cb52-39"><a href="#cb52-39" aria-hidden="true" tabindex="-1"></a><span class="co">#           panel.background = element_rect(fill = "white")</span></span>
-<span id="cb52-40"><a href="#cb52-40" aria-hidden="true" tabindex="-1"></a><span class="co">#           )+ </span></span>
-<span id="cb52-41"><a href="#cb52-41" aria-hidden="true" tabindex="-1"></a><span class="co">#   coord_flip() +</span></span>
-<span id="cb52-42"><a href="#cb52-42" aria-hidden="true" tabindex="-1"></a><span class="co">#     ggtitle('Volcano Plot: 5 µM abemaciclib vs Vehicle') # Add a title to the plot </span></span>
-<span id="cb52-43"><a href="#cb52-43" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb52-44"><a href="#cb52-44" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb52-45"><a href="#cb52-45" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb52-46"><a href="#cb52-46" aria-hidden="true" tabindex="-1"></a><span class="co"># plot_volcano_abe</span></span>
-<span id="cb52-47"><a href="#cb52-47" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb52-48"><a href="#cb52-48" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(filename = here("notebooks/seq/output/abe_volcano.png"))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [17]:</pre></div><div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| label: fig-abemaceclib</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co"># #| fig-cap: "Volcano plot. Abemaciclib vs. vehicle control. Vertical lines for fold change thresholds"</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="co"># #| warning: false</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="co"># # Create a new column for labeling differential gene expression</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="co"># abe_data$diffexpressed &lt;- "NO" # Default value for genes not differentially expressed</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a><span class="co"># # Identify and label upregulated genes</span></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a><span class="co"># # Genes with log2FoldChange &gt; 1, FDR &lt; 0.05, and logCPM &gt; 1 are labeled as "UP"</span></span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a><span class="co"># abe_data$diffexpressed[abe_data$FDR &lt; 0.05 &amp; abe_data$logCPM &gt; 1 &amp; abe_data$logFC &gt; 0] &lt;- "UP"</span></span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a><span class="co"># # Identify and label downregulated genes</span></span>
+<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a><span class="co"># # Genes with log2FoldChange &lt; -1, FDR &lt; 0.05, and logCPM &gt; 1 are labeled as "DOWN"</span></span>
+<span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a><span class="co"># abe_data$diffexpressed[abe_data$FDR &lt; 0.05 &amp; abe_data$logCPM &gt; 1 &amp; abe_data$logFC &lt; 0] &lt;- "DOWN"</span></span>
+<span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb60-16"><a href="#cb60-16" aria-hidden="true" tabindex="-1"></a><span class="co"># # Initialize 'delabel' column to NA for all rows to create the column</span></span>
+<span id="cb60-17"><a href="#cb60-17" aria-hidden="true" tabindex="-1"></a><span class="co"># abe_data$delabel &lt;- NA</span></span>
+<span id="cb60-18"><a href="#cb60-18" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb60-19"><a href="#cb60-19" aria-hidden="true" tabindex="-1"></a><span class="co"># # Now, you can safely assign gene names to the 'delabel' column for differentially expressed genes</span></span>
+<span id="cb60-20"><a href="#cb60-20" aria-hidden="true" tabindex="-1"></a><span class="co"># abe_data$delabel[abe_data$diffexpressed != "NO"] &lt;- abe_data$genes[abe_data$diffexpressed != "NO"]</span></span>
+<span id="cb60-21"><a href="#cb60-21" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb60-22"><a href="#cb60-22" aria-hidden="true" tabindex="-1"></a><span class="co"># # Create the volcano plot using ggplot2</span></span>
+<span id="cb60-23"><a href="#cb60-23" aria-hidden="true" tabindex="-1"></a><span class="co"># plot_volcano_abe &lt;- </span></span>
+<span id="cb60-24"><a href="#cb60-24" aria-hidden="true" tabindex="-1"></a><span class="co">#   ggplot(data=abe_data, aes(x=logFC, y=-log10(FDR), col=diffexpressed, label=delabel)) + </span></span>
+<span id="cb60-25"><a href="#cb60-25" aria-hidden="true" tabindex="-1"></a><span class="co">#     theme_minimal() + # Use a minimal theme for the plot</span></span>
+<span id="cb60-26"><a href="#cb60-26" aria-hidden="true" tabindex="-1"></a><span class="co">#     geom_text_repel() + # Use repelling text to avoid label overlap</span></span>
+<span id="cb60-27"><a href="#cb60-27" aria-hidden="true" tabindex="-1"></a><span class="co">#     scale_color_manual(values=c("blue", "black", "red")) + # Custom colors for differential expression</span></span>
+<span id="cb60-28"><a href="#cb60-28" aria-hidden="true" tabindex="-1"></a><span class="co">#     geom_vline(xintercept=c(-1, 1), col="dark grey", linetype = "dashed") + # Vertical lines for fold change thresholds</span></span>
+<span id="cb60-29"><a href="#cb60-29" aria-hidden="true" tabindex="-1"></a><span class="co">#     geom_hline(yintercept=-log10(0.05), col="dark grey", linetype = "dashed") + # Horizontal line for FDR threshold</span></span>
+<span id="cb60-30"><a href="#cb60-30" aria-hidden="true" tabindex="-1"></a><span class="co">#     geom_point() + # Add points for each gene</span></span>
+<span id="cb60-31"><a href="#cb60-31" aria-hidden="true" tabindex="-1"></a><span class="co">#     labs(color = 'Direction of gene expression', # Customize legend title</span></span>
+<span id="cb60-32"><a href="#cb60-32" aria-hidden="true" tabindex="-1"></a><span class="co">#          x = expression("log"[2]*"FC (IL6 vs Vehicle)"), # Customize x-axis label</span></span>
+<span id="cb60-33"><a href="#cb60-33" aria-hidden="true" tabindex="-1"></a><span class="co">#          y = expression("-log"[10]*"FDR")) + # Customize y-axis label</span></span>
+<span id="cb60-34"><a href="#cb60-34" aria-hidden="true" tabindex="-1"></a><span class="co">#     #scale_x_continuous(limits = c(-8, 10)) + # Customize x-axis breaks</span></span>
+<span id="cb60-35"><a href="#cb60-35" aria-hidden="true" tabindex="-1"></a><span class="co">#     #scale_y_continuous(limits = c(0, 320)) + # Customize y-axis breaks</span></span>
+<span id="cb60-36"><a href="#cb60-36" aria-hidden="true" tabindex="-1"></a><span class="co">#     theme(panel.grid.minor.y = element_blank(),# Remove minor grid lines</span></span>
+<span id="cb60-37"><a href="#cb60-37" aria-hidden="true" tabindex="-1"></a><span class="co">#           panel.grid.minor.x = element_blank(),# Remove minor grid lines</span></span>
+<span id="cb60-38"><a href="#cb60-38" aria-hidden="true" tabindex="-1"></a><span class="co">#           legend.position = "bottom",</span></span>
+<span id="cb60-39"><a href="#cb60-39" aria-hidden="true" tabindex="-1"></a><span class="co">#           panel.background = element_rect(fill = "white")</span></span>
+<span id="cb60-40"><a href="#cb60-40" aria-hidden="true" tabindex="-1"></a><span class="co">#           )+ </span></span>
+<span id="cb60-41"><a href="#cb60-41" aria-hidden="true" tabindex="-1"></a><span class="co">#   coord_flip() +</span></span>
+<span id="cb60-42"><a href="#cb60-42" aria-hidden="true" tabindex="-1"></a><span class="co">#     ggtitle('Volcano Plot: 5 µM abemaciclib vs Vehicle') # Add a title to the plot </span></span>
+<span id="cb60-43"><a href="#cb60-43" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb60-44"><a href="#cb60-44" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb60-45"><a href="#cb60-45" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb60-46"><a href="#cb60-46" aria-hidden="true" tabindex="-1"></a><span class="co"># plot_volcano_abe</span></span>
+<span id="cb60-47"><a href="#cb60-47" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb60-48"><a href="#cb60-48" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(filename = here("notebooks/seq/output/abe_volcano.png"))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 </section>
 </section>
@@ -1296,7 +1287,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"openEffect":"zoom","closeEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"selector":".lightbox","descPosition":"bottom","openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

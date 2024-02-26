@@ -162,6 +162,18 @@ Volcano plot of 0.1 ng/ml IL-6 vs vehicle
 
 {{< embed notebooks/seq/seq.qmd#fig-volcano-il6-0.1 >}}
 
+Volcano plot of pooled IL-1B vs vehicle
+
+{{< embed notebooks/seq/seq.qmd#fig-volcano-il1B-pooled >}}
+
+Volcano plot of 10 ng/ml IL-1B vs vehicle
+
+{{< embed notebooks/seq/seq.qmd#fig-volcano-il1B-10 >}}
+
+Volcano plot of 10 ng/ml IL-1B vs vehicle
+
+{{< embed notebooks/seq/seq.qmd#fig-volcano-il1B-0.1 >}}
+
 ## Supplementary
 
 ### Viability
