@@ -220,6 +220,24 @@ Below are individual donor 2 plots
 
 {{< embed notebooks/seq/GSEA.qmd#fig-kegg-plots8 >}}
 
+**BIOCARTA**
+
+{{< embed notebooks/seq/GSEA.qmd#fig-biocarta-plots1 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-biocarta-plots2 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-biocarta-plots3 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-biocarta-plots4 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-biocarta-plots5 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-biocarta-plots6 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-biocarta-plots7 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-biocarta-plots8 >}}
+
 ## References {.unnumbered}
 
 ::: {#refs}
