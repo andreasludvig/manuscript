@@ -2,6 +2,7 @@
 title: "Geneset enrichment analysis"
 editor_options: 
   chunk_output_type: console
+fig-height: 17
 ---
 
 ## Pathway/gene set enrichment analysis
@@ -131,6 +132,7 @@ ggplot(plot_data, aes(x = NES, y = fct_reorder(pathway, NES), color = padj, size
 ### All KEGG plots
 
 Plot all using a function
+
 ```{r}
 # Get file paths
 kegg_file_paths <- dir(here("notebooks/seq/data_raw/GSEA"), pattern = "KEGG", full.names = TRUE)
@@ -148,9 +150,13 @@ KEGG_plot_list <- map(kegg_file_paths, function(file_path) {
   processed_data <- plot_data %>%
     arrange(desc(abs(NES))) %>%
     group_by(sign_NES = sign(NES)) %>%
-    slice_head(n = 20) %>%
+    slice_head(n = 10) %>%
     ungroup() %>%
-    filter(padj <= 0.05)
+    filter(padj <= 0.05) %>%
+    mutate(pathway = str_remove_all(pathway, "KEGG_"),
+           pathway = str_replace_all(pathway, pattern = "_", replacement = " "),
+           pathway = str_to_title(pathway))
+
   
   # Generate the plot
   ggplot(processed_data,
@@ -163,13 +169,13 @@ KEGG_plot_list <- map(kegg_file_paths, function(file_path) {
     geom_point(stat = 'identity') +
     labs(x = "NES",
          y = "Pathway",
-         title = paste("Top 20 Pathways for","", basename(file_path))
+         title = paste("Top 10 up/down Pathways for","", basename(file_path))
          ) +
     theme_bw() +
     scale_color_distiller(type = "seq", palette = "YlOrRd") #+
-    #theme(legend.position = "none") # Remove legend to focus on the data
+    #theme(axis.text.y = element_text(size = 8))
 })
-
+KEGG_plot_list[[1]]
 ```
 
 ```{r}
@@ -220,12 +226,12 @@ KEGG_plot_list[[7]]
 KEGG_plot_list[[8]]
 ```
 
-
 #### BIOCARTA
 
 **Plot all using a function**
 
 Get all file paths related to BIOCARTA
+
 ```{r}
 # Get file paths
 biocarta_file_paths <- dir(here("notebooks/seq/data_raw/GSEA"), pattern = "BIOCARTA", full.names = TRUE)
@@ -243,14 +249,17 @@ BIOCARTA_plot_list <- map(biocarta_file_paths, function(file_path) {
   processed_data <- plot_data %>%
     arrange(desc(abs(NES))) %>%
     group_by(sign_NES = sign(NES)) %>%
-    slice_head(n = 20) %>%
+    slice_head(n = 10) %>%
     ungroup() %>%
-    filter(padj <= 0.05)
+    filter(padj <= 0.05) %>%
+    mutate(pathway = str_remove_all(pathway, "BIOCARTA"),
+           pathway = str_replace_all(pathway, pattern = "_", replacement = " "),
+           pathway = str_to_title(pathway))
   
   # Generate the plot
   ggplot(processed_data, aes(x = NES, y = fct_reorder(pathway, NES), color = padj, size = size)) +
     geom_point(stat = 'identity') +
-    labs(x = "NES", y = "Pathway", title = paste("Top 20 Pathways for","", basename(file_path))) +
+    labs(x = "NES", y = "Pathway", title = paste("Top 10 up/down Pathways for","", basename(file_path))) +
     theme_bw() +
     scale_color_distiller(type = "seq", palette = "YlOrRd") #+
     #theme(legend.position = "none") # Remove legend to focus on the data
@@ -298,7 +307,9 @@ BIOCARTA_plot_list[[8]]
 ```
 
 ### REACTOME
+
 Get all file paths related to Reactome
+
 ```{r}
 # Get file paths
 reactome_file_paths <- dir(here("notebooks/seq/data_raw/GSEA"), pattern = "REACTOME", full.names = TRUE)
@@ -316,9 +327,12 @@ REACTOME_plot_list <- map(reactome_file_paths, function(file_path) {
   processed_data <- plot_data %>%
     arrange(desc(abs(NES))) %>%
     group_by(sign_NES = sign(NES)) %>%
-    slice_head(n = 20) %>%
+    slice_head(n = 10) %>%
     ungroup() %>%
-    filter(padj <= 0.05)
+    filter(padj <= 0.05) %>%
+    mutate(pathway = str_remove_all(pathway, "REACTOME_"),
+           pathway = str_replace_all(pathway, pattern = "_", replacement = " "),
+           pathway = str_to_title(pathway))
   
   # Generate the plot
   ggplot(processed_data,
@@ -331,7 +345,7 @@ REACTOME_plot_list <- map(reactome_file_paths, function(file_path) {
     geom_point(stat = 'identity') +
     labs(x = "NES",
          y = "Pathway",
-         title = paste("Top 20 Pathways for","", basename(file_path))
+         title = paste("Top 10 up/down Pathways for","", basename(file_path))
          ) +
     theme_bw() +
     scale_color_distiller(type = "seq", palette = "YlOrRd") #+
@@ -396,6 +410,7 @@ CONSIDER :Split data into each of the GO databases:
 3.  **Cellular Component (CC)**, which describes where in the cell the gene product is active.
 
 Get all file paths related to GO
+
 ```{r}
 # Get file paths
 go_file_paths <- dir(here("notebooks/seq/data_raw/GSEA"), pattern = "GO", full.names = TRUE)
@@ -413,7 +428,7 @@ GO_plot_list <- map(go_file_paths, function(file_path) {
   processed_data <- plot_data %>%
     arrange(desc(abs(NES))) %>%
     group_by(sign_NES = sign(NES)) %>%
-    slice_head(n = 20) %>%
+    slice_head(n = 10) %>%
     ungroup() %>%
     filter(padj <= 0.05)
   
@@ -428,7 +443,7 @@ GO_plot_list <- map(go_file_paths, function(file_path) {
     geom_point(stat = 'identity') +
     labs(x = "NES",
          y = "Pathway",
-         title = paste("Top 20 Pathways for","", basename(file_path))
+         title = paste("Top 10 up/down Pathways for","", basename(file_path))
          ) +
     theme_bw() +
     scale_color_distiller(type = "seq", palette = "YlOrRd") #+
@@ -483,5 +498,3 @@ GO_plot_list[[7]]
 
 GO_plot_list[[8]]
 ```
-
-

@@ -98,8 +98,9 @@ plot_viability <-
              y = mean_ATP, 
              color = as.factor(donor),
              shape = as.factor(donor))) +
-  geom_point(size = 8) +
-  scale_color_brewer(palette = "Set2") +
+  geom_point(size = 7) +
+  #scale_color_brewer(palette = "Set2") +
+  scale_color_viridis_d(option = "plasma") +
   labs(title = "Absolute ATP content",
        x = "Day",
        y = "Mean ATP content (pmol/spheroid)",
@@ -111,17 +112,21 @@ plot_viability <-
   theme_bw() +
   theme(panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank(),
-        legend.title = element_blank(),  # Remove legend title for size
-        legend.key.size = unit(1.2, 'lines'))  # Adjust the size of the legend keys
+        legend.position = "bottom",
+        axis.title = element_text(face = "bold"))  
 
-ggsave(filename = here("notebooks/viability/output/viability.png"),
-       dpi = "retina")
+plot_viability
+
+# Best option for discrete viridis color scale: B, C, D, H
+
+# ggsave(filename = here("notebooks/viability/output/viability.png"),
+#        dpi = "retina")
 
 ```
 
 ```{r}
 #| label: fig-viability
-#| fig-cap: "Each point is the mean ATP content of 5-8 spheroids/replicates (mean = 7). There is no data for for donor 1 on day 5 and 16. Data for donor 3 day 9 was measured on day 10"
+#| fig-cap: "Each point is the mean ATP content of 5-8 spheroids/replicates (mean = 7). Missing data for for donor 1 on day 5 and 16. Data for donor 3 day 9 was measured on day 10"
 
 plot_viability
 ```

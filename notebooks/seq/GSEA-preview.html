@@ -388,27 +388,39 @@
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  processed_data <span class="ot">&lt;-</span> plot_data <span class="sc">%&gt;%</span></span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(NES))) <span class="sc">%&gt;%</span></span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="at">sign_NES =</span> <span class="fu">sign</span>(NES)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(padj <span class="sc">&lt;=</span> <span class="fl">0.05</span>)</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate the plot</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(processed_data,</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>         <span class="fu">aes</span>(<span class="at">x =</span> NES,</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fu">fct_reorder</span>(pathway, NES),</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> padj,</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> size</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>             )</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"NES"</span>,</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Pathway"</span>,</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Top 20 Pathways for"</span>,<span class="st">""</span>, <span class="fu">basename</span>(file_path))</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_distiller</span>(<span class="at">type =</span> <span class="st">"seq"</span>, <span class="at">palette =</span> <span class="st">"YlOrRd"</span>) <span class="co">#+</span></span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">#theme(legend.position = "none") # Remove legend to focus on the data</span></span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(padj <span class="sc">&lt;=</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">pathway =</span> <span class="fu">str_remove_all</span>(pathway, <span class="st">"KEGG_"</span>),</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">pathway =</span> <span class="fu">str_replace_all</span>(pathway, <span class="at">pattern =</span> <span class="st">"_"</span>, <span class="at">replacement =</span> <span class="st">" "</span>),</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">pathway =</span> <span class="fu">str_to_title</span>(pathway))</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate the plot</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(processed_data,</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>         <span class="fu">aes</span>(<span class="at">x =</span> NES,</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fu">fct_reorder</span>(pathway, NES),</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> padj,</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> size</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>             )</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"NES"</span>,</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Pathway"</span>,</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Top 10 up/down Pathways for"</span>,<span class="st">""</span>, <span class="fu">basename</span>(file_path))</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_distiller</span>(<span class="at">type =</span> <span class="st">"seq"</span>, <span class="at">palette =</span> <span class="st">"YlOrRd"</span>) <span class="co">#+</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">#theme(axis.text.y = element_text(size = 8))</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="">
+<figure class="figure">
+<p class=""><a href="GSEA_files/figure-html/unnamed-chunk-7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="GSEA_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
 </div></div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="cell-fig-kegg-plots1" class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -417,7 +429,7 @@
 <div id="fig-kegg-plots1" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kegg-plots1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-kegg-plots1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="GSEA_files/figure-html/fig-kegg-plots1-1.png" id="fig-kegg-plots1" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-kegg-plots1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="GSEA_files/figure-html/fig-kegg-plots1-1.png" id="fig-kegg-plots1" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-plots1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -432,7 +444,7 @@
 <div id="fig-kegg-plots2" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kegg-plots2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-kegg-plots2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="GSEA_files/figure-html/fig-kegg-plots2-1.png" id="fig-kegg-plots2" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-kegg-plots2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="GSEA_files/figure-html/fig-kegg-plots2-1.png" id="fig-kegg-plots2" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-plots2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -447,7 +459,7 @@
 <div id="fig-kegg-plots3" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kegg-plots3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-kegg-plots3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="GSEA_files/figure-html/fig-kegg-plots3-1.png" id="fig-kegg-plots3" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-kegg-plots3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="GSEA_files/figure-html/fig-kegg-plots3-1.png" id="fig-kegg-plots3" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-plots3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -462,7 +474,7 @@
 <div id="fig-kegg-plots4" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kegg-plots4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-kegg-plots4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="GSEA_files/figure-html/fig-kegg-plots4-1.png" id="fig-kegg-plots4" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-kegg-plots4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="GSEA_files/figure-html/fig-kegg-plots4-1.png" id="fig-kegg-plots4" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-plots4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -477,7 +489,7 @@
 <div id="fig-kegg-plots5" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kegg-plots5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-kegg-plots5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="GSEA_files/figure-html/fig-kegg-plots5-1.png" id="fig-kegg-plots5" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-kegg-plots5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="GSEA_files/figure-html/fig-kegg-plots5-1.png" id="fig-kegg-plots5" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-plots5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -492,7 +504,7 @@
 <div id="fig-kegg-plots6" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kegg-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-kegg-plots6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="GSEA_files/figure-html/fig-kegg-plots6-1.png" id="fig-kegg-plots6" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-kegg-plots6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="GSEA_files/figure-html/fig-kegg-plots6-1.png" id="fig-kegg-plots6" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -507,7 +519,7 @@
 <div id="fig-kegg-plots7" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kegg-plots7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-kegg-plots7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="GSEA_files/figure-html/fig-kegg-plots7-1.png" id="fig-kegg-plots7" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-kegg-plots7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="GSEA_files/figure-html/fig-kegg-plots7-1.png" id="fig-kegg-plots7" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-plots7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -522,7 +534,7 @@
 <div id="fig-kegg-plots8" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kegg-plots8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-kegg-plots8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="GSEA_files/figure-html/fig-kegg-plots8-1.png" id="fig-kegg-plots8" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-kegg-plots8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="GSEA_files/figure-html/fig-kegg-plots8-1.png" id="fig-kegg-plots8" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-plots8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -550,18 +562,21 @@
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  processed_data <span class="ot">&lt;-</span> plot_data <span class="sc">%&gt;%</span></span>
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(NES))) <span class="sc">%&gt;%</span></span>
 <span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="at">sign_NES =</span> <span class="fu">sign</span>(NES)) <span class="sc">%&gt;%</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(padj <span class="sc">&lt;=</span> <span class="fl">0.05</span>)</span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate the plot</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(processed_data, <span class="fu">aes</span>(<span class="at">x =</span> NES, <span class="at">y =</span> <span class="fu">fct_reorder</span>(pathway, NES), <span class="at">color =</span> padj, <span class="at">size =</span> size)) <span class="sc">+</span></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"NES"</span>, <span class="at">y =</span> <span class="st">"Pathway"</span>, <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Top 20 Pathways for"</span>,<span class="st">""</span>, <span class="fu">basename</span>(file_path))) <span class="sc">+</span></span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_distiller</span>(<span class="at">type =</span> <span class="st">"seq"</span>, <span class="at">palette =</span> <span class="st">"YlOrRd"</span>) <span class="co">#+</span></span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">#theme(legend.position = "none") # Remove legend to focus on the data</span></span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(padj <span class="sc">&lt;=</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">pathway =</span> <span class="fu">str_remove_all</span>(pathway, <span class="st">"BIOCARTA"</span>),</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">pathway =</span> <span class="fu">str_replace_all</span>(pathway, <span class="at">pattern =</span> <span class="st">"_"</span>, <span class="at">replacement =</span> <span class="st">" "</span>),</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">pathway =</span> <span class="fu">str_to_title</span>(pathway))</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate the plot</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(processed_data, <span class="fu">aes</span>(<span class="at">x =</span> NES, <span class="at">y =</span> <span class="fu">fct_reorder</span>(pathway, NES), <span class="at">color =</span> padj, <span class="at">size =</span> size)) <span class="sc">+</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"NES"</span>, <span class="at">y =</span> <span class="st">"Pathway"</span>, <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Top 10 up/down Pathways for"</span>,<span class="st">""</span>, <span class="fu">basename</span>(file_path))) <span class="sc">+</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_distiller</span>(<span class="at">type =</span> <span class="st">"seq"</span>, <span class="at">palette =</span> <span class="st">"YlOrRd"</span>) <span class="co">#+</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">#theme(legend.position = "none") # Remove legend to focus on the data</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [18]:</pre></div><div id="cell-fig-biocarta-plots1" class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>BIOCARTA_plot_list[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -569,7 +584,7 @@
 <div id="fig-biocarta-plots1" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-biocarta-plots1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-biocarta-plots1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="GSEA_files/figure-html/fig-biocarta-plots1-1.png" id="fig-biocarta-plots1" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-biocarta-plots1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="GSEA_files/figure-html/fig-biocarta-plots1-1.png" id="fig-biocarta-plots1" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-plots1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -583,7 +598,7 @@
 <div id="fig-biocarta-plots2" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-biocarta-plots2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-biocarta-plots2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="GSEA_files/figure-html/fig-biocarta-plots2-1.png" id="fig-biocarta-plots2" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-biocarta-plots2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="GSEA_files/figure-html/fig-biocarta-plots2-1.png" id="fig-biocarta-plots2" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-plots2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -597,7 +612,7 @@
 <div id="fig-biocarta-plots3" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-biocarta-plots3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-biocarta-plots3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="GSEA_files/figure-html/fig-biocarta-plots3-1.png" id="fig-biocarta-plots3" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-biocarta-plots3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-19"><img src="GSEA_files/figure-html/fig-biocarta-plots3-1.png" id="fig-biocarta-plots3" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-plots3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -611,7 +626,7 @@
 <div id="fig-biocarta-plots4" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-biocarta-plots4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-biocarta-plots4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-19"><img src="GSEA_files/figure-html/fig-biocarta-plots4-1.png" id="fig-biocarta-plots4" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-biocarta-plots4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-20"><img src="GSEA_files/figure-html/fig-biocarta-plots4-1.png" id="fig-biocarta-plots4" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-plots4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -625,7 +640,7 @@
 <div id="fig-biocarta-plots5" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-biocarta-plots5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-biocarta-plots5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-20"><img src="GSEA_files/figure-html/fig-biocarta-plots5-1.png" id="fig-biocarta-plots5" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-biocarta-plots5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-21"><img src="GSEA_files/figure-html/fig-biocarta-plots5-1.png" id="fig-biocarta-plots5" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-plots5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -639,7 +654,7 @@
 <div id="fig-biocarta-plots6" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-biocarta-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-biocarta-plots6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-21"><img src="GSEA_files/figure-html/fig-biocarta-plots6-1.png" id="fig-biocarta-plots6" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-biocarta-plots6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-22"><img src="GSEA_files/figure-html/fig-biocarta-plots6-1.png" id="fig-biocarta-plots6" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -653,7 +668,7 @@
 <div id="fig-biocarta-plots7" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-biocarta-plots7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-biocarta-plots7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-22"><img src="GSEA_files/figure-html/fig-biocarta-plots7-1.png" id="fig-biocarta-plots7" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-biocarta-plots7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-23"><img src="GSEA_files/figure-html/fig-biocarta-plots7-1.png" id="fig-biocarta-plots7" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-plots7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -667,7 +682,7 @@
 <div id="fig-biocarta-plots8" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-biocarta-plots8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-biocarta-plots8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-23"><img src="GSEA_files/figure-html/fig-biocarta-plots8-1.png" id="fig-biocarta-plots8" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-biocarta-plots8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-24"><img src="GSEA_files/figure-html/fig-biocarta-plots8-1.png" id="fig-biocarta-plots8" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-plots8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -696,27 +711,30 @@
 <span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  processed_data <span class="ot">&lt;-</span> plot_data <span class="sc">%&gt;%</span></span>
 <span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(NES))) <span class="sc">%&gt;%</span></span>
 <span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="at">sign_NES =</span> <span class="fu">sign</span>(NES)) <span class="sc">%&gt;%</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(padj <span class="sc">&lt;=</span> <span class="fl">0.05</span>)</span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate the plot</span></span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(processed_data,</span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>         <span class="fu">aes</span>(<span class="at">x =</span> NES,</span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fu">fct_reorder</span>(pathway, NES),</span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> padj,</span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> size</span>
-<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>             )</span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
-<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span></span>
-<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"NES"</span>,</span>
-<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Pathway"</span>,</span>
-<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Top 20 Pathways for"</span>,<span class="st">""</span>, <span class="fu">basename</span>(file_path))</span>
-<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
-<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_distiller</span>(<span class="at">type =</span> <span class="st">"seq"</span>, <span class="at">palette =</span> <span class="st">"YlOrRd"</span>) <span class="co">#+</span></span>
-<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">#theme(legend.position = "none") # Remove legend to focus on the data</span></span>
-<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(padj <span class="sc">&lt;=</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">pathway =</span> <span class="fu">str_remove_all</span>(pathway, <span class="st">"REACTOME_"</span>),</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">pathway =</span> <span class="fu">str_replace_all</span>(pathway, <span class="at">pattern =</span> <span class="st">"_"</span>, <span class="at">replacement =</span> <span class="st">" "</span>),</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">pathway =</span> <span class="fu">str_to_title</span>(pathway))</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate the plot</span></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(processed_data,</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>         <span class="fu">aes</span>(<span class="at">x =</span> NES,</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fu">fct_reorder</span>(pathway, NES),</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> padj,</span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> size</span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>             )</span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span></span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"NES"</span>,</span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Pathway"</span>,</span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Top 10 up/down Pathways for"</span>,<span class="st">""</span>, <span class="fu">basename</span>(file_path))</span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_distiller</span>(<span class="at">type =</span> <span class="st">"seq"</span>, <span class="at">palette =</span> <span class="st">"YlOrRd"</span>) <span class="co">#+</span></span>
+<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>    <span class="co">#theme(legend.position = "none") # Remove legend to focus on the data</span></span>
+<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [28]:</pre></div><div id="cell-fig-reactome-plots1" class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -725,7 +743,7 @@
 <div id="fig-reactome-plots1" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reactome-plots1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-reactome-plots1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-24"><img src="GSEA_files/figure-html/fig-reactome-plots1-1.png" id="fig-reactome-plots1" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-reactome-plots1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-25"><img src="GSEA_files/figure-html/fig-reactome-plots1-1.png" id="fig-reactome-plots1" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-plots1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -740,7 +758,7 @@
 <div id="fig-reactome-plots2" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reactome-plots2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-reactome-plots2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-25"><img src="GSEA_files/figure-html/fig-reactome-plots2-1.png" id="fig-reactome-plots2" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-reactome-plots2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-26"><img src="GSEA_files/figure-html/fig-reactome-plots2-1.png" id="fig-reactome-plots2" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-plots2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -755,7 +773,7 @@
 <div id="fig-reactome-plots3" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reactome-plots3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-reactome-plots3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-26"><img src="GSEA_files/figure-html/fig-reactome-plots3-1.png" id="fig-reactome-plots3" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-reactome-plots3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-27"><img src="GSEA_files/figure-html/fig-reactome-plots3-1.png" id="fig-reactome-plots3" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-plots3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -770,7 +788,7 @@
 <div id="fig-reactome-plots4" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reactome-plots4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-reactome-plots4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-27"><img src="GSEA_files/figure-html/fig-reactome-plots4-1.png" id="fig-reactome-plots4" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-reactome-plots4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-28"><img src="GSEA_files/figure-html/fig-reactome-plots4-1.png" id="fig-reactome-plots4" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-plots4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -785,7 +803,7 @@
 <div id="fig-reactome-plots5" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reactome-plots5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-reactome-plots5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-28"><img src="GSEA_files/figure-html/fig-reactome-plots5-1.png" id="fig-reactome-plots5" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-reactome-plots5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-29"><img src="GSEA_files/figure-html/fig-reactome-plots5-1.png" id="fig-reactome-plots5" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-plots5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -800,7 +818,7 @@
 <div id="fig-reactome-plots6" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reactome-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-reactome-plots6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-29"><img src="GSEA_files/figure-html/fig-reactome-plots6-1.png" id="fig-reactome-plots6" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-reactome-plots6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-30"><img src="GSEA_files/figure-html/fig-reactome-plots6-1.png" id="fig-reactome-plots6" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -815,7 +833,7 @@
 <div id="fig-reactome-plots7" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reactome-plots7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-reactome-plots7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-30"><img src="GSEA_files/figure-html/fig-reactome-plots7-1.png" id="fig-reactome-plots7" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-reactome-plots7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-31"><img src="GSEA_files/figure-html/fig-reactome-plots7-1.png" id="fig-reactome-plots7" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-plots7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -830,7 +848,7 @@
 <div id="fig-reactome-plots8" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reactome-plots8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-reactome-plots8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-31"><img src="GSEA_files/figure-html/fig-reactome-plots8-1.png" id="fig-reactome-plots8" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-reactome-plots8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-32"><img src="GSEA_files/figure-html/fig-reactome-plots8-1.png" id="fig-reactome-plots8" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-plots8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -864,7 +882,7 @@
 <span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  processed_data <span class="ot">&lt;-</span> plot_data <span class="sc">%&gt;%</span></span>
 <span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(NES))) <span class="sc">%&gt;%</span></span>
 <span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="at">sign_NES =</span> <span class="fu">sign</span>(NES)) <span class="sc">%&gt;%</span></span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(padj <span class="sc">&lt;=</span> <span class="fl">0.05</span>)</span>
 <span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  </span>
@@ -879,7 +897,7 @@
 <span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span></span>
 <span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"NES"</span>,</span>
 <span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Pathway"</span>,</span>
-<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Top 20 Pathways for"</span>,<span class="st">""</span>, <span class="fu">basename</span>(file_path))</span>
+<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Top 10 up/down Pathways for"</span>,<span class="st">""</span>, <span class="fu">basename</span>(file_path))</span>
 <span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
 <span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb42-27"><a href="#cb42-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_distiller</span>(<span class="at">type =</span> <span class="st">"seq"</span>, <span class="at">palette =</span> <span class="st">"YlOrRd"</span>) <span class="co">#+</span></span>
@@ -893,7 +911,7 @@
 <div id="fig-go-plots1" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-plots1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-go-plots1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-32"><img src="GSEA_files/figure-html/fig-go-plots1-1.png" id="fig-go-plots1" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-go-plots1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-33"><img src="GSEA_files/figure-html/fig-go-plots1-1.png" id="fig-go-plots1" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-plots1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -908,7 +926,7 @@
 <div id="fig-go-plots2" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-plots2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-go-plots2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-33"><img src="GSEA_files/figure-html/fig-go-plots2-1.png" id="fig-go-plots2" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-go-plots2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-34"><img src="GSEA_files/figure-html/fig-go-plots2-1.png" id="fig-go-plots2" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-plots2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -923,7 +941,7 @@
 <div id="fig-go-plots3" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-plots3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-go-plots3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-34"><img src="GSEA_files/figure-html/fig-go-plots3-1.png" id="fig-go-plots3" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-go-plots3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-35"><img src="GSEA_files/figure-html/fig-go-plots3-1.png" id="fig-go-plots3" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-plots3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -938,7 +956,7 @@
 <div id="fig-go-plots4" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-plots4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-go-plots4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-35"><img src="GSEA_files/figure-html/fig-go-plots4-1.png" id="fig-go-plots4" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-go-plots4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-36"><img src="GSEA_files/figure-html/fig-go-plots4-1.png" id="fig-go-plots4" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-plots4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -953,7 +971,7 @@
 <div id="fig-go-plots5" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-plots5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-go-plots5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-36"><img src="GSEA_files/figure-html/fig-go-plots5-1.png" id="fig-go-plots5" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-go-plots5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-37"><img src="GSEA_files/figure-html/fig-go-plots5-1.png" id="fig-go-plots5" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-plots5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -968,7 +986,7 @@
 <div id="fig-go-plots6" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-go-plots6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-37"><img src="GSEA_files/figure-html/fig-go-plots6-1.png" id="fig-go-plots6" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-go-plots6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-38"><img src="GSEA_files/figure-html/fig-go-plots6-1.png" id="fig-go-plots6" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -983,7 +1001,7 @@
 <div id="fig-go-plots7" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-plots7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-go-plots7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-38"><img src="GSEA_files/figure-html/fig-go-plots7-1.png" id="fig-go-plots7" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-go-plots7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-39"><img src="GSEA_files/figure-html/fig-go-plots7-1.png" id="fig-go-plots7" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-plots7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -998,7 +1016,7 @@
 <div id="fig-go-plots8" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-plots8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-go-plots8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-39"><img src="GSEA_files/figure-html/fig-go-plots8-1.png" id="fig-go-plots8" class="img-fluid figure-img" width="672"></a>
+<a href="GSEA_files/figure-html/fig-go-plots8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-40"><img src="GSEA_files/figure-html/fig-go-plots8-1.png" id="fig-go-plots8" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-plots8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1417,7 +1435,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","descPosition":"bottom","closeEffect":"zoom","loop":false});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
