@@ -238,6 +238,42 @@ Below are individual donor 2 plots
 
 {{< embed notebooks/seq/GSEA.qmd#fig-biocarta-plots8 >}}
 
+**REACTOME**
+
+{{< embed notebooks/seq/GSEA.qmd#fig-reactome-plots1 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-reactome-plots2 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-reactome-plots3 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-reactome-plots4 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-reactome-plots5 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-reactome-plots6 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-reactome-plots7 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-reactome-plots8 >}}
+
+**GO**
+
+{{< embed notebooks/seq/GSEA.qmd#fig-go-plots1 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-go-plots2 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-go-plots3 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-go-plots4 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-go-plots5 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-go-plots6 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-go-plots7 >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-go-plots8 >}}
+
 ## References {.unnumbered}
 
 ::: {#refs}

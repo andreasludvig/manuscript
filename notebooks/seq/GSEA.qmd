@@ -386,14 +386,102 @@ REACTOME_plot_list[[7]]
 
 REACTOME_plot_list[[8]]
 ```
+
 ### GO
 
-Split data into each of the GO databases:
+CONSIDER :Split data into each of the GO databases:
 
 1.  **Biological Process (BP)**, which describes the biological objectives to which the gene or gene product contributes.
 2.  **Molecular Function (MF**), which describes the elemental activities of a gene product at the molecular level, such as binding or catalysis.
 3.  **Cellular Component (CC)**, which describes where in the cell the gene product is active.
 
+Get all file paths related to GO
+```{r}
+# Get file paths
+go_file_paths <- dir(here("notebooks/seq/data_raw/GSEA"), pattern = "GO", full.names = TRUE)
 
+# Subset to interleukines if wanted
+# kegg_file_paths[grep(pattern = "IL", kegg_file_paths)]
+```
+
+```{r}
+GO_plot_list <- map(go_file_paths, function(file_path) {
+  # Read the file
+  plot_data <- read_excel(file_path)
+  
+  # Process the data
+  processed_data <- plot_data %>%
+    arrange(desc(abs(NES))) %>%
+    group_by(sign_NES = sign(NES)) %>%
+    slice_head(n = 20) %>%
+    ungroup() %>%
+    filter(padj <= 0.05)
+  
+  # Generate the plot
+  ggplot(processed_data,
+         aes(x = NES,
+             y = fct_reorder(pathway, NES),
+             color = padj,
+             size = size
+             )
+         ) +
+    geom_point(stat = 'identity') +
+    labs(x = "NES",
+         y = "Pathway",
+         title = paste("Top 20 Pathways for","", basename(file_path))
+         ) +
+    theme_bw() +
+    scale_color_distiller(type = "seq", palette = "YlOrRd") #+
+    #theme(legend.position = "none") # Remove legend to focus on the data
+})
+```
+
+```{r}
+#| label: fig-go-plots1
+
+GO_plot_list[[1]]
+```
+
+```{r}
+#| label: fig-go-plots2
+
+GO_plot_list[[2]]
+```
+
+```{r}
+#| label: fig-go-plots3
+
+GO_plot_list[[3]]
+```
+
+```{r}
+#| label: fig-go-plots4
+
+GO_plot_list[[4]]
+```
+
+```{r}
+#| label: fig-go-plots5
+
+GO_plot_list[[5]]
+```
+
+```{r}
+#| label: fig-go-plots6
+
+GO_plot_list[[6]]
+```
+
+```{r}
+#| label: fig-go-plots7
+
+GO_plot_list[[7]]
+```
+
+```{r}
+#| label: fig-go-plots8
+
+GO_plot_list[[8]]
+```
 
 
