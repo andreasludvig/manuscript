@@ -2,8 +2,10 @@
 title: "Geneset enrichment analysis"
 editor_options: 
   chunk_output_type: console
-fig-height: 17
+fig-width: 12
+fig-height: 10
 ---
+
 
 ## Pathway/gene set enrichment analysis
 
@@ -477,6 +479,7 @@ GO_plot_list[[4]]
 
 ```{r}
 #| label: fig-go-plots5
+
 
 GO_plot_list[[5]]
 ```
