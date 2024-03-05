@@ -32,6 +32,7 @@ csl: vancouver.csl
 number-sections: false
 reference-location: margin
 lightbox: true
+notebook-links: global
 ---
 
 ```{r}
