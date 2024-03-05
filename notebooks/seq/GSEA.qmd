@@ -131,6 +131,7 @@ ggplot(plot_data, aes(x = NES, y = fct_reorder(pathway, NES), color = padj, size
   scale_color_distiller(type = "seq", palette = "YlOrRd")
 ```
 
+
 ### All KEGG plots
 
 Plot all using a function
