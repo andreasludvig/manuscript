@@ -146,7 +146,7 @@ The treatments did not have a negative effect on the viability or morphology of 
 
 #### EC50
 
-{{< embed notebooks/LCMS/LCMS.qmd#fig-dose-response-act-il6 >}}
+Lav bare tabel for alle IC50
 
 ```         
 IC50:      9.447e-01 
@@ -209,6 +209,8 @@ Below are individual donor 2 plots
 {{< embed notebooks/LCMS/LCMS.qmd#fig-act_3A4_IL_6_AS0008 >}}
 
 {{< embed notebooks/LCMS/LCMS.qmd#fig-act_3A4_IL_1B_AS0008 >}}
+
+## Redundant plots
 
 ### Sequencing
 
