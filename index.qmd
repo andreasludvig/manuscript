@@ -12,9 +12,11 @@ author:
       - Visualization
     affiliations:
       - SDU
+  - name: Erkka Järvinen
+    affiliations: SDU?
   - name: Tore B. Stage
+    affiliations: SDU
     corresponding: false
-      - SDU
 keywords:
   - 3D primary human hepatocytes
   - Inflammation
