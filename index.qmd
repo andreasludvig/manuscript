@@ -214,20 +214,28 @@ Below are individual donor 2 plots
 ### Seq
 **REACTOME**
 
+{{< embed notebooks/seq/GSEA.qmd#fig-reactome-il1b-0.1 >}}
 
-{{< embed notebooks/seq/GSEA.qmd#fig-reactome-plots2 >}}
+{{< embed notebooks/seq/GSEA.qmd#fig-reactome-il1b-10 >}}
 
-{{< embed notebooks/seq/GSEA.qmd#fig-reactome-plots3 >}}
+{{< embed notebooks/seq/GSEA.qmd#fig-reactome-il6-0.1 >}}
 
-{{< embed notebooks/seq/GSEA.qmd#fig-reactome-plots4 >}}
+{{< embed notebooks/seq/GSEA.qmd#fig-reactome-il6-10 >}}
 
-{{< embed notebooks/seq/GSEA.qmd#fig-reactome-plots5 >}}
+{{< embed notebooks/seq/GSEA.qmd#fig-reactome-il6-combined >}}
 
-{{< embed notebooks/seq/GSEA.qmd#fig-reactome-plots6 >}}
 
-{{< embed notebooks/seq/GSEA.qmd#fig-reactome-plots7 >}}
+**Medium vs vehicle**
+{{< embed notebooks/seq/GSEA.qmd#fig-reactome-medium >}}
 
-{{< embed notebooks/seq/GSEA.qmd#fig-reactome-plots8 >}}
+{{< embed notebooks/seq/GSEA.qmd#fig-kegg-medium >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-go-medium >}}
+
+{{< embed notebooks/seq/GSEA.qmd#fig-go-split-medium >}}
+
+
+
 
 ## Redundant plots
 
@@ -236,42 +244,29 @@ Below are individual donor 2 plots
 #### GSEA
 
 **KEGG**
+{{< embed notebooks/seq/GSEA.qmd#fig-kegg-il1b-0.1 >}}
 
-{{< embed notebooks/seq/GSEA.qmd#fig-kegg-plots1 >}}
+{{< embed notebooks/seq/GSEA.qmd#fig-kegg-il1b-10 >}}
 
-{{< embed notebooks/seq/GSEA.qmd#fig-kegg-plots2 >}}
+{{< embed notebooks/seq/GSEA.qmd#fig-kegg-il6-0.1 >}}
 
-{{< embed notebooks/seq/GSEA.qmd#fig-kegg-plots3 >}}
+{{< embed notebooks/seq/GSEA.qmd#fig-kegg-il6-10 >}}
 
-{{< embed notebooks/seq/GSEA.qmd#fig-kegg-plots4 >}}
-
-{{< embed notebooks/seq/GSEA.qmd#fig-kegg-plots5 >}}
-
-{{< embed notebooks/seq/GSEA.qmd#fig-kegg-plots6 >}}
-
-{{< embed notebooks/seq/GSEA.qmd#fig-kegg-plots7 >}}
-
-{{< embed notebooks/seq/GSEA.qmd#fig-kegg-plots8 >}}
+{{< embed notebooks/seq/GSEA.qmd#fig-kegg-il6-combined >}}
 
 
+**BIOCARTA**
+{{< embed notebooks/seq/GSEA.qmd#fig-biocarta-il1b-0.1 >}}
 
-**GO**
+{{< embed notebooks/seq/GSEA.qmd#fig-biocarta-il1b-10 >}}
 
-{{< embed notebooks/seq/GSEA.qmd#fig-go-plots1 >}}
+{{< embed notebooks/seq/GSEA.qmd#fig-biocarta-il6-0.1 >}}
 
-{{< embed notebooks/seq/GSEA.qmd#fig-go-plots2 >}}
+{{< embed notebooks/seq/GSEA.qmd#fig-biocarta-il6-10 >}}
 
-{{< embed notebooks/seq/GSEA.qmd#fig-go-plots3 >}}
+{{< embed notebooks/seq/GSEA.qmd#fig-biocarta-il6-combined >}}
 
-{{< embed notebooks/seq/GSEA.qmd#fig-go-plots4 >}}
-
-{{< embed notebooks/seq/GSEA.qmd#fig-go-plots5 >}}
-
-{{< embed notebooks/seq/GSEA.qmd#fig-go-plots6 >}}
-
-{{< embed notebooks/seq/GSEA.qmd#fig-go-plots7 >}}
-
-{{< embed notebooks/seq/GSEA.qmd#fig-go-plots8 >}}
+{{< embed notebooks/seq/GSEA.qmd#fig-biocarta-medium >}}
 
 ## References {.unnumbered}
 
