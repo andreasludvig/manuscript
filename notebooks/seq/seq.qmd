@@ -282,7 +282,7 @@ plot_volcano_il1B_pooled <-
           panel.grid.minor.x = element_blank(),# Remove minor grid lines
           legend.position = "bottom" 
           )+ 
-    ggtitle('Volcano Plot: IL1B 10 ng/ml vs Vehicle') # Add a title to the plot
+    ggtitle('Volcano Plot: IL1B pooled vs Vehicle') # Add a title to the plot
 
 
 plot_volcano_il1B_pooled
@@ -328,10 +328,16 @@ il1B_10_data$delabel <- NA
 il1B_10_data$delabel[il1B_10_data$diffexpressed != "NO"] <- il1B_10_data$genes[il1B_10_data$diffexpressed != "NO"]
 
 # Create the volcano plot using ggplot2
-plot_volcano_il1B_0.1 <- 
+plot_volcano_il1B_10 <- 
   ggplot(data=il1B_10_data, aes(x=logFC, y=-log10(FDR), col=diffexpressed, label=delabel)) + 
     theme_minimal() + # Use a minimal theme for the plot
-    geom_text_repel(max.overlaps = 10) + # Use repelling text to avoid label overlap
+        geom_text_repel(size = 2.5,
+                        nudge_x = .25,
+                        nudge_y = .25,
+                        point.padding = 0.5,
+                        box.padding = 1,
+                        max.overlaps = 10,
+                        force = 1) + 
     scale_color_manual(values=c("blue", "black", "red")) + # Custom colors for differential expression
     geom_vline(xintercept=c(-1, 1), col="dark grey", linetype = "dashed") + # Vertical lines for fold change thresholds
     geom_hline(yintercept=-log10(0.05), col="dark grey", linetype = "dashed") + # Horizontal line for FDR threshold
@@ -348,9 +354,10 @@ plot_volcano_il1B_0.1 <-
     ggtitle('Volcano Plot: IL1B 10 ng/ml vs Vehicle') # Add a title to the plot
 
 
-plot_volcano_il1B_0.1
+plot_volcano_il1B_10
 
 # ggsave(filename = here("notebooks/seq/output/IL_1B_10ng_volcano.png"))
+# ggsave(filename = here("notebooks/seq/output/IL_1B_10ng_volcano.pdf"))
 
 ```
 
@@ -394,8 +401,15 @@ il1B_0.1_data$delabel[il1B_0.1_data$diffexpressed != "NO"] <- il1B_0.1_data$gene
 plot_volcano_il1B_0.1 <- 
   ggplot(data=il1B_0.1_data, aes(x=logFC, y=-log10(FDR), col=diffexpressed, label=delabel)) + 
     theme_minimal() + # Use a minimal theme for the plot
-    geom_text_repel(max.overlaps = 7) + # Use repelling text to avoid label overlap
+    geom_text_repel(size = 2.5,
+                    nudge_x = .25,
+                    nudge_y = .25,
+                    point.padding = 0.5,
+                    box.padding = 0.5,
+                    max.overlaps = 10,
+                    force = 1) + 
     scale_color_manual(values=c("blue", "black", "red")) + # Custom colors for differential expression
+    #scale_color_viridis_d(option = "H")+
     geom_vline(xintercept=c(-1, 1), col="dark grey", linetype = "dashed") + # Vertical lines for fold change thresholds
     geom_hline(yintercept=-log10(0.05), col="dark grey", linetype = "dashed") + # Horizontal line for FDR threshold
     geom_point() + # Add points for each gene
@@ -414,6 +428,7 @@ plot_volcano_il1B_0.1 <-
 plot_volcano_il1B_0.1
 
 # ggsave(filename = here("notebooks/seq/output/IL_1B_01ng_volcano.png"))
+# ggsave(filename = here("notebooks/seq/output/IL_1B_01ng_volcano.pdf"))
 ```
 
 ## Abemaciclib 5 µM 
@@ -1065,4 +1080,17 @@ print(combined_plot)
 # MAIN SEQ PLOTS
 Lav en samlet figur med 0.1 og 10 ng/ml IL-6 og en anden med begge koncentratioenr med IL-1B. Så laver du A, B, C for at få pathway analyser og vulkan plot med.
 
+### IL1-B 
+```{r}
+# GO_plots$`IL1B 10`$BP
+# 
+# ggsave(filename = here("notebooks/seq/output/GSEA_il1b_10.png"))
+# ggsave(filename = here("notebooks/seq/output/GSEA_il1b_10.pdf"))
+```
+
+```{r}
+# GO_plots$`IL1B 0.1`$BP
+# ggsave(filename = here("notebooks/seq/output/GSEA_il1b_01.png"))
+# ggsave(filename = here("notebooks/seq/output/GSEA_il1b_01.pdf"))
+```
 
