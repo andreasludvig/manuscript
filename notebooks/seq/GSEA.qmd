@@ -91,6 +91,7 @@ Gene Ontology (GO), KEGG, Reactome, and BioCarta are databases and tools that pr
 library(here)
 library(readxl)
 library(tidyverse)
+library(patchwork)
 ```
 
 ### IL-1B 10 ng
@@ -128,7 +129,9 @@ ggplot(plot_data, aes(x = NES, y = fct_reorder(pathway, NES), color = padj, size
   geom_point(stat = 'identity') + 
   xlab("ratio") + ylab("path") + ggtitle("your data") + 
   theme_bw() + 
-  scale_color_distiller(type = "seq", palette = "YlOrRd")
+  scale_color_viridis_c() +
+  #scale_color_distiller(type = "seq", palette = "PuRd") +
+  geom_vline(xintercept = 0)
 ```
 
 
@@ -175,61 +178,63 @@ KEGG_plot_list <- map(kegg_file_paths, function(file_path) {
          title = paste("Top 10 up/down Pathways for","", basename(file_path))
          ) +
     theme_bw() +
-    scale_color_distiller(type = "seq", palette = "YlOrRd") #+
+    geom_vline(xintercept = 0) +
+    scale_color_viridis_c()
+    #scale_color_distiller(type = "seq", palette = "YlOrRd") #+
     #theme(axis.text.y = element_text(size = 8))
 })
+
+```
+
+```{r}
+#| label: fig-kegg-abe
+
 KEGG_plot_list[[1]]
 ```
 
 ```{r}
-#| label: fig-kegg-plots1
-
-KEGG_plot_list[[1]]
-```
-
-```{r}
-#| label: fig-kegg-plots2
+#| label: fig-kegg-il1b-0.1
 
 KEGG_plot_list[[2]]
 ```
 
 ```{r}
-#| label: fig-kegg-plots3
+#| label: fig-kegg-il1b-10
 
 KEGG_plot_list[[3]]
 ```
 
 ```{r}
-#| label: fig-kegg-plots4
+#| label: fig-kegg-il6-0.1
 
 KEGG_plot_list[[4]]
 ```
 
 ```{r}
-#| label: fig-kegg-plots5
+#| label: fig-kegg-il6-10
 
 KEGG_plot_list[[5]]
 ```
 
 ```{r}
-#| label: fig-kegg-plots6
+#| label: fig-kegg-il6-combined
 
 KEGG_plot_list[[6]]
 ```
 
 ```{r}
-#| label: fig-kegg-plots7
+#| label: fig-kegg-medium
 
 KEGG_plot_list[[7]]
 ```
 
 ```{r}
-#| label: fig-kegg-plots8
+#| label: fig-kegg-rif
 
 KEGG_plot_list[[8]]
 ```
 
-#### BIOCARTA
+#### ALL BIOCARTA
 
 **Plot all using a function**
 
@@ -264,48 +269,50 @@ BIOCARTA_plot_list <- map(biocarta_file_paths, function(file_path) {
     geom_point(stat = 'identity') +
     labs(x = "NES", y = "Pathway", title = paste("Top 10 up/down Pathways for","", basename(file_path))) +
     theme_bw() +
-    scale_color_distiller(type = "seq", palette = "YlOrRd") #+
+    geom_vline(xintercept = 0) +
+    scale_color_viridis_c()
+    #scale_color_distiller(type = "seq", palette = "YlOrRd") #+
     #theme(legend.position = "none") # Remove legend to focus on the data
 })
 ```
 
 ```{r}
-#| label: fig-biocarta-plots1
+#| label: fig-biocarta-abe
 BIOCARTA_plot_list[[1]]
 ```
 
 ```{r}
-#| label: fig-biocarta-plots2
+#| label: fig-biocarta-il1b-0.1
 BIOCARTA_plot_list[[2]]
 ```
 
 ```{r}
-#| label: fig-biocarta-plots3
+#| label: fig-biocarta-il1b-10
 BIOCARTA_plot_list[[3]]
 ```
 
 ```{r}
-#| label: fig-biocarta-plots4
+#| label: fig-biocarta-il6-0.1
 BIOCARTA_plot_list[[4]]
 ```
 
 ```{r}
-#| label: fig-biocarta-plots5
+#| label: fig-biocarta-il6-10
 BIOCARTA_plot_list[[5]]
 ```
 
 ```{r}
-#| label: fig-biocarta-plots6
+#| label: fig-biocarta-il6-combined
 BIOCARTA_plot_list[[6]]
 ```
 
 ```{r}
-#| label: fig-biocarta-plots7
+#| label: fig-biocarta-medium
 BIOCARTA_plot_list[[7]]
 ```
 
 ```{r}
-#| label: fig-biocarta-plots8
+#| label: fig-biocarta-rif
 BIOCARTA_plot_list[[8]]
 ```
 
@@ -351,60 +358,62 @@ REACTOME_plot_list <- map(reactome_file_paths, function(file_path) {
          title = paste("Top 10 up/down Pathways for","", basename(file_path))
          ) +
     theme_bw() +
-    scale_color_distiller(type = "seq", palette = "YlOrRd") #+
+    geom_vline(xintercept = 0) +
+    scale_color_viridis_c() 
+    #scale_color_distiller(type = "seq", palette = "YlOrRd") #+
     #theme(legend.position = "none") # Remove legend to focus on the data
 })
 ```
 
 ```{r}
-#| label: fig-reactome-plots1
+#| label: fig-reactome-abe
 
 REACTOME_plot_list[[1]]
 ```
 
 ```{r}
-#| label: fig-reactome-plots2
+#| label: fig-reactome-il1b-0.1
 
 REACTOME_plot_list[[2]]
 ```
 
 ```{r}
-#| label: fig-reactome-plots3
+#| label: fig-reactome-il1b-10
 
 REACTOME_plot_list[[3]]
 ```
 
 ```{r}
-#| label: fig-reactome-plots4
+#| label: fig-reactome-il6-0.1
 
 REACTOME_plot_list[[4]]
 ```
 
 ```{r}
-#| label: fig-reactome-plots5
+#| label: fig-reactome-il6-10
 
 REACTOME_plot_list[[5]]
 ```
 
 ```{r}
-#| label: fig-reactome-plots6
+#| label: fig-reactome-il6-combined
 
 REACTOME_plot_list[[6]]
 ```
 
 ```{r}
-#| label: fig-reactome-plots7
+#| label: fig-reactome-medium
 
 REACTOME_plot_list[[7]]
 ```
 
 ```{r}
-#| label: fig-reactome-plots8
+#| label: fig-reactome-rif
 
 REACTOME_plot_list[[8]]
 ```
 
-### GO
+### GO combined databases
 
 CONSIDER :Split data into each of the GO databases:
 
@@ -449,37 +458,40 @@ GO_plot_list <- map(go_file_paths, function(file_path) {
          title = paste("Top 10 up/down Pathways for","", basename(file_path))
          ) +
     theme_bw() +
-    scale_color_distiller(type = "seq", palette = "YlOrRd") #+
+    geom_vline(xintercept = 0) +
+    scale_color_viridis_c() 
+    #scale_color_viridis_c(option = "A")
+    #scale_color_distiller(type = "seq", palette = "YlOrRd") #+
     #theme(legend.position = "none") # Remove legend to focus on the data
 })
 ```
 
 ```{r}
-#| label: fig-go-plots1
+#| label: fig-go-abe
 
 GO_plot_list[[1]]
 ```
 
 ```{r}
-#| label: fig-go-plots2
+#| label: fig-go-il1b-0.1
 
 GO_plot_list[[2]]
 ```
 
 ```{r}
-#| label: fig-go-plots3
+#| label: fig-go-il1b-10
 
 GO_plot_list[[3]]
 ```
 
 ```{r}
-#| label: fig-go-plots4
+#| label: fig-go-il6-0.1
 
 GO_plot_list[[4]]
 ```
 
 ```{r}
-#| label: fig-go-plots5
+#| label: fig-go-il6-10
 
 
 GO_plot_list[[5]]
@@ -495,7 +507,7 @@ GO_plot_list[[6]]
 ```
 
 ```{r}
-#| label: fig-go-plots7
+#| label: fig-go-medium
 #| fig-width: 12
 #| fig-height: 10
 
@@ -504,9 +516,149 @@ GO_plot_list[[7]]
 ```
 
 ```{r}
-#| label: fig-go-plots8
+#| label: fig-go-rif
 #| fig-width: 12
 #| fig-height: 10
 
 GO_plot_list[[8]]
 ```
+
+### GO split databases
+
+```{r}
+# Read the GO file paths, and for each dataframe, add a column denoting 
+# Which GO database was used.
+GO_sorted_dfs <- map(go_file_paths, function(path) {
+  read_excel(path) %>%
+    mutate(db = case_when(
+      str_detect(pathway, "GOBP") ~ "BP",
+      str_detect(pathway, "GOCC") ~ "CC",
+      str_detect(pathway, "GOMF") ~ "MF"
+    ))
+})
+
+# Process the dataframes. Arrange by absolute NES vaule, group on positive or 
+# negative regulation. Take just top ten of each group, and filter in only stat
+# significant pathways.
+GO_processed_data <- map(GO_sorted_dfs, function(df) {
+    df %>%
+    arrange(desc(abs(NES))) %>%
+    group_by(sign_NES = sign(NES)) %>%
+    slice_head(n = 10) %>%
+    ungroup() %>%
+    filter(padj <= 0.05)
+})
+
+
+# Function to generate plots for each db category within a single dataframe
+generate_plots <- function(df, file_path) {
+  db_categories <- unique(df$db)
+  plots <- map(db_categories, function(db_category) {
+    filtered_data <- filter(df, db == db_category)
+    plot <- ggplot(filtered_data,
+                   aes(x = NES,
+                       y = fct_reorder(pathway, NES),
+                       color = padj,
+                       size = size)) +
+      geom_point(stat = 'identity') +
+      labs(x = "NES",
+           y = "Pathway",
+           title = paste("Top 10 up/down Pathways for", db_category, basename(file_path))) +
+      theme_bw() +
+      geom_vline(xintercept = 0) +
+      scale_color_viridis_c()
+    plot
+  })
+  names(plots) <- db_categories
+  return(plots)
+}
+
+# Map over GO_processed_data to generate plots for each dataframe
+GO_plots <- map2(GO_processed_data, go_file_paths, generate_plots)
+
+# GO_plots is a list of lists of plots, with each inner list containing three plots (one for each db category)
+
+
+# Extracting treatment names from the file paths
+# Assuming the treatment names are directly before "vs_vehicle.xlsx" in the file names
+treatment_names <- sapply(go_file_paths, function(path) {
+  # Extract the part of the filename before "vs_vehicle.xlsx"
+  treatment_name <- sub(".*GO_(.*)_vs_vehicle\\.xlsx$", "\\1", basename(path))
+  # Replace underscores with spaces or any other necessary formatting
+  treatment_name <- gsub("_", " ", treatment_name)
+  treatment_name
+})
+
+# Now, apply these names to your combined_GO_plots list
+names(GO_plots) <- treatment_names
+
+```
+
+```{r}
+#| label: fig-go-split-il1b-0.1
+
+# Combine plots from each database
+combined_plot <- GO_plots[[2]]$BP + GO_plots[[2]]$CC + GO_plots[[2]]$MF + 
+  plot_layout(ncol = 1) # Arranges the plots in a single column
+
+# Print the combined plot
+print(combined_plot)
+```
+
+```{r}
+#| label: fig-go-split-il1b-10
+#| fig-width: 20
+
+
+# Combine plots from each database
+combined_plot <- GO_plots[[3]]$BP + GO_plots[[3]]$CC + GO_plots[[3]]$MF + 
+  plot_layout(ncol = 1) # Arranges the plots in a single column
+
+# Print the combined plot
+print(combined_plot)
+```
+
+```{r}
+#| label: fig-go-split-i6-0.1
+
+# Combine plots from each database
+combined_plot <- GO_plots[[4]]$BP + GO_plots[[4]]$CC + GO_plots[[4]]$MF + 
+  plot_layout(ncol = 1) # Arranges the plots in a single column
+
+# Print the combined plot
+print(combined_plot)
+```
+
+```{r}
+#| label: fig-go-split-i6-10
+
+# Combine plots from each database
+combined_plot <- GO_plots[[5]]$BP + GO_plots[[5]]$CC + GO_plots[[5]]$MF + 
+  plot_layout(ncol = 1) # Arranges the plots in a single column
+
+# Print the combined plot
+print(combined_plot)
+```
+
+```{r}
+#| label: fig-go-split-i6-combined
+
+# Combine plots from each database
+combined_plot <- GO_plots[[6]]$BP + GO_plots[[6]]$CC + GO_plots[[6]]$MF + 
+  plot_layout(ncol = 1) # Arranges the plots in a single column
+
+# Print the combined plot
+print(combined_plot)
+```
+
+```{r}
+#| label: fig-go-split-medium
+
+# Combine plots from each database
+combined_plot <- GO_plots[[7]]$BP + GO_plots[[7]]$CC + GO_plots[[7]]$MF + 
+  plot_layout(ncol = 1) # Arranges the plots in a single column
+
+# Print the combined plot
+print(combined_plot)
+```
+

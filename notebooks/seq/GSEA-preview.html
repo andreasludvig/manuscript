@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
     <meta charset="utf-8">
-    <meta name="generator" content="quarto-1.5.23">
+    <meta name="generator" content="quarto-1.5.24">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -217,7 +217,8 @@
   <li><a href="#il-1b-10-ng" id="toc-il-1b-10-ng" class="nav-link" data-scroll-target="#il-1b-10-ng">IL-1B 10 ng</a></li>
   <li><a href="#all-kegg-plots" id="toc-all-kegg-plots" class="nav-link" data-scroll-target="#all-kegg-plots">All KEGG plots</a></li>
   <li><a href="#reactome" id="toc-reactome" class="nav-link" data-scroll-target="#reactome">REACTOME</a></li>
-  <li><a href="#go" id="toc-go" class="nav-link" data-scroll-target="#go">GO</a></li>
+  <li><a href="#go-combined-databases" id="toc-go-combined-databases" class="nav-link" data-scroll-target="#go-combined-databases">GO combined databases</a></li>
+  <li><a href="#go-split-databases" id="toc-go-split-databases" class="nav-link" data-scroll-target="#go-split-databases">GO split databases</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -318,6 +319,7 @@
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 </section>
 <section id="il-1b-10-ng" class="level3">
@@ -326,24 +328,24 @@
 <h4 class="anchored" data-anchor-id="kegg">KEGG</h4>
 <p>Testing just KEGG. Getting the code to work for one file.</p>
 <div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>path_raw_data <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"notebooks/seq/data_raw/GSEA/"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>gsea_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="fu">here</span>(path_raw_data, <span class="st">"KEGG_IL1B_10_vs_vehicle.xlsx"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>path_raw_data <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"notebooks/seq/data_raw/GSEA/"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>gsea_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="fu">here</span>(path_raw_data, <span class="st">"KEGG_IL1B_10_vs_vehicle.xlsx"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(gsea_data, <span class="sc">-</span><span class="fu">abs</span>(NES)) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="fu">sign</span>(NES)) <span class="sc">%&gt;%</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(gsea_data, <span class="sc">-</span><span class="fu">abs</span>(NES)) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="fu">sign</span>(NES)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> plot_data,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> NES,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="fu">fct_reorder</span>(pathway, NES),</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> padj</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>       ) <span class="sc">+</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">type =</span> <span class="st">"seq"</span>, <span class="at">palette =</span> <span class="st">"YlOrRd"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> plot_data,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> NES,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="fu">fct_reorder</span>(pathway, NES),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">fill =</span> padj</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>           )</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>       ) <span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">type =</span> <span class="st">"seq"</span>, <span class="at">palette =</span> <span class="st">"YlOrRd"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="">
 <figure class="figure">
@@ -351,14 +353,16 @@
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  <span class="co">#scale_fill_continuous(low='red', high='blue', guide=guide_colorbar(reverse=TRUE), ) </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>  <span class="co">#scale_fill_continuous(low='red', high='blue', guide=guide_colorbar(reverse=TRUE), ) </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> NES, <span class="at">y =</span> <span class="fu">fct_reorder</span>(pathway, NES), <span class="at">color =</span> padj, <span class="at">size =</span> size)) <span class="sc">+</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span> </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"ratio"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"path"</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"your data"</span>) <span class="sc">+</span> </span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_distiller</span>(<span class="at">type =</span> <span class="st">"seq"</span>, <span class="at">palette =</span> <span class="st">"YlOrRd"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x =</span> NES, <span class="at">y =</span> <span class="fu">fct_reorder</span>(pathway, NES), <span class="at">color =</span> padj, <span class="at">size =</span> size)) <span class="sc">+</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"ratio"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"path"</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"your data"</span>) <span class="sc">+</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>() <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#scale_color_distiller(type = "seq", palette = "PuRd") +</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="">
 <figure class="figure">
@@ -373,318 +377,314 @@
 <h3 class="anchored" data-anchor-id="all-kegg-plots">All KEGG plots</h3>
 <p>Plot all using a function</p>
 <div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get file paths</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>kegg_file_paths <span class="ot">&lt;-</span> <span class="fu">dir</span>(<span class="fu">here</span>(<span class="st">"notebooks/seq/data_raw/GSEA"</span>), <span class="at">pattern =</span> <span class="st">"KEGG"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset to interleukines if wanted</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#kegg_file_paths[grep(pattern = "IL", kegg_file_paths)]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get file paths</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>kegg_file_paths <span class="ot">&lt;-</span> <span class="fu">dir</span>(<span class="fu">here</span>(<span class="st">"notebooks/seq/data_raw/GSEA"</span>), <span class="at">pattern =</span> <span class="st">"KEGG"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset to interleukines if wanted</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#kegg_file_paths[grep(pattern = "IL", kegg_file_paths)]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list <span class="ot">&lt;-</span> <span class="fu">map</span>(kegg_file_paths, <span class="cf">function</span>(file_path) {</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Read the file</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  plot_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_path)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Process the data</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  processed_data <span class="ot">&lt;-</span> plot_data <span class="sc">%&gt;%</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(NES))) <span class="sc">%&gt;%</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="at">sign_NES =</span> <span class="fu">sign</span>(NES)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(padj <span class="sc">&lt;=</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">pathway =</span> <span class="fu">str_remove_all</span>(pathway, <span class="st">"KEGG_"</span>),</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">pathway =</span> <span class="fu">str_replace_all</span>(pathway, <span class="at">pattern =</span> <span class="st">"_"</span>, <span class="at">replacement =</span> <span class="st">" "</span>),</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">pathway =</span> <span class="fu">str_to_title</span>(pathway))</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate the plot</span></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(processed_data,</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>         <span class="fu">aes</span>(<span class="at">x =</span> NES,</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fu">fct_reorder</span>(pathway, NES),</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> padj,</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> size</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>             )</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span></span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"NES"</span>,</span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Pathway"</span>,</span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Top 10 up/down Pathways for"</span>,<span class="st">""</span>, <span class="fu">basename</span>(file_path))</span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_distiller</span>(<span class="at">type =</span> <span class="st">"seq"</span>, <span class="at">palette =</span> <span class="st">"YlOrRd"</span>) <span class="co">#+</span></span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">#theme(axis.text.y = element_text(size = 8))</span></span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="">
-<figure class="figure">
-<p class=""><a href="GSEA_files/figure-html/unnamed-chunk-7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="GSEA_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="1152"></a></p>
-</figure>
-</div>
-</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list <span class="ot">&lt;-</span> <span class="fu">map</span>(kegg_file_paths, <span class="cf">function</span>(file_path) {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Read the file</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  plot_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_path)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Process the data</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  processed_data <span class="ot">&lt;-</span> plot_data <span class="sc">%&gt;%</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(NES))) <span class="sc">%&gt;%</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="at">sign_NES =</span> <span class="fu">sign</span>(NES)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(padj <span class="sc">&lt;=</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">pathway =</span> <span class="fu">str_remove_all</span>(pathway, <span class="st">"KEGG_"</span>),</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">pathway =</span> <span class="fu">str_replace_all</span>(pathway, <span class="at">pattern =</span> <span class="st">"_"</span>, <span class="at">replacement =</span> <span class="st">" "</span>),</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">pathway =</span> <span class="fu">str_to_title</span>(pathway))</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate the plot</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(processed_data,</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>         <span class="fu">aes</span>(<span class="at">x =</span> NES,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fu">fct_reorder</span>(pathway, NES),</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> padj,</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> size</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>             )</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"NES"</span>,</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Pathway"</span>,</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Top 10 up/down Pathways for"</span>,<span class="st">""</span>, <span class="fu">basename</span>(file_path))</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_viridis_c</span>()</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_color_distiller(type = "seq", palette = "YlOrRd") #+</span></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>    <span class="co">#theme(axis.text.y = element_text(size = 8))</span></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="cell-fig-kegg-plots1" class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fig-kegg-plots1" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-kegg-plots1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-kegg-plots1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="GSEA_files/figure-html/fig-kegg-plots1-1.png" id="fig-kegg-plots1" class="img-fluid figure-img" width="1152"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-plots1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-</figcaption>
-</figure>
-</div>
-</div>
-</div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div id="cell-fig-kegg-plots2" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="cell-fig-kegg-abe" class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-kegg-plots2" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-kegg-abe" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-kegg-plots2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-kegg-plots2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="GSEA_files/figure-html/fig-kegg-plots2-1.png" id="fig-kegg-plots2" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-kegg-abe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-kegg-abe-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="GSEA_files/figure-html/fig-kegg-abe-1.png" id="fig-kegg-abe" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-plots2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-abe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="cell-fig-kegg-plots3" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div id="cell-fig-kegg-il1b-0.1" class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-kegg-plots3" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-kegg-il1b-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-kegg-plots3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-kegg-plots3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="GSEA_files/figure-html/fig-kegg-plots3-1.png" id="fig-kegg-plots3" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-kegg-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-kegg-il1b-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="GSEA_files/figure-html/fig-kegg-il1b-0.1-1.png" id="fig-kegg-il1b-0.1" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-plots3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="cell-fig-kegg-plots4" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="cell-fig-kegg-il1b-10" class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">4</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-kegg-plots4" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-kegg-il1b-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-kegg-plots4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-kegg-plots4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="GSEA_files/figure-html/fig-kegg-plots4-1.png" id="fig-kegg-plots4" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-kegg-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-kegg-il1b-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="GSEA_files/figure-html/fig-kegg-il1b-10-1.png" id="fig-kegg-il1b-10" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-plots4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [12]:</pre></div><div id="cell-fig-kegg-plots5" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="cell-fig-kegg-il6-0.1" class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">5</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">4</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-kegg-plots5" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-kegg-il6-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-kegg-plots5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-kegg-plots5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="GSEA_files/figure-html/fig-kegg-plots5-1.png" id="fig-kegg-plots5" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-kegg-il6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-kegg-il6-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="GSEA_files/figure-html/fig-kegg-il6-0.1-1.png" id="fig-kegg-il6-0.1" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-plots5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-il6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [13]:</pre></div><div id="cell-fig-kegg-plots6" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [12]:</pre></div><div id="cell-fig-kegg-il6-10" class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">6</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">5</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-kegg-plots6" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-kegg-il6-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-kegg-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-kegg-plots6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="GSEA_files/figure-html/fig-kegg-plots6-1.png" id="fig-kegg-plots6" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-kegg-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-kegg-il6-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="GSEA_files/figure-html/fig-kegg-il6-10-1.png" id="fig-kegg-il6-10" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [14]:</pre></div><div id="cell-fig-kegg-plots7" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [13]:</pre></div><div id="cell-fig-kegg-il6-combined" class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">7</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">6</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-kegg-plots7" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-kegg-il6-combined" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-kegg-plots7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-kegg-plots7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="GSEA_files/figure-html/fig-kegg-plots7-1.png" id="fig-kegg-plots7" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-kegg-il6-combined-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-kegg-il6-combined-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="GSEA_files/figure-html/fig-kegg-il6-combined-1.png" id="fig-kegg-il6-combined" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-plots7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-il6-combined-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [15]:</pre></div><div id="cell-fig-kegg-plots8" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [14]:</pre></div><div id="cell-fig-kegg-medium" class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">8</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">7</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-kegg-plots8" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-kegg-medium" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-kegg-plots8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-kegg-plots8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="GSEA_files/figure-html/fig-kegg-plots8-1.png" id="fig-kegg-plots8" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-kegg-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-kegg-medium-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="GSEA_files/figure-html/fig-kegg-medium-1.png" id="fig-kegg-medium" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-plots8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<section id="biocarta" class="level4">
-<h4 class="anchored" data-anchor-id="biocarta">BIOCARTA</h4>
+<div class="cell-container"><div class="cell-decorator"><pre>In [15]:</pre></div><div id="cell-fig-kegg-rif" class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>KEGG_plot_list[[<span class="dv">8</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-kegg-rif" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kegg-rif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-kegg-rif-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="GSEA_files/figure-html/fig-kegg-rif-1.png" id="fig-kegg-rif" class="img-fluid figure-img" width="1152"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-rif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+<section id="all-biocarta" class="level4">
+<h4 class="anchored" data-anchor-id="all-biocarta">ALL BIOCARTA</h4>
 <p><strong>Plot all using a function</strong></p>
 <p>Get all file paths related to BIOCARTA</p>
 <div class="cell-container"><div class="cell-decorator"><pre>In [16]:</pre></div><div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get file paths</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>biocarta_file_paths <span class="ot">&lt;-</span> <span class="fu">dir</span>(<span class="fu">here</span>(<span class="st">"notebooks/seq/data_raw/GSEA"</span>), <span class="at">pattern =</span> <span class="st">"BIOCARTA"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset to interleukines if wanted</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># kegg_file_paths[grep(pattern = "IL", kegg_file_paths)]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get file paths</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>biocarta_file_paths <span class="ot">&lt;-</span> <span class="fu">dir</span>(<span class="fu">here</span>(<span class="st">"notebooks/seq/data_raw/GSEA"</span>), <span class="at">pattern =</span> <span class="st">"BIOCARTA"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset to interleukines if wanted</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># kegg_file_paths[grep(pattern = "IL", kegg_file_paths)]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [17]:</pre></div><div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>BIOCARTA_plot_list <span class="ot">&lt;-</span> <span class="fu">map</span>(biocarta_file_paths, <span class="cf">function</span>(file_path) {</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Read the file</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  plot_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_path)</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Process the data</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  processed_data <span class="ot">&lt;-</span> plot_data <span class="sc">%&gt;%</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(NES))) <span class="sc">%&gt;%</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="at">sign_NES =</span> <span class="fu">sign</span>(NES)) <span class="sc">%&gt;%</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(padj <span class="sc">&lt;=</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">pathway =</span> <span class="fu">str_remove_all</span>(pathway, <span class="st">"BIOCARTA"</span>),</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">pathway =</span> <span class="fu">str_replace_all</span>(pathway, <span class="at">pattern =</span> <span class="st">"_"</span>, <span class="at">replacement =</span> <span class="st">" "</span>),</span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">pathway =</span> <span class="fu">str_to_title</span>(pathway))</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate the plot</span></span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(processed_data, <span class="fu">aes</span>(<span class="at">x =</span> NES, <span class="at">y =</span> <span class="fu">fct_reorder</span>(pathway, NES), <span class="at">color =</span> padj, <span class="at">size =</span> size)) <span class="sc">+</span></span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span></span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"NES"</span>, <span class="at">y =</span> <span class="st">"Pathway"</span>, <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Top 10 up/down Pathways for"</span>,<span class="st">""</span>, <span class="fu">basename</span>(file_path))) <span class="sc">+</span></span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_distiller</span>(<span class="at">type =</span> <span class="st">"seq"</span>, <span class="at">palette =</span> <span class="st">"YlOrRd"</span>) <span class="co">#+</span></span>
-<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">#theme(legend.position = "none") # Remove legend to focus on the data</span></span>
-<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>BIOCARTA_plot_list <span class="ot">&lt;-</span> <span class="fu">map</span>(biocarta_file_paths, <span class="cf">function</span>(file_path) {</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Read the file</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  plot_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_path)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Process the data</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  processed_data <span class="ot">&lt;-</span> plot_data <span class="sc">%&gt;%</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(NES))) <span class="sc">%&gt;%</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="at">sign_NES =</span> <span class="fu">sign</span>(NES)) <span class="sc">%&gt;%</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(padj <span class="sc">&lt;=</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">pathway =</span> <span class="fu">str_remove_all</span>(pathway, <span class="st">"BIOCARTA"</span>),</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">pathway =</span> <span class="fu">str_replace_all</span>(pathway, <span class="at">pattern =</span> <span class="st">"_"</span>, <span class="at">replacement =</span> <span class="st">" "</span>),</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">pathway =</span> <span class="fu">str_to_title</span>(pathway))</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate the plot</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(processed_data, <span class="fu">aes</span>(<span class="at">x =</span> NES, <span class="at">y =</span> <span class="fu">fct_reorder</span>(pathway, NES), <span class="at">color =</span> padj, <span class="at">size =</span> size)) <span class="sc">+</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"NES"</span>, <span class="at">y =</span> <span class="st">"Pathway"</span>, <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Top 10 up/down Pathways for"</span>,<span class="st">""</span>, <span class="fu">basename</span>(file_path))) <span class="sc">+</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_viridis_c</span>()</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_color_distiller(type = "seq", palette = "YlOrRd") #+</span></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">#theme(legend.position = "none") # Remove legend to focus on the data</span></span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [18]:</pre></div><div id="cell-fig-biocarta-plots1" class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>BIOCARTA_plot_list[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [18]:</pre></div><div id="cell-fig-biocarta-abe" class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>BIOCARTA_plot_list[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-biocarta-plots1" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-biocarta-abe" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-biocarta-plots1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-biocarta-plots1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="GSEA_files/figure-html/fig-biocarta-plots1-1.png" id="fig-biocarta-plots1" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-biocarta-abe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-biocarta-abe-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="GSEA_files/figure-html/fig-biocarta-abe-1.png" id="fig-biocarta-abe" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-plots1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-abe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [19]:</pre></div><div id="cell-fig-biocarta-plots2" class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>BIOCARTA_plot_list[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [19]:</pre></div><div id="cell-fig-biocarta-il1b-0.1" class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>BIOCARTA_plot_list[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-biocarta-plots2" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-biocarta-il1b-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-biocarta-plots2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-biocarta-plots2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="GSEA_files/figure-html/fig-biocarta-plots2-1.png" id="fig-biocarta-plots2" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-biocarta-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-biocarta-il1b-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="GSEA_files/figure-html/fig-biocarta-il1b-0.1-1.png" id="fig-biocarta-il1b-0.1" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-plots2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [20]:</pre></div><div id="cell-fig-biocarta-plots3" class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>BIOCARTA_plot_list[[<span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [20]:</pre></div><div id="cell-fig-biocarta-il1b-10" class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>BIOCARTA_plot_list[[<span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-biocarta-plots3" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-biocarta-il1b-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-biocarta-plots3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-biocarta-plots3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-19"><img src="GSEA_files/figure-html/fig-biocarta-plots3-1.png" id="fig-biocarta-plots3" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-biocarta-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-biocarta-il1b-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="GSEA_files/figure-html/fig-biocarta-il1b-10-1.png" id="fig-biocarta-il1b-10" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-plots3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [21]:</pre></div><div id="cell-fig-biocarta-plots4" class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>BIOCARTA_plot_list[[<span class="dv">4</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [21]:</pre></div><div id="cell-fig-biocarta-il6-0.1" class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>BIOCARTA_plot_list[[<span class="dv">4</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-biocarta-plots4" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-biocarta-il6-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-biocarta-plots4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-biocarta-plots4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-20"><img src="GSEA_files/figure-html/fig-biocarta-plots4-1.png" id="fig-biocarta-plots4" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-biocarta-il6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-biocarta-il6-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-19"><img src="GSEA_files/figure-html/fig-biocarta-il6-0.1-1.png" id="fig-biocarta-il6-0.1" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-plots4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-il6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [22]:</pre></div><div id="cell-fig-biocarta-plots5" class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>BIOCARTA_plot_list[[<span class="dv">5</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [22]:</pre></div><div id="cell-fig-biocarta-il6-10" class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>BIOCARTA_plot_list[[<span class="dv">5</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-biocarta-plots5" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-biocarta-il6-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-biocarta-plots5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-biocarta-plots5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-21"><img src="GSEA_files/figure-html/fig-biocarta-plots5-1.png" id="fig-biocarta-plots5" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-biocarta-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-biocarta-il6-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-20"><img src="GSEA_files/figure-html/fig-biocarta-il6-10-1.png" id="fig-biocarta-il6-10" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-plots5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [23]:</pre></div><div id="cell-fig-biocarta-plots6" class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>BIOCARTA_plot_list[[<span class="dv">6</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [23]:</pre></div><div id="cell-fig-biocarta-il6-combined" class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>BIOCARTA_plot_list[[<span class="dv">6</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-biocarta-plots6" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-biocarta-il6-combined" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-biocarta-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-biocarta-plots6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-22"><img src="GSEA_files/figure-html/fig-biocarta-plots6-1.png" id="fig-biocarta-plots6" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-biocarta-il6-combined-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-biocarta-il6-combined-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-21"><img src="GSEA_files/figure-html/fig-biocarta-il6-combined-1.png" id="fig-biocarta-il6-combined" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-il6-combined-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [24]:</pre></div><div id="cell-fig-biocarta-plots7" class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>BIOCARTA_plot_list[[<span class="dv">7</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [24]:</pre></div><div id="cell-fig-biocarta-medium" class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>BIOCARTA_plot_list[[<span class="dv">7</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-biocarta-plots7" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-biocarta-medium" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-biocarta-plots7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-biocarta-plots7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-23"><img src="GSEA_files/figure-html/fig-biocarta-plots7-1.png" id="fig-biocarta-plots7" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-biocarta-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-biocarta-medium-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-22"><img src="GSEA_files/figure-html/fig-biocarta-medium-1.png" id="fig-biocarta-medium" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-plots7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [25]:</pre></div><div id="cell-fig-biocarta-plots8" class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>BIOCARTA_plot_list[[<span class="dv">8</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [25]:</pre></div><div id="cell-fig-biocarta-rif" class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>BIOCARTA_plot_list[[<span class="dv">8</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-biocarta-plots8" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-biocarta-rif" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-biocarta-plots8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-biocarta-plots8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-24"><img src="GSEA_files/figure-html/fig-biocarta-plots8-1.png" id="fig-biocarta-plots8" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-biocarta-rif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-biocarta-rif-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-23"><img src="GSEA_files/figure-html/fig-biocarta-rif-1.png" id="fig-biocarta-rif" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-plots8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-rif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
@@ -696,169 +696,171 @@
 <h3 class="anchored" data-anchor-id="reactome">REACTOME</h3>
 <p>Get all file paths related to Reactome</p>
 <div class="cell-container"><div class="cell-decorator"><pre>In [26]:</pre></div><div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get file paths</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>reactome_file_paths <span class="ot">&lt;-</span> <span class="fu">dir</span>(<span class="fu">here</span>(<span class="st">"notebooks/seq/data_raw/GSEA"</span>), <span class="at">pattern =</span> <span class="st">"REACTOME"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset to interleukines if wanted</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co"># kegg_file_paths[grep(pattern = "IL", kegg_file_paths)]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get file paths</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>reactome_file_paths <span class="ot">&lt;-</span> <span class="fu">dir</span>(<span class="fu">here</span>(<span class="st">"notebooks/seq/data_raw/GSEA"</span>), <span class="at">pattern =</span> <span class="st">"REACTOME"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset to interleukines if wanted</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># kegg_file_paths[grep(pattern = "IL", kegg_file_paths)]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [27]:</pre></div><div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>REACTOME_plot_list <span class="ot">&lt;-</span> <span class="fu">map</span>(reactome_file_paths, <span class="cf">function</span>(file_path) {</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Read the file</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  plot_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_path)</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Process the data</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  processed_data <span class="ot">&lt;-</span> plot_data <span class="sc">%&gt;%</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(NES))) <span class="sc">%&gt;%</span></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="at">sign_NES =</span> <span class="fu">sign</span>(NES)) <span class="sc">%&gt;%</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(padj <span class="sc">&lt;=</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">pathway =</span> <span class="fu">str_remove_all</span>(pathway, <span class="st">"REACTOME_"</span>),</span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">pathway =</span> <span class="fu">str_replace_all</span>(pathway, <span class="at">pattern =</span> <span class="st">"_"</span>, <span class="at">replacement =</span> <span class="st">" "</span>),</span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">pathway =</span> <span class="fu">str_to_title</span>(pathway))</span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate the plot</span></span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(processed_data,</span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>         <span class="fu">aes</span>(<span class="at">x =</span> NES,</span>
-<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fu">fct_reorder</span>(pathway, NES),</span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> padj,</span>
-<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> size</span>
-<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>             )</span>
-<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
-<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span></span>
-<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"NES"</span>,</span>
-<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Pathway"</span>,</span>
-<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Top 10 up/down Pathways for"</span>,<span class="st">""</span>, <span class="fu">basename</span>(file_path))</span>
-<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
-<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_distiller</span>(<span class="at">type =</span> <span class="st">"seq"</span>, <span class="at">palette =</span> <span class="st">"YlOrRd"</span>) <span class="co">#+</span></span>
-<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>    <span class="co">#theme(legend.position = "none") # Remove legend to focus on the data</span></span>
-<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>REACTOME_plot_list <span class="ot">&lt;-</span> <span class="fu">map</span>(reactome_file_paths, <span class="cf">function</span>(file_path) {</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Read the file</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  plot_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_path)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Process the data</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  processed_data <span class="ot">&lt;-</span> plot_data <span class="sc">%&gt;%</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(NES))) <span class="sc">%&gt;%</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="at">sign_NES =</span> <span class="fu">sign</span>(NES)) <span class="sc">%&gt;%</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(padj <span class="sc">&lt;=</span> <span class="fl">0.05</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">pathway =</span> <span class="fu">str_remove_all</span>(pathway, <span class="st">"REACTOME_"</span>),</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">pathway =</span> <span class="fu">str_replace_all</span>(pathway, <span class="at">pattern =</span> <span class="st">"_"</span>, <span class="at">replacement =</span> <span class="st">" "</span>),</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">pathway =</span> <span class="fu">str_to_title</span>(pathway))</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate the plot</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(processed_data,</span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>         <span class="fu">aes</span>(<span class="at">x =</span> NES,</span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fu">fct_reorder</span>(pathway, NES),</span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> padj,</span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> size</span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>             )</span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span></span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"NES"</span>,</span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Pathway"</span>,</span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Top 10 up/down Pathways for"</span>,<span class="st">""</span>, <span class="fu">basename</span>(file_path))</span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_viridis_c</span>() </span>
+<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_color_distiller(type = "seq", palette = "YlOrRd") #+</span></span>
+<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a>    <span class="co">#theme(legend.position = "none") # Remove legend to focus on the data</span></span>
+<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [28]:</pre></div><div id="cell-fig-reactome-plots1" class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>REACTOME_plot_list[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fig-reactome-plots1" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-reactome-plots1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-reactome-plots1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-25"><img src="GSEA_files/figure-html/fig-reactome-plots1-1.png" id="fig-reactome-plots1" class="img-fluid figure-img" width="1152"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-plots1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-</figcaption>
-</figure>
-</div>
-</div>
-</div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [29]:</pre></div><div id="cell-fig-reactome-plots2" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [28]:</pre></div><div id="cell-fig-reactome-abe" class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>REACTOME_plot_list[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>REACTOME_plot_list[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-reactome-plots2" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-reactome-abe" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-reactome-plots2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-reactome-plots2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-26"><img src="GSEA_files/figure-html/fig-reactome-plots2-1.png" id="fig-reactome-plots2" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-reactome-abe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-reactome-abe-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-24"><img src="GSEA_files/figure-html/fig-reactome-abe-1.png" id="fig-reactome-abe" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-plots2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-abe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [30]:</pre></div><div id="cell-fig-reactome-plots3" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [29]:</pre></div><div id="cell-fig-reactome-il1b-0.1" class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>REACTOME_plot_list[[<span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>REACTOME_plot_list[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-reactome-plots3" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-reactome-il1b-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-reactome-plots3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-reactome-plots3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-27"><img src="GSEA_files/figure-html/fig-reactome-plots3-1.png" id="fig-reactome-plots3" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-reactome-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-reactome-il1b-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-25"><img src="GSEA_files/figure-html/fig-reactome-il1b-0.1-1.png" id="fig-reactome-il1b-0.1" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-plots3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [31]:</pre></div><div id="cell-fig-reactome-plots4" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [30]:</pre></div><div id="cell-fig-reactome-il1b-10" class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>REACTOME_plot_list[[<span class="dv">4</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>REACTOME_plot_list[[<span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-reactome-plots4" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-reactome-il1b-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-reactome-plots4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-reactome-plots4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-28"><img src="GSEA_files/figure-html/fig-reactome-plots4-1.png" id="fig-reactome-plots4" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-reactome-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-reactome-il1b-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-26"><img src="GSEA_files/figure-html/fig-reactome-il1b-10-1.png" id="fig-reactome-il1b-10" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-plots4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [32]:</pre></div><div id="cell-fig-reactome-plots5" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [31]:</pre></div><div id="cell-fig-reactome-il6-0.1" class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>REACTOME_plot_list[[<span class="dv">5</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>REACTOME_plot_list[[<span class="dv">4</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-reactome-plots5" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-reactome-il6-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-reactome-plots5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-reactome-plots5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-29"><img src="GSEA_files/figure-html/fig-reactome-plots5-1.png" id="fig-reactome-plots5" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-reactome-il6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-reactome-il6-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-27"><img src="GSEA_files/figure-html/fig-reactome-il6-0.1-1.png" id="fig-reactome-il6-0.1" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-plots5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-il6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [33]:</pre></div><div id="cell-fig-reactome-plots6" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [32]:</pre></div><div id="cell-fig-reactome-il6-10" class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>REACTOME_plot_list[[<span class="dv">6</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>REACTOME_plot_list[[<span class="dv">5</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-reactome-plots6" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-reactome-il6-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-reactome-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-reactome-plots6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-30"><img src="GSEA_files/figure-html/fig-reactome-plots6-1.png" id="fig-reactome-plots6" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-reactome-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-reactome-il6-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-28"><img src="GSEA_files/figure-html/fig-reactome-il6-10-1.png" id="fig-reactome-il6-10" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [34]:</pre></div><div id="cell-fig-reactome-plots7" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [33]:</pre></div><div id="cell-fig-reactome-il6-combined" class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>REACTOME_plot_list[[<span class="dv">7</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>REACTOME_plot_list[[<span class="dv">6</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-reactome-plots7" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-reactome-il6-combined" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-reactome-plots7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-reactome-plots7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-31"><img src="GSEA_files/figure-html/fig-reactome-plots7-1.png" id="fig-reactome-plots7" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-reactome-il6-combined-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-reactome-il6-combined-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-29"><img src="GSEA_files/figure-html/fig-reactome-il6-combined-1.png" id="fig-reactome-il6-combined" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-plots7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-il6-combined-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [35]:</pre></div><div id="cell-fig-reactome-plots8" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [34]:</pre></div><div id="cell-fig-reactome-medium" class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>REACTOME_plot_list[[<span class="dv">8</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>REACTOME_plot_list[[<span class="dv">7</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-reactome-plots8" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-reactome-medium" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-reactome-plots8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-reactome-plots8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-32"><img src="GSEA_files/figure-html/fig-reactome-plots8-1.png" id="fig-reactome-plots8" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-reactome-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-reactome-medium-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-30"><img src="GSEA_files/figure-html/fig-reactome-medium-1.png" id="fig-reactome-medium" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-plots8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [35]:</pre></div><div id="cell-fig-reactome-rif" class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>REACTOME_plot_list[[<span class="dv">8</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-reactome-rif" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reactome-rif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-reactome-rif-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-31"><img src="GSEA_files/figure-html/fig-reactome-rif-1.png" id="fig-reactome-rif" class="img-fluid figure-img" width="1152"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-rif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
 </section>
-<section id="go" class="level3">
-<h3 class="anchored" data-anchor-id="go">GO</h3>
+<section id="go-combined-databases" class="level3">
+<h3 class="anchored" data-anchor-id="go-combined-databases">GO combined databases</h3>
 <p>CONSIDER :Split data into each of the GO databases:</p>
 <ol type="1">
 <li><strong>Biological Process (BP)</strong>, which describes the biological objectives to which the gene or gene product contributes.</li>
@@ -867,126 +869,129 @@
 </ol>
 <p>Get all file paths related to GO</p>
 <div class="cell-container"><div class="cell-decorator"><pre>In [36]:</pre></div><div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get file paths</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>go_file_paths <span class="ot">&lt;-</span> <span class="fu">dir</span>(<span class="fu">here</span>(<span class="st">"notebooks/seq/data_raw/GSEA"</span>), <span class="at">pattern =</span> <span class="st">"GO"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset to interleukines if wanted</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="co"># kegg_file_paths[grep(pattern = "IL", kegg_file_paths)]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get file paths</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>go_file_paths <span class="ot">&lt;-</span> <span class="fu">dir</span>(<span class="fu">here</span>(<span class="st">"notebooks/seq/data_raw/GSEA"</span>), <span class="at">pattern =</span> <span class="st">"GO"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset to interleukines if wanted</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co"># kegg_file_paths[grep(pattern = "IL", kegg_file_paths)]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [37]:</pre></div><div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>GO_plot_list <span class="ot">&lt;-</span> <span class="fu">map</span>(go_file_paths, <span class="cf">function</span>(file_path) {</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Read the file</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  plot_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_path)</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Process the data</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  processed_data <span class="ot">&lt;-</span> plot_data <span class="sc">%&gt;%</span></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(NES))) <span class="sc">%&gt;%</span></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="at">sign_NES =</span> <span class="fu">sign</span>(NES)) <span class="sc">%&gt;%</span></span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(padj <span class="sc">&lt;=</span> <span class="fl">0.05</span>)</span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate the plot</span></span>
-<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(processed_data,</span>
-<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>         <span class="fu">aes</span>(<span class="at">x =</span> NES,</span>
-<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fu">fct_reorder</span>(pathway, NES),</span>
-<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> padj,</span>
-<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> size</span>
-<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>             )</span>
-<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
-<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span></span>
-<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"NES"</span>,</span>
-<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Pathway"</span>,</span>
-<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Top 10 up/down Pathways for"</span>,<span class="st">""</span>, <span class="fu">basename</span>(file_path))</span>
-<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
-<span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb42-27"><a href="#cb42-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_distiller</span>(<span class="at">type =</span> <span class="st">"seq"</span>, <span class="at">palette =</span> <span class="st">"YlOrRd"</span>) <span class="co">#+</span></span>
-<span id="cb42-28"><a href="#cb42-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">#theme(legend.position = "none") # Remove legend to focus on the data</span></span>
-<span id="cb42-29"><a href="#cb42-29" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>GO_plot_list <span class="ot">&lt;-</span> <span class="fu">map</span>(go_file_paths, <span class="cf">function</span>(file_path) {</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Read the file</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  plot_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_path)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Process the data</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  processed_data <span class="ot">&lt;-</span> plot_data <span class="sc">%&gt;%</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(NES))) <span class="sc">%&gt;%</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="at">sign_NES =</span> <span class="fu">sign</span>(NES)) <span class="sc">%&gt;%</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(padj <span class="sc">&lt;=</span> <span class="fl">0.05</span>)</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate the plot</span></span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(processed_data,</span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>         <span class="fu">aes</span>(<span class="at">x =</span> NES,</span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="fu">fct_reorder</span>(pathway, NES),</span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> padj,</span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> size</span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>             )</span>
+<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
+<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span></span>
+<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"NES"</span>,</span>
+<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Pathway"</span>,</span>
+<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Top 10 up/down Pathways for"</span>,<span class="st">""</span>, <span class="fu">basename</span>(file_path))</span>
+<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
+<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_viridis_c</span>() </span>
+<span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_color_viridis_c(option = "A")</span></span>
+<span id="cb43-30"><a href="#cb43-30" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_color_distiller(type = "seq", palette = "YlOrRd") #+</span></span>
+<span id="cb43-31"><a href="#cb43-31" aria-hidden="true" tabindex="-1"></a>    <span class="co">#theme(legend.position = "none") # Remove legend to focus on the data</span></span>
+<span id="cb43-32"><a href="#cb43-32" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [38]:</pre></div><div id="cell-fig-go-plots1" class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>GO_plot_list[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fig-go-plots1" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-go-plots1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-go-plots1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-33"><img src="GSEA_files/figure-html/fig-go-plots1-1.png" id="fig-go-plots1" class="img-fluid figure-img" width="1152"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-plots1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-</figcaption>
-</figure>
-</div>
-</div>
-</div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [39]:</pre></div><div id="cell-fig-go-plots2" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [38]:</pre></div><div id="cell-fig-go-abe" class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>GO_plot_list[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>GO_plot_list[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-go-plots2" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-go-abe" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-go-plots2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-go-plots2-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-34"><img src="GSEA_files/figure-html/fig-go-plots2-1.png" id="fig-go-plots2" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-go-abe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-go-abe-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-32"><img src="GSEA_files/figure-html/fig-go-abe-1.png" id="fig-go-abe" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-plots2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-abe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [40]:</pre></div><div id="cell-fig-go-plots3" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [39]:</pre></div><div id="cell-fig-go-il1b-0.1" class="cell">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>GO_plot_list[[<span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>GO_plot_list[[<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-go-plots3" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-go-il1b-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-go-plots3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-go-plots3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-35"><img src="GSEA_files/figure-html/fig-go-plots3-1.png" id="fig-go-plots3" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-go-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-go-il1b-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-33"><img src="GSEA_files/figure-html/fig-go-il1b-0.1-1.png" id="fig-go-il1b-0.1" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-plots3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [41]:</pre></div><div id="cell-fig-go-plots4" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [40]:</pre></div><div id="cell-fig-go-il1b-10" class="cell">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>GO_plot_list[[<span class="dv">4</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>GO_plot_list[[<span class="dv">3</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-go-plots4" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-go-il1b-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-go-plots4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-go-plots4-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-36"><img src="GSEA_files/figure-html/fig-go-plots4-1.png" id="fig-go-plots4" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-go-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-go-il1b-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-34"><img src="GSEA_files/figure-html/fig-go-il1b-10-1.png" id="fig-go-il1b-10" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-plots4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [42]:</pre></div><div id="cell-fig-go-plots5" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [41]:</pre></div><div id="cell-fig-go-il6-0.1" class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>GO_plot_list[[<span class="dv">5</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>GO_plot_list[[<span class="dv">4</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-go-plots5" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-go-il6-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-go-plots5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-go-plots5-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-37"><img src="GSEA_files/figure-html/fig-go-plots5-1.png" id="fig-go-plots5" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-go-il6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-go-il6-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-35"><img src="GSEA_files/figure-html/fig-go-il6-0.1-1.png" id="fig-go-il6-0.1" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-plots5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-il6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [42]:</pre></div><div id="cell-fig-go-il6-10" class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>GO_plot_list[[<span class="dv">5</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-go-il6-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-go-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-go-il6-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-36"><img src="GSEA_files/figure-html/fig-go-il6-10-1.png" id="fig-go-il6-10" class="img-fluid figure-img" width="1152"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
 <div class="cell-container"><div class="cell-decorator"><pre>In [43]:</pre></div><div id="cell-fig-go-plots6" class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>GO_plot_list[[<span class="dv">6</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>GO_plot_list[[<span class="dv">6</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-go-plots6" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-go-plots6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-38"><img src="GSEA_files/figure-html/fig-go-plots6-1.png" id="fig-go-plots6" class="img-fluid figure-img" width="1152"></a>
+<a href="GSEA_files/figure-html/fig-go-plots6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-37"><img src="GSEA_files/figure-html/fig-go-plots6-1.png" id="fig-go-plots6" class="img-fluid figure-img" width="1152"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -994,31 +999,221 @@
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [44]:</pre></div><div id="cell-fig-go-plots7" class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>GO_plot_list[[<span class="dv">7</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [44]:</pre></div><div id="cell-fig-go-medium" class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>GO_plot_list[[<span class="dv">7</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-go-plots7" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-go-medium" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-go-plots7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-go-plots7-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-39"><img src="GSEA_files/figure-html/fig-go-plots7-1.png" id="fig-go-plots7" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-go-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-go-medium-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-38"><img src="GSEA_files/figure-html/fig-go-medium-1.png" id="fig-go-medium" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-plots7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [45]:</pre></div><div id="cell-fig-go-plots8" class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>GO_plot_list[[<span class="dv">8</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [45]:</pre></div><div id="cell-fig-go-rif" class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>GO_plot_list[[<span class="dv">8</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-go-plots8" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<div id="fig-go-rif" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-go-plots8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="GSEA_files/figure-html/fig-go-plots8-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-40"><img src="GSEA_files/figure-html/fig-go-plots8-1.png" id="fig-go-plots8" class="img-fluid figure-img" width="1152"></a>
+<div aria-describedby="fig-go-rif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-go-rif-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-39"><img src="GSEA_files/figure-html/fig-go-rif-1.png" id="fig-go-rif" class="img-fluid figure-img" width="1152"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-plots8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-rif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
+<section id="go-split-databases" class="level3">
+<h3 class="anchored" data-anchor-id="go-split-databases">GO split databases</h3>
+<div class="cell-container"><div class="cell-decorator"><pre>In [46]:</pre></div><div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the GO file paths, and for each dataframe, add a column denoting </span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Which GO database was used.</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>GO_sorted_dfs <span class="ot">&lt;-</span> <span class="fu">map</span>(go_file_paths, <span class="cf">function</span>(path) {</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_excel</span>(path) <span class="sc">%&gt;%</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">db =</span> <span class="fu">case_when</span>(</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(pathway, <span class="st">"GOBP"</span>) <span class="sc">~</span> <span class="st">"BP"</span>,</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(pathway, <span class="st">"GOCC"</span>) <span class="sc">~</span> <span class="st">"CC"</span>,</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(pathway, <span class="st">"GOMF"</span>) <span class="sc">~</span> <span class="st">"MF"</span></span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Process the dataframes. Arrange by absolute NES vaule, group on positive or </span></span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a><span class="co"># negative regulation. Take just top ten of each group, and filter in only stat</span></span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a><span class="co"># significant pathways.</span></span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>GO_processed_data <span class="ot">&lt;-</span> <span class="fu">map</span>(GO_sorted_dfs, <span class="cf">function</span>(df) {</span>
+<span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a>    df <span class="sc">%&gt;%</span></span>
+<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(NES))) <span class="sc">%&gt;%</span></span>
+<span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="at">sign_NES =</span> <span class="fu">sign</span>(NES)) <span class="sc">%&gt;%</span></span>
+<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb52-21"><a href="#cb52-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(padj <span class="sc">&lt;=</span> <span class="fl">0.05</span>)</span>
+<span id="cb52-22"><a href="#cb52-22" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb52-23"><a href="#cb52-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-24"><a href="#cb52-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-25"><a href="#cb52-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to generate plots for each db category within a single dataframe</span></span>
+<span id="cb52-26"><a href="#cb52-26" aria-hidden="true" tabindex="-1"></a>generate_plots <span class="ot">&lt;-</span> <span class="cf">function</span>(df, file_path) {</span>
+<span id="cb52-27"><a href="#cb52-27" aria-hidden="true" tabindex="-1"></a>  db_categories <span class="ot">&lt;-</span> <span class="fu">unique</span>(df<span class="sc">$</span>db)</span>
+<span id="cb52-28"><a href="#cb52-28" aria-hidden="true" tabindex="-1"></a>  plots <span class="ot">&lt;-</span> <span class="fu">map</span>(db_categories, <span class="cf">function</span>(db_category) {</span>
+<span id="cb52-29"><a href="#cb52-29" aria-hidden="true" tabindex="-1"></a>    filtered_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(df, db <span class="sc">==</span> db_category)</span>
+<span id="cb52-30"><a href="#cb52-30" aria-hidden="true" tabindex="-1"></a>    plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(filtered_data,</span>
+<span id="cb52-31"><a href="#cb52-31" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">aes</span>(<span class="at">x =</span> NES,</span>
+<span id="cb52-32"><a href="#cb52-32" aria-hidden="true" tabindex="-1"></a>                       <span class="at">y =</span> <span class="fu">fct_reorder</span>(pathway, NES),</span>
+<span id="cb52-33"><a href="#cb52-33" aria-hidden="true" tabindex="-1"></a>                       <span class="at">color =</span> padj,</span>
+<span id="cb52-34"><a href="#cb52-34" aria-hidden="true" tabindex="-1"></a>                       <span class="at">size =</span> size)) <span class="sc">+</span></span>
+<span id="cb52-35"><a href="#cb52-35" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">'identity'</span>) <span class="sc">+</span></span>
+<span id="cb52-36"><a href="#cb52-36" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"NES"</span>,</span>
+<span id="cb52-37"><a href="#cb52-37" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="st">"Pathway"</span>,</span>
+<span id="cb52-38"><a href="#cb52-38" aria-hidden="true" tabindex="-1"></a>           <span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Top 10 up/down Pathways for"</span>, db_category, <span class="fu">basename</span>(file_path))) <span class="sc">+</span></span>
+<span id="cb52-39"><a href="#cb52-39" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb52-40"><a href="#cb52-40" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb52-41"><a href="#cb52-41" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_color_viridis_c</span>()</span>
+<span id="cb52-42"><a href="#cb52-42" aria-hidden="true" tabindex="-1"></a>    plot</span>
+<span id="cb52-43"><a href="#cb52-43" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb52-44"><a href="#cb52-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(plots) <span class="ot">&lt;-</span> db_categories</span>
+<span id="cb52-45"><a href="#cb52-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(plots)</span>
+<span id="cb52-46"><a href="#cb52-46" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb52-47"><a href="#cb52-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-48"><a href="#cb52-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Map over GO_processed_data to generate plots for each dataframe</span></span>
+<span id="cb52-49"><a href="#cb52-49" aria-hidden="true" tabindex="-1"></a>GO_plots <span class="ot">&lt;-</span> <span class="fu">map2</span>(GO_processed_data, go_file_paths, generate_plots)</span>
+<span id="cb52-50"><a href="#cb52-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-51"><a href="#cb52-51" aria-hidden="true" tabindex="-1"></a><span class="co"># GO_plots is a list of lists of plots, with each inner list containing three plots (one for each db category)</span></span>
+<span id="cb52-52"><a href="#cb52-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-53"><a href="#cb52-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-54"><a href="#cb52-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting treatment names from the file paths</span></span>
+<span id="cb52-55"><a href="#cb52-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming the treatment names are directly before "vs_vehicle.xlsx" in the file names</span></span>
+<span id="cb52-56"><a href="#cb52-56" aria-hidden="true" tabindex="-1"></a>treatment_names <span class="ot">&lt;-</span> <span class="fu">sapply</span>(go_file_paths, <span class="cf">function</span>(path) {</span>
+<span id="cb52-57"><a href="#cb52-57" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract the part of the filename before "vs_vehicle.xlsx"</span></span>
+<span id="cb52-58"><a href="#cb52-58" aria-hidden="true" tabindex="-1"></a>  treatment_name <span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">".*GO_(.*)_vs_vehicle</span><span class="sc">\\</span><span class="st">.xlsx$"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, <span class="fu">basename</span>(path))</span>
+<span id="cb52-59"><a href="#cb52-59" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace underscores with spaces or any other necessary formatting</span></span>
+<span id="cb52-60"><a href="#cb52-60" aria-hidden="true" tabindex="-1"></a>  treatment_name <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"_"</span>, <span class="st">" "</span>, treatment_name)</span>
+<span id="cb52-61"><a href="#cb52-61" aria-hidden="true" tabindex="-1"></a>  treatment_name</span>
+<span id="cb52-62"><a href="#cb52-62" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb52-63"><a href="#cb52-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-64"><a href="#cb52-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Now, apply these names to your combined_GO_plots list</span></span>
+<span id="cb52-65"><a href="#cb52-65" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(GO_plots) <span class="ot">&lt;-</span> treatment_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [47]:</pre></div><div id="cell-fig-go-split-il1b-0.1" class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine plots from each database</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>combined_plot <span class="ot">&lt;-</span> GO_plots[[<span class="dv">2</span>]]<span class="sc">$</span>BP <span class="sc">+</span> GO_plots[[<span class="dv">2</span>]]<span class="sc">$</span>CC <span class="sc">+</span> GO_plots[[<span class="dv">2</span>]]<span class="sc">$</span>MF <span class="sc">+</span> </span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">ncol =</span> <span class="dv">1</span>) <span class="co"># Arranges the plots in a single column</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the combined plot</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(combined_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-go-split-il1b-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-go-split-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-go-split-il1b-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-40"><img src="GSEA_files/figure-html/fig-go-split-il1b-0.1-1.png" id="fig-go-split-il1b-0.1" class="img-fluid figure-img" width="1152"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-split-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [48]:</pre></div><div id="cell-fig-go-split-il1b-10" class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine plots from each database</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>combined_plot <span class="ot">&lt;-</span> GO_plots[[<span class="dv">3</span>]]<span class="sc">$</span>BP <span class="sc">+</span> GO_plots[[<span class="dv">3</span>]]<span class="sc">$</span>CC <span class="sc">+</span> GO_plots[[<span class="dv">3</span>]]<span class="sc">$</span>MF <span class="sc">+</span> </span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">ncol =</span> <span class="dv">1</span>) <span class="co"># Arranges the plots in a single column</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the combined plot</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(combined_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-go-split-il1b-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="1920">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-go-split-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-go-split-il1b-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-41"><img src="GSEA_files/figure-html/fig-go-split-il1b-10-1.png" id="fig-go-split-il1b-10" class="img-fluid figure-img" width="1920"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-split-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [49]:</pre></div><div id="cell-fig-go-split-i6-0.1" class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine plots from each database</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>combined_plot <span class="ot">&lt;-</span> GO_plots[[<span class="dv">4</span>]]<span class="sc">$</span>BP <span class="sc">+</span> GO_plots[[<span class="dv">4</span>]]<span class="sc">$</span>CC <span class="sc">+</span> GO_plots[[<span class="dv">4</span>]]<span class="sc">$</span>MF <span class="sc">+</span> </span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">ncol =</span> <span class="dv">1</span>) <span class="co"># Arranges the plots in a single column</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the combined plot</span></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(combined_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-go-split-i6-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-go-split-i6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-go-split-i6-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-42"><img src="GSEA_files/figure-html/fig-go-split-i6-0.1-1.png" id="fig-go-split-i6-0.1" class="img-fluid figure-img" width="1152"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-split-i6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [50]:</pre></div><div id="cell-fig-go-split-i6-10" class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine plots from each database</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>combined_plot <span class="ot">&lt;-</span> GO_plots[[<span class="dv">5</span>]]<span class="sc">$</span>BP <span class="sc">+</span> GO_plots[[<span class="dv">5</span>]]<span class="sc">$</span>CC <span class="sc">+</span> GO_plots[[<span class="dv">5</span>]]<span class="sc">$</span>MF <span class="sc">+</span> </span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">ncol =</span> <span class="dv">1</span>) <span class="co"># Arranges the plots in a single column</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the combined plot</span></span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(combined_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-go-split-i6-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-go-split-i6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-go-split-i6-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-43"><img src="GSEA_files/figure-html/fig-go-split-i6-10-1.png" id="fig-go-split-i6-10" class="img-fluid figure-img" width="1152"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-split-i6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [51]:</pre></div><div id="cell-fig-go-split-i6-combined" class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine plots from each database</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>combined_plot <span class="ot">&lt;-</span> GO_plots[[<span class="dv">6</span>]]<span class="sc">$</span>BP <span class="sc">+</span> GO_plots[[<span class="dv">6</span>]]<span class="sc">$</span>CC <span class="sc">+</span> GO_plots[[<span class="dv">6</span>]]<span class="sc">$</span>MF <span class="sc">+</span> </span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">ncol =</span> <span class="dv">1</span>) <span class="co"># Arranges the plots in a single column</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the combined plot</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(combined_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-go-split-i6-combined" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-go-split-i6-combined-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-go-split-i6-combined-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-44"><img src="GSEA_files/figure-html/fig-go-split-i6-combined-1.png" id="fig-go-split-i6-combined" class="img-fluid figure-img" width="1152"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-split-i6-combined-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figcaption>
+</figure>
+</div>
+</div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [52]:</pre></div><div id="cell-fig-go-split-medium" class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine plots from each database</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>combined_plot <span class="ot">&lt;-</span> GO_plots[[<span class="dv">7</span>]]<span class="sc">$</span>BP <span class="sc">+</span> GO_plots[[<span class="dv">7</span>]]<span class="sc">$</span>CC <span class="sc">+</span> GO_plots[[<span class="dv">7</span>]]<span class="sc">$</span>MF <span class="sc">+</span> </span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_layout</span>(<span class="at">ncol =</span> <span class="dv">1</span>) <span class="co"># Arranges the plots in a single column</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the combined plot</span></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(combined_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-go-split-medium" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-go-split-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="GSEA_files/figure-html/fig-go-split-medium-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-45"><img src="GSEA_files/figure-html/fig-go-split-medium-1.png" id="fig-go-split-medium" class="img-fluid figure-img" width="1152"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-split-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
 </figure>
 </div>
@@ -1113,7 +1308,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -1435,7 +1630,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"selector":".lightbox","closeEffect":"zoom","openEffect":"zoom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","selector":".lightbox","openEffect":"zoom","loop":false});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
