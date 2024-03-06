@@ -13,9 +13,12 @@ author:
     affiliations:
       - SDU
   - name: Erkka Järvinen
-    affiliations: SDU?
+    affiliations: 
+      - SDU?
+    corresponding: false
   - name: Tore B. Stage
-    affiliations: SDU
+    affiliations: 
+      - SDU
     corresponding: false
 keywords:
   - 3D primary human hepatocytes
@@ -214,6 +217,14 @@ Volcano plot of 10 ng/ml IL-1B vs vehicle
 
 
 
+## References
+
+::: {#refs}
+:::
+
+
+
+
 
 ## Redundant plots
 
@@ -274,8 +285,3 @@ Below are individual donor 2 plots
 {{< embed notebooks/LCMS/LCMS.qmd#fig-act_3A4_IL_1B_AS0008 >}}
 
 
-
-## References {.unnumbered}
-
-::: {#refs}
-:::
