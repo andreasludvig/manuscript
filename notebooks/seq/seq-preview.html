@@ -228,7 +228,10 @@
   <li><a href="#go-split-databases" id="toc-go-split-databases" class="nav-link" data-scroll-target="#go-split-databases">GO split databases</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#main-seq-plots" id="toc-main-seq-plots" class="nav-link" data-scroll-target="#main-seq-plots">MAIN SEQ PLOTS</a></li>
+  <li><a href="#main-seq-plots" id="toc-main-seq-plots" class="nav-link" data-scroll-target="#main-seq-plots">MAIN SEQ PLOTS</a>
+  <ul class="collapse">
+  <li><a href="#il1-b" id="toc-il1-b" class="nav-link" data-scroll-target="#il1-b">IL1-B</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -583,7 +586,7 @@ Volcano plot. IL-6 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold c
 <span id="cb36-34"><a href="#cb36-34" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),<span class="co"># Remove minor grid lines</span></span>
 <span id="cb36-35"><a href="#cb36-35" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.position =</span> <span class="st">"bottom"</span> </span>
 <span id="cb36-36"><a href="#cb36-36" aria-hidden="true" tabindex="-1"></a>          )<span class="sc">+</span> </span>
-<span id="cb36-37"><a href="#cb36-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">'Volcano Plot: IL1B 10 ng/ml vs Vehicle'</span>) <span class="co"># Add a title to the plot</span></span>
+<span id="cb36-37"><a href="#cb36-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">'Volcano Plot: IL1B pooled vs Vehicle'</span>) <span class="co"># Add a title to the plot</span></span>
 <span id="cb36-38"><a href="#cb36-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-39"><a href="#cb36-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-40"><a href="#cb36-40" aria-hidden="true" tabindex="-1"></a>plot_volcano_il1B_pooled</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -648,36 +651,43 @@ Volcano plot. IL-1B pooled vs.&nbsp;vehicle control. Vertical lines for fold cha
 <span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>il1B_10_data<span class="sc">$</span>delabel[il1B_10_data<span class="sc">$</span>diffexpressed <span class="sc">!=</span> <span class="st">"NO"</span>] <span class="ot">&lt;-</span> il1B_10_data<span class="sc">$</span>genes[il1B_10_data<span class="sc">$</span>diffexpressed <span class="sc">!=</span> <span class="st">"NO"</span>]</span>
 <span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the volcano plot using ggplot2</span></span>
-<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>plot_volcano_il1B_0<span class="fl">.1</span> <span class="ot">&lt;-</span> </span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>plot_volcano_il1B_10 <span class="ot">&lt;-</span> </span>
 <span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data=</span>il1B_10_data, <span class="fu">aes</span>(<span class="at">x=</span>logFC, <span class="at">y=</span><span class="sc">-</span><span class="fu">log10</span>(FDR), <span class="at">col=</span>diffexpressed, <span class="at">label=</span>delabel)) <span class="sc">+</span> </span>
 <span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="co"># Use a minimal theme for the plot</span></span>
-<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text_repel</span>(<span class="at">max.overlaps =</span> <span class="dv">10</span>) <span class="sc">+</span> <span class="co"># Use repelling text to avoid label overlap</span></span>
-<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"black"</span>, <span class="st">"red"</span>)) <span class="sc">+</span> <span class="co"># Custom colors for differential expression</span></span>
-<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">col=</span><span class="st">"dark grey"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> <span class="co"># Vertical lines for fold change thresholds</span></span>
-<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="sc">-</span><span class="fu">log10</span>(<span class="fl">0.05</span>), <span class="at">col=</span><span class="st">"dark grey"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> <span class="co"># Horizontal line for FDR threshold</span></span>
-<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="co"># Add points for each gene</span></span>
-<span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">'Direction of gene expression'</span>, <span class="co"># Customize legend title</span></span>
-<span id="cb44-29"><a href="#cb44-29" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="fu">expression</span>(<span class="st">"log"</span>[<span class="dv">2</span>]<span class="sc">*</span><span class="st">"FC (IL6 vs Vehicle)"</span>), <span class="co"># Customize x-axis label</span></span>
-<span id="cb44-30"><a href="#cb44-30" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="fu">expression</span>(<span class="st">"-log"</span>[<span class="dv">10</span>]<span class="sc">*</span><span class="st">"FDR"</span>)) <span class="sc">+</span> <span class="co"># Customize y-axis label</span></span>
-<span id="cb44-31"><a href="#cb44-31" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_x_continuous(limits = c(-8, 10)) + # Customize x-axis breaks</span></span>
-<span id="cb44-32"><a href="#cb44-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_y_continuous(limits = c(0, 320)) + # Customize y-axis breaks</span></span>
-<span id="cb44-33"><a href="#cb44-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">panel.grid.minor.y =</span> <span class="fu">element_blank</span>(),<span class="co"># Remove minor grid lines</span></span>
-<span id="cb44-34"><a href="#cb44-34" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),<span class="co"># Remove minor grid lines</span></span>
-<span id="cb44-35"><a href="#cb44-35" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.position =</span> <span class="st">"bottom"</span> </span>
-<span id="cb44-36"><a href="#cb44-36" aria-hidden="true" tabindex="-1"></a>          )<span class="sc">+</span> </span>
-<span id="cb44-37"><a href="#cb44-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">'Volcano Plot: IL1B 10 ng/ml vs Vehicle'</span>) <span class="co"># Add a title to the plot</span></span>
-<span id="cb44-38"><a href="#cb44-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-39"><a href="#cb44-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-40"><a href="#cb44-40" aria-hidden="true" tabindex="-1"></a>plot_volcano_il1B_0<span class="fl">.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_text_repel</span>(<span class="at">size =</span> <span class="fl">2.5</span>,</span>
+<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>                        <span class="at">nudge_x =</span> .<span class="dv">25</span>,</span>
+<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a>                        <span class="at">nudge_y =</span> .<span class="dv">25</span>,</span>
+<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a>                        <span class="at">point.padding =</span> <span class="fl">0.5</span>,</span>
+<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a>                        <span class="at">box.padding =</span> <span class="dv">1</span>,</span>
+<span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a>                        <span class="at">max.overlaps =</span> <span class="dv">10</span>,</span>
+<span id="cb44-29"><a href="#cb44-29" aria-hidden="true" tabindex="-1"></a>                        <span class="at">force =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb44-30"><a href="#cb44-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"black"</span>, <span class="st">"red"</span>)) <span class="sc">+</span> <span class="co"># Custom colors for differential expression</span></span>
+<span id="cb44-31"><a href="#cb44-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">col=</span><span class="st">"dark grey"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> <span class="co"># Vertical lines for fold change thresholds</span></span>
+<span id="cb44-32"><a href="#cb44-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="sc">-</span><span class="fu">log10</span>(<span class="fl">0.05</span>), <span class="at">col=</span><span class="st">"dark grey"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> <span class="co"># Horizontal line for FDR threshold</span></span>
+<span id="cb44-33"><a href="#cb44-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="co"># Add points for each gene</span></span>
+<span id="cb44-34"><a href="#cb44-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">'Direction of gene expression'</span>, <span class="co"># Customize legend title</span></span>
+<span id="cb44-35"><a href="#cb44-35" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="fu">expression</span>(<span class="st">"log"</span>[<span class="dv">2</span>]<span class="sc">*</span><span class="st">"FC (IL6 vs Vehicle)"</span>), <span class="co"># Customize x-axis label</span></span>
+<span id="cb44-36"><a href="#cb44-36" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="fu">expression</span>(<span class="st">"-log"</span>[<span class="dv">10</span>]<span class="sc">*</span><span class="st">"FDR"</span>)) <span class="sc">+</span> <span class="co"># Customize y-axis label</span></span>
+<span id="cb44-37"><a href="#cb44-37" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_x_continuous(limits = c(-8, 10)) + # Customize x-axis breaks</span></span>
+<span id="cb44-38"><a href="#cb44-38" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_y_continuous(limits = c(0, 320)) + # Customize y-axis breaks</span></span>
+<span id="cb44-39"><a href="#cb44-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">panel.grid.minor.y =</span> <span class="fu">element_blank</span>(),<span class="co"># Remove minor grid lines</span></span>
+<span id="cb44-40"><a href="#cb44-40" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),<span class="co"># Remove minor grid lines</span></span>
+<span id="cb44-41"><a href="#cb44-41" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.position =</span> <span class="st">"bottom"</span> </span>
+<span id="cb44-42"><a href="#cb44-42" aria-hidden="true" tabindex="-1"></a>          )<span class="sc">+</span> </span>
+<span id="cb44-43"><a href="#cb44-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">'Volcano Plot: IL1B 10 ng/ml vs Vehicle'</span>) <span class="co"># Add a title to the plot</span></span>
+<span id="cb44-44"><a href="#cb44-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-45"><a href="#cb44-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-46"><a href="#cb44-46" aria-hidden="true" tabindex="-1"></a>plot_volcano_il1B_10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 7089 rows containing missing values (`geom_text_repel()`).</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: ggrepel: 5707 unlabeled data points (too many overlaps). Consider
+<pre><code>Warning: ggrepel: 5738 unlabeled data points (too many overlaps). Consider
 increasing max.overlaps</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(filename = here("notebooks/seq/output/IL_1B_10ng_volcano.png"))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(filename = here("notebooks/seq/output/IL_1B_10ng_volcano.png"))</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(filename = here("notebooks/seq/output/IL_1B_10ng_volcano.pdf"))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-volcano-il1B-10" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -733,24 +743,31 @@ Volcano plot. IL-1B 10 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold c
 <span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a>plot_volcano_il1B_0<span class="fl">.1</span> <span class="ot">&lt;-</span> </span>
 <span id="cb52-21"><a href="#cb52-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data=</span>il1B_0<span class="fl">.1</span>_data, <span class="fu">aes</span>(<span class="at">x=</span>logFC, <span class="at">y=</span><span class="sc">-</span><span class="fu">log10</span>(FDR), <span class="at">col=</span>diffexpressed, <span class="at">label=</span>delabel)) <span class="sc">+</span> </span>
 <span id="cb52-22"><a href="#cb52-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="co"># Use a minimal theme for the plot</span></span>
-<span id="cb52-23"><a href="#cb52-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text_repel</span>(<span class="at">max.overlaps =</span> <span class="dv">7</span>) <span class="sc">+</span> <span class="co"># Use repelling text to avoid label overlap</span></span>
-<span id="cb52-24"><a href="#cb52-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"black"</span>, <span class="st">"red"</span>)) <span class="sc">+</span> <span class="co"># Custom colors for differential expression</span></span>
-<span id="cb52-25"><a href="#cb52-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">col=</span><span class="st">"dark grey"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> <span class="co"># Vertical lines for fold change thresholds</span></span>
-<span id="cb52-26"><a href="#cb52-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="sc">-</span><span class="fu">log10</span>(<span class="fl">0.05</span>), <span class="at">col=</span><span class="st">"dark grey"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> <span class="co"># Horizontal line for FDR threshold</span></span>
-<span id="cb52-27"><a href="#cb52-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="co"># Add points for each gene</span></span>
-<span id="cb52-28"><a href="#cb52-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">'Direction of gene expression'</span>, <span class="co"># Customize legend title</span></span>
-<span id="cb52-29"><a href="#cb52-29" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="fu">expression</span>(<span class="st">"log"</span>[<span class="dv">2</span>]<span class="sc">*</span><span class="st">"FC (IL6 vs Vehicle)"</span>), <span class="co"># Customize x-axis label</span></span>
-<span id="cb52-30"><a href="#cb52-30" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="fu">expression</span>(<span class="st">"-log"</span>[<span class="dv">10</span>]<span class="sc">*</span><span class="st">"FDR"</span>)) <span class="sc">+</span> <span class="co"># Customize y-axis label</span></span>
-<span id="cb52-31"><a href="#cb52-31" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_x_continuous(limits = c(-8, 10)) + # Customize x-axis breaks</span></span>
-<span id="cb52-32"><a href="#cb52-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_y_continuous(limits = c(0, 320)) + # Customize y-axis breaks</span></span>
-<span id="cb52-33"><a href="#cb52-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">panel.grid.minor.y =</span> <span class="fu">element_blank</span>(),<span class="co"># Remove minor grid lines</span></span>
-<span id="cb52-34"><a href="#cb52-34" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),<span class="co"># Remove minor grid lines</span></span>
-<span id="cb52-35"><a href="#cb52-35" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.position =</span> <span class="st">"bottom"</span> </span>
-<span id="cb52-36"><a href="#cb52-36" aria-hidden="true" tabindex="-1"></a>          )<span class="sc">+</span> </span>
-<span id="cb52-37"><a href="#cb52-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">'Volcano Plot: IL1B 0.1 ng/ml vs Vehicle'</span>) <span class="co"># Add a title to the plot</span></span>
-<span id="cb52-38"><a href="#cb52-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-39"><a href="#cb52-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-40"><a href="#cb52-40" aria-hidden="true" tabindex="-1"></a>plot_volcano_il1B_0<span class="fl">.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb52-23"><a href="#cb52-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text_repel</span>(<span class="at">size =</span> <span class="fl">2.5</span>,</span>
+<span id="cb52-24"><a href="#cb52-24" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nudge_x =</span> .<span class="dv">25</span>,</span>
+<span id="cb52-25"><a href="#cb52-25" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nudge_y =</span> .<span class="dv">25</span>,</span>
+<span id="cb52-26"><a href="#cb52-26" aria-hidden="true" tabindex="-1"></a>                    <span class="at">point.padding =</span> <span class="fl">0.5</span>,</span>
+<span id="cb52-27"><a href="#cb52-27" aria-hidden="true" tabindex="-1"></a>                    <span class="at">box.padding =</span> <span class="fl">0.5</span>,</span>
+<span id="cb52-28"><a href="#cb52-28" aria-hidden="true" tabindex="-1"></a>                    <span class="at">max.overlaps =</span> <span class="dv">10</span>,</span>
+<span id="cb52-29"><a href="#cb52-29" aria-hidden="true" tabindex="-1"></a>                    <span class="at">force =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb52-30"><a href="#cb52-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"black"</span>, <span class="st">"red"</span>)) <span class="sc">+</span> <span class="co"># Custom colors for differential expression</span></span>
+<span id="cb52-31"><a href="#cb52-31" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_color_viridis_d(option = "H")+</span></span>
+<span id="cb52-32"><a href="#cb52-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>), <span class="at">col=</span><span class="st">"dark grey"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> <span class="co"># Vertical lines for fold change thresholds</span></span>
+<span id="cb52-33"><a href="#cb52-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="sc">-</span><span class="fu">log10</span>(<span class="fl">0.05</span>), <span class="at">col=</span><span class="st">"dark grey"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> <span class="co"># Horizontal line for FDR threshold</span></span>
+<span id="cb52-34"><a href="#cb52-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="co"># Add points for each gene</span></span>
+<span id="cb52-35"><a href="#cb52-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">'Direction of gene expression'</span>, <span class="co"># Customize legend title</span></span>
+<span id="cb52-36"><a href="#cb52-36" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="fu">expression</span>(<span class="st">"log"</span>[<span class="dv">2</span>]<span class="sc">*</span><span class="st">"FC (IL6 vs Vehicle)"</span>), <span class="co"># Customize x-axis label</span></span>
+<span id="cb52-37"><a href="#cb52-37" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="fu">expression</span>(<span class="st">"-log"</span>[<span class="dv">10</span>]<span class="sc">*</span><span class="st">"FDR"</span>)) <span class="sc">+</span> <span class="co"># Customize y-axis label</span></span>
+<span id="cb52-38"><a href="#cb52-38" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_x_continuous(limits = c(-8, 10)) + # Customize x-axis breaks</span></span>
+<span id="cb52-39"><a href="#cb52-39" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale_y_continuous(limits = c(0, 320)) + # Customize y-axis breaks</span></span>
+<span id="cb52-40"><a href="#cb52-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">panel.grid.minor.y =</span> <span class="fu">element_blank</span>(),<span class="co"># Remove minor grid lines</span></span>
+<span id="cb52-41"><a href="#cb52-41" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.minor.x =</span> <span class="fu">element_blank</span>(),<span class="co"># Remove minor grid lines</span></span>
+<span id="cb52-42"><a href="#cb52-42" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.position =</span> <span class="st">"bottom"</span> </span>
+<span id="cb52-43"><a href="#cb52-43" aria-hidden="true" tabindex="-1"></a>          )<span class="sc">+</span> </span>
+<span id="cb52-44"><a href="#cb52-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">'Volcano Plot: IL1B 0.1 ng/ml vs Vehicle'</span>) <span class="co"># Add a title to the plot</span></span>
+<span id="cb52-45"><a href="#cb52-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-46"><a href="#cb52-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-47"><a href="#cb52-47" aria-hidden="true" tabindex="-1"></a>plot_volcano_il1B_0<span class="fl">.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 11903 rows containing missing values (`geom_text_repel()`).</code></pre>
 </div>
@@ -759,7 +776,8 @@ Volcano plot. IL-1B 10 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold c
 increasing max.overlaps</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(filename = here("notebooks/seq/output/IL_1B_01ng_volcano.png"))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(filename = here("notebooks/seq/output/IL_1B_01ng_volcano.png"))</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(filename = here("notebooks/seq/output/IL_1B_01ng_volcano.pdf"))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-volcano-il1B-0.1" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1832,6 +1850,20 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <section id="main-seq-plots" class="level1">
 <h1>MAIN SEQ PLOTS</h1>
 <p>Lav en samlet figur med 0.1 og 10 ng/ml IL-6 og en anden med begge koncentratioenr med IL-1B. Så laver du A, B, C for at få pathway analyser og vulkan plot med.</p>
+<section id="il1-b" class="level3">
+<h3 class="anchored" data-anchor-id="il1-b">IL1-B</h3>
+<div class="cell-container"><div class="cell-decorator"><pre>In [70]:</pre></div><div class="cell">
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GO_plots$`IL1B 10`$BP</span></span>
+<span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb116-3"><a href="#cb116-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(filename = here("notebooks/seq/output/GSEA_il1b_10.png"))</span></span>
+<span id="cb116-4"><a href="#cb116-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(filename = here("notebooks/seq/output/GSEA_il1b_10.pdf"))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [71]:</pre></div><div class="cell">
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GO_plots$`IL1B 0.1`$BP</span></span>
+<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(filename = here("notebooks/seq/output/GSEA_il1b_01.png"))</span></span>
+<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave(filename = here("notebooks/seq/output/GSEA_il1b_01.pdf"))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+</section>
 </section>
      </main>
 <!-- /main column -->  <script id="quarto-html-after-body" type="application/javascript">
@@ -2242,7 +2274,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"openEffect":"zoom","closeEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","selector":".lightbox","loop":false,"closeEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

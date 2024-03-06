@@ -160,28 +160,9 @@ IC50:      9.447e-01
 
 ### Sequencing
 
-Volcano plot of 10 ng/ml IL-6 vs vehicle
-
-{{< embed notebooks/seq/seq.qmd#fig-volcano-il6-10 >}}
-
-Volcano plot of 0.1 ng/ml IL-6 vs vehicle
-
-{{< embed notebooks/seq/seq.qmd#fig-volcano-il6-0.1 >}}
-
-Volcano plot of pooled IL-1B vs vehicle
-
-{{< embed notebooks/seq/seq.qmd#fig-volcano-il1B-pooled >}}
-
-Volcano plot of 10 ng/ml IL-1B vs vehicle
-
-{{< embed notebooks/seq/seq.qmd#fig-volcano-il1B-10 >}}
-
-Volcano plot of 10 ng/ml IL-1B vs vehicle
-
-{{< embed notebooks/seq/seq.qmd#fig-volcano-il1B-0.1 >}}
+![IL-1B sequencing](images/seq_il1b.png){#fig-seq-il1b}
 
 ## Supplementary
-
 
 ### mRNA
 
@@ -191,8 +172,8 @@ Volcano plot of 10 ng/ml IL-1B vs vehicle
 
 {{< embed notebooks/qPCR/mRNA.qmd#fig-rest_of_cyps_overall_mean >}}
 
-
 ### Seq
+
 #### **REACTOME**
 
 {{< embed notebooks/seq/seq.qmd#fig-reactome-il1b-0.1 >}}
@@ -205,8 +186,8 @@ Volcano plot of 10 ng/ml IL-1B vs vehicle
 
 {{< embed notebooks/seq/seq.qmd#fig-reactome-il6-combined >}}
 
-
 #### **Medium vs vehicle**
+
 {{< embed notebooks/seq/seq.qmd#fig-reactome-medium >}}
 
 {{< embed notebooks/seq/seq.qmd#fig-kegg-medium >}}
@@ -215,16 +196,10 @@ Volcano plot of 10 ng/ml IL-1B vs vehicle
 
 {{< embed notebooks/seq/seq.qmd#fig-go-split-medium >}}
 
-
-
 ## References
 
 ::: {#refs}
 :::
-
-
-
-
 
 ## Redundant plots
 
@@ -233,6 +208,7 @@ Volcano plot of 10 ng/ml IL-1B vs vehicle
 #### GSEA
 
 **KEGG**
+
 {{< embed notebooks/seq/seq.qmd#fig-kegg-il1b-0.1 >}}
 
 {{< embed notebooks/seq/seq.qmd#fig-kegg-il1b-10 >}}
@@ -243,8 +219,8 @@ Volcano plot of 10 ng/ml IL-1B vs vehicle
 
 {{< embed notebooks/seq/seq.qmd#fig-kegg-il6-combined >}}
 
-
 **BIOCARTA**
+
 {{< embed notebooks/seq/seq.qmd#fig-biocarta-il1b-0.1 >}}
 
 {{< embed notebooks/seq/seq.qmd#fig-biocarta-il1b-10 >}}
@@ -256,7 +232,6 @@ Volcano plot of 10 ng/ml IL-1B vs vehicle
 {{< embed notebooks/seq/seq.qmd#fig-biocarta-il6-combined >}}
 
 {{< embed notebooks/seq/seq.qmd#fig-biocarta-medium >}}
-
 
 ### Viability
 
@@ -283,5 +258,3 @@ Below are individual donor 2 plots
 {{< embed notebooks/LCMS/LCMS.qmd#fig-act_3A4_IL_6_AS0008 >}}
 
 {{< embed notebooks/LCMS/LCMS.qmd#fig-act_3A4_IL_1B_AS0008 >}}
-
-
