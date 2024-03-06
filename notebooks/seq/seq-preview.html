@@ -219,11 +219,6 @@
   </ul></li>
   <li><a href="#gsea" id="toc-gsea" class="nav-link" data-scroll-target="#gsea">GSEA</a>
   <ul class="collapse">
-  <li><a href="#pathwaygene-set-enrichment-analysis" id="toc-pathwaygene-set-enrichment-analysis" class="nav-link" data-scroll-target="#pathwaygene-set-enrichment-analysis">Pathway/gene set enrichment analysis</a>
-  <ul class="collapse">
-  <li><a href="#how-does-pea-work" id="toc-how-does-pea-work" class="nav-link" data-scroll-target="#how-does-pea-work">How does PEA work?</a></li>
-  <li><a href="#our-analysis" id="toc-our-analysis" class="nav-link" data-scroll-target="#our-analysis">Our analysis</a></li>
-  </ul></li>
   <li><a href="#visualization-of-gsea" id="toc-visualization-of-gsea" class="nav-link" data-scroll-target="#visualization-of-gsea">Visualization of GSEA</a>
   <ul class="collapse">
   <li><a href="#il-1b-10-ng" id="toc-il-1b-10-ng" class="nav-link" data-scroll-target="#il-1b-10-ng">IL-1B 10 ng</a></li>
@@ -233,6 +228,7 @@
   <li><a href="#go-split-databases" id="toc-go-split-databases" class="nav-link" data-scroll-target="#go-split-databases">GO split databases</a></li>
   </ul></li>
   </ul></li>
+  <li><a href="#main-seq-plots" id="toc-main-seq-plots" class="nav-link" data-scroll-target="#main-seq-plots">MAIN SEQ PLOTS</a></li>
   </ul>
 </nav>
 </div>
@@ -896,73 +892,6 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 </section>
 <section id="gsea" class="level1">
 <h1>GSEA</h1>
-<section id="pathwaygene-set-enrichment-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="pathwaygene-set-enrichment-analysis">Pathway/gene set enrichment analysis</h2>
-<p>After differential gene expression (DGE) analysis we have a long list of differentially expressed genes. Pathway enrichment analysis (PEA) is a common approach to summarise this long list of genes and interpret hundreds of DGEs at once. So instead of having a list of 20 000 genes, we may get a list of 50 or 60 biological pathways.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../../images/GSE_analysis/pea.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Summarise lists of DGEs to pathways"><img src="../../images/GSE_analysis/pea.png" class="img-fluid figure-img" alt="Summarise lists of DGEs to pathways"></a></p>
-<figcaption>Summarise lists of DGEs to pathways</figcaption>
-</figure>
-</div>
-<p>Pathway enrichment analysis summarises the long gene list to a shorter and more easily interpretable list of pathways.</p>
-<section id="how-does-pea-work" class="level3">
-<h3 class="anchored" data-anchor-id="how-does-pea-work">How does PEA work?</h3>
-<p>For a pathway enrichment analysis we need 3 ingredients.</p>
-<ol type="1">
-<li>Our <strong>gene list</strong> of interest, fx. a list of DGEs which we want to summarise.</li>
-<li>A list of <strong>background genes</strong> - fx all of the genes in the human genome/transcriptome.</li>
-<li>A list of <strong>gene sets</strong>. Gene sets are basically groups of related genes. Of course, for the algorithm to know if your list has a lot of genes related to breast cancer, or apoptosis, or cellular respiration, you need to tell it which genes are actually involved in breast cancer, apoptosis, and cellular respiration.</li>
-</ol>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../../images/GSE_analysis/pea_2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Components of a pathway enrichment analysis"><img src="../../images/GSE_analysis/pea_2.png" class="img-fluid figure-img" alt="Components of a pathway enrichment analysis"></a></p>
-<figcaption>Components of a pathway enrichment analysis</figcaption>
-</figure>
-</div>
-<p>PEA essentially compares our gene list to the background list to check if there are certain pathways <strong>overrepresented</strong></p>
-<p>One example could be: Alcoholic liver disease is usually involved in inflammatory processes, which often involve pro-inflammatory cytokines like IL-6. So, is there an <strong>association</strong> between our genes differentially expressed in alcoholic liver disease vs healthy cells and IL-6 production.</p>
-<p><a href="../../images/GSE_analysis/pea_3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="../../images/GSE_analysis/pea_3.png" class="img-fluid"></a></p>
-<p>Is our list of DGEs <strong>enriched</strong> with genes involved in IL-6 synthesis pathway?</p>
-<p><a href="../../images/GSE_analysis/pea_4.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="../../images/GSE_analysis/pea_4.png" class="img-fluid"></a></p>
-<p>To answer this question, we can build a contigency table. This will help us determine whether the fraction of genes of interest in the pathway is higher compared to the fraction of genes outside the pathway (so, backgound set). See the table below.</p>
-<p><a href="../../images/GSE_analysis/pea_5.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="../../images/GSE_analysis/pea_5.png" class="img-fluid"></a></p>
-<p>We have a column for differentially expressed and a column not differentially expressed genes, and then two rows, for genes that are annotated as being involved in IL-6 production and genes that are not involved in IL6 production.</p>
-<p>To simplify things a lot, we will just look at 30 genes. 15 deferentially expressed genes were identified and of those, 12 genes were associated with the GO term interleukin-6 production.</p>
-<p>We find that <strong>12 of our 15</strong> differentially expressed genes are involved in IL-6 production. We could quite confidently say that <strong>our gene list is enriched with genes involved in IL-6 production.</strong></p>
-<p>But what if there was 9 of our 15 involved in IL-6 production. is our gene list enriched with genes involved in IL-6 production? We need an objective statistical test to determine what is enriched and what is not. There are many methods, by the one that is commonly used in pathway enrichment analysis is fisher’s exact test. I our p-value is really lwo we can safely say that our list is overrepresented with genes involved in IL-6 production, in other words, IL-6 prodcution is an immportant pathway in alchoholic liver diseases compared to healthy liver cells. Becayse we a testing thousands of pathways we till have to adjust p-values with a multiple-testing correction method.</p>
-<p>Pathway enrichment analysis takes your&nbsp;<strong>gene list</strong>&nbsp;of interest and compares it to a&nbsp;<strong>list of background genes</strong>&nbsp;to check if there are certain pathways that are&nbsp;over-represented.</p>
-<p>So it checks the fraction of your genes annotated to a specific Gene Ontology (GO) term. Then it checks the proportion of genes in the whole genome (your background set) that are annotated to that GO Term.</p>
-<p>Then, it gives you a <strong>p-value</strong> which tells you what is the probability that that pathway is actually over-represented in your gene list and it wasn’t just coincidence.</p>
-</section>
-<section id="our-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="our-analysis">Our analysis</h3>
-<p>Mark Burton have done the GSE analysis using four different databases, outlined below. I think we just use the vehicle control as the list of background genes. Otherwise he must have used some subset of only genes/pathways related to PHHs.</p>
-<p>Gene Ontology (GO), KEGG, Reactome, and BioCarta are databases and tools that provide comprehensive information on gene and protein functions, interactions, and pathways. Each has its unique focus and strengths:</p>
-<ol type="1">
-<li><p><strong>Gene Ontology (GO)</strong></p>
-<ul>
-<li><p><strong>Focus:</strong> Provides a standardized vocabulary (ontologies) to describe gene and protein roles in cells. It covers three domains: Biological Process (BP), which describes the biological objectives to which the gene or gene product contributes; Molecular Function (MF), which describes the elemental activities of a gene product at the molecular level, such as binding or catalysis; and Cellular Component (CC), which describes where in the cell the gene product is active.</p></li>
-<li><p><strong>Strengths:</strong> Widely used for annotating genes and gene products across species; facilitates consistent descriptions of gene products even in the context of different studies.</p></li>
-</ul></li>
-<li><p><strong>Kyoto Encyclopedia of Genes and Genomes (KEGG)</strong></p>
-<ul>
-<li><p><strong>Focus:</strong> Integrates genomic, chemical, and systemic functional information. KEGG provides pathways maps that represent molecular interaction and reaction networks, covering metabolism, genetic information processing, environmental information processing, cellular processes, organismal systems, and human diseases.</p></li>
-<li><p><strong>Strengths:</strong> Comprehensive in linking genes to functions through networks of interactions; useful for understanding high-level functions and utilities of the biological system.</p></li>
-</ul></li>
-<li><p><strong>Reactome</strong></p>
-<ul>
-<li><p><strong>Focus:</strong> A curated database of pathways and reactions in human biology. Reactome pathways encompass various processes such as metabolism, signal transduction, gene expression, and cell cycle. It aims to provide a detailed, visual representation of molecular processes.</p></li>
-<li><p><strong>Strengths:</strong> Highly detailed and manually curated; provides an interactive pathway browser that facilitates the exploration of complex biological pathways; also includes pathways from other species, providing a comparative perspective.</p></li>
-</ul></li>
-<li><p><strong>BioCarta</strong></p>
-<ul>
-<li><p><strong>Focus:</strong> Earlier widely used for providing graphical representations of molecular pathways, focusing on various biological and signaling pathways. BioCarta’s pathways were known for highlighting the interactions between different molecules and the potential regulation mechanisms.</p></li>
-<li><p><strong>Strengths:</strong> Although less updated and less comprehensive than other databases mentioned, BioCarta pathways have been historically significant for offering insights into specific signaling and molecular pathways, contributing to the understanding of complex biological processes.</p></li>
-</ul></li>
-</ol>
-</section>
-</section>
 <section id="visualization-of-gsea" class="level2">
 <h2 class="anchored" data-anchor-id="visualization-of-gsea">Visualization of GSEA</h2>
 <section id="setup" class="level4">
@@ -1027,7 +956,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div class="cell-output-display">
 <div class="">
 <figure class="figure">
-<p class=""><a href="seq_files/figure-html/unnamed-chunk-21-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="seq_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></a></p>
+<p class=""><a href="seq_files/figure-html/unnamed-chunk-21-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="seq_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1044,7 +973,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div class="cell-output-display">
 <div class="">
 <figure class="figure">
-<p class=""><a href="seq_files/figure-html/unnamed-chunk-22-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="seq_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></a></p>
+<p class=""><a href="seq_files/figure-html/unnamed-chunk-22-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="seq_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1105,7 +1034,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-kegg-abe" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kegg-abe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-kegg-abe-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="seq_files/figure-html/fig-kegg-abe-1.png" id="fig-kegg-abe" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-kegg-abe-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="seq_files/figure-html/fig-kegg-abe-1.png" id="fig-kegg-abe" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-abe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1120,7 +1049,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-kegg-il1b-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kegg-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-kegg-il1b-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="seq_files/figure-html/fig-kegg-il1b-0.1-1.png" id="fig-kegg-il1b-0.1" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-kegg-il1b-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="seq_files/figure-html/fig-kegg-il1b-0.1-1.png" id="fig-kegg-il1b-0.1" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1135,7 +1064,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-kegg-il1b-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kegg-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-kegg-il1b-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="seq_files/figure-html/fig-kegg-il1b-10-1.png" id="fig-kegg-il1b-10" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-kegg-il1b-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="seq_files/figure-html/fig-kegg-il1b-10-1.png" id="fig-kegg-il1b-10" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1150,7 +1079,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-kegg-il6-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kegg-il6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-kegg-il6-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="seq_files/figure-html/fig-kegg-il6-0.1-1.png" id="fig-kegg-il6-0.1" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-kegg-il6-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="seq_files/figure-html/fig-kegg-il6-0.1-1.png" id="fig-kegg-il6-0.1" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-il6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1165,7 +1094,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-kegg-il6-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kegg-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-kegg-il6-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="seq_files/figure-html/fig-kegg-il6-10-1.png" id="fig-kegg-il6-10" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-kegg-il6-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="seq_files/figure-html/fig-kegg-il6-10-1.png" id="fig-kegg-il6-10" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1180,7 +1109,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-kegg-il6-combined" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kegg-il6-combined-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-kegg-il6-combined-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-19"><img src="seq_files/figure-html/fig-kegg-il6-combined-1.png" id="fig-kegg-il6-combined" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-kegg-il6-combined-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="seq_files/figure-html/fig-kegg-il6-combined-1.png" id="fig-kegg-il6-combined" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-il6-combined-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1195,7 +1124,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-kegg-medium" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kegg-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-kegg-medium-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-20"><img src="seq_files/figure-html/fig-kegg-medium-1.png" id="fig-kegg-medium" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-kegg-medium-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="seq_files/figure-html/fig-kegg-medium-1.png" id="fig-kegg-medium" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1210,7 +1139,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-kegg-rif" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-kegg-rif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-kegg-rif-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-21"><img src="seq_files/figure-html/fig-kegg-rif-1.png" id="fig-kegg-rif" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-kegg-rif-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="seq_files/figure-html/fig-kegg-rif-1.png" id="fig-kegg-rif" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kegg-rif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1262,7 +1191,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-biocarta-abe" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-biocarta-abe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-biocarta-abe-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-22"><img src="seq_files/figure-html/fig-biocarta-abe-1.png" id="fig-biocarta-abe" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-biocarta-abe-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="seq_files/figure-html/fig-biocarta-abe-1.png" id="fig-biocarta-abe" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-abe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1276,7 +1205,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-biocarta-il1b-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-biocarta-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-biocarta-il1b-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-23"><img src="seq_files/figure-html/fig-biocarta-il1b-0.1-1.png" id="fig-biocarta-il1b-0.1" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-biocarta-il1b-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="seq_files/figure-html/fig-biocarta-il1b-0.1-1.png" id="fig-biocarta-il1b-0.1" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1290,7 +1219,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-biocarta-il1b-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-biocarta-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-biocarta-il1b-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-24"><img src="seq_files/figure-html/fig-biocarta-il1b-10-1.png" id="fig-biocarta-il1b-10" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-biocarta-il1b-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-19"><img src="seq_files/figure-html/fig-biocarta-il1b-10-1.png" id="fig-biocarta-il1b-10" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1304,7 +1233,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-biocarta-il6-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-biocarta-il6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-biocarta-il6-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-25"><img src="seq_files/figure-html/fig-biocarta-il6-0.1-1.png" id="fig-biocarta-il6-0.1" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-biocarta-il6-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-20"><img src="seq_files/figure-html/fig-biocarta-il6-0.1-1.png" id="fig-biocarta-il6-0.1" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-il6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1318,7 +1247,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-biocarta-il6-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-biocarta-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-biocarta-il6-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-26"><img src="seq_files/figure-html/fig-biocarta-il6-10-1.png" id="fig-biocarta-il6-10" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-biocarta-il6-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-21"><img src="seq_files/figure-html/fig-biocarta-il6-10-1.png" id="fig-biocarta-il6-10" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1332,7 +1261,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-biocarta-il6-combined" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-biocarta-il6-combined-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-biocarta-il6-combined-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-27"><img src="seq_files/figure-html/fig-biocarta-il6-combined-1.png" id="fig-biocarta-il6-combined" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-biocarta-il6-combined-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-22"><img src="seq_files/figure-html/fig-biocarta-il6-combined-1.png" id="fig-biocarta-il6-combined" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-il6-combined-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1346,7 +1275,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-biocarta-medium" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-biocarta-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-biocarta-medium-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-28"><img src="seq_files/figure-html/fig-biocarta-medium-1.png" id="fig-biocarta-medium" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-biocarta-medium-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-23"><img src="seq_files/figure-html/fig-biocarta-medium-1.png" id="fig-biocarta-medium" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1360,7 +1289,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-biocarta-rif" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-biocarta-rif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-biocarta-rif-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-29"><img src="seq_files/figure-html/fig-biocarta-rif-1.png" id="fig-biocarta-rif" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-biocarta-rif-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-24"><img src="seq_files/figure-html/fig-biocarta-rif-1.png" id="fig-biocarta-rif" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biocarta-rif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1423,7 +1352,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-reactome-abe" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reactome-abe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-reactome-abe-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-30"><img src="seq_files/figure-html/fig-reactome-abe-1.png" id="fig-reactome-abe" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-reactome-abe-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-25"><img src="seq_files/figure-html/fig-reactome-abe-1.png" id="fig-reactome-abe" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-abe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1438,7 +1367,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-reactome-il1b-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reactome-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-reactome-il1b-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-31"><img src="seq_files/figure-html/fig-reactome-il1b-0.1-1.png" id="fig-reactome-il1b-0.1" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-reactome-il1b-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-26"><img src="seq_files/figure-html/fig-reactome-il1b-0.1-1.png" id="fig-reactome-il1b-0.1" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1453,7 +1382,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-reactome-il1b-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reactome-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-reactome-il1b-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-32"><img src="seq_files/figure-html/fig-reactome-il1b-10-1.png" id="fig-reactome-il1b-10" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-reactome-il1b-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-27"><img src="seq_files/figure-html/fig-reactome-il1b-10-1.png" id="fig-reactome-il1b-10" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1468,7 +1397,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-reactome-il6-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reactome-il6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-reactome-il6-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-33"><img src="seq_files/figure-html/fig-reactome-il6-0.1-1.png" id="fig-reactome-il6-0.1" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-reactome-il6-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-28"><img src="seq_files/figure-html/fig-reactome-il6-0.1-1.png" id="fig-reactome-il6-0.1" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-il6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1483,7 +1412,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-reactome-il6-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reactome-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-reactome-il6-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-34"><img src="seq_files/figure-html/fig-reactome-il6-10-1.png" id="fig-reactome-il6-10" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-reactome-il6-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-29"><img src="seq_files/figure-html/fig-reactome-il6-10-1.png" id="fig-reactome-il6-10" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1498,7 +1427,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-reactome-il6-combined" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reactome-il6-combined-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-reactome-il6-combined-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-35"><img src="seq_files/figure-html/fig-reactome-il6-combined-1.png" id="fig-reactome-il6-combined" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-reactome-il6-combined-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-30"><img src="seq_files/figure-html/fig-reactome-il6-combined-1.png" id="fig-reactome-il6-combined" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-il6-combined-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1513,7 +1442,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-reactome-medium" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reactome-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-reactome-medium-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-36"><img src="seq_files/figure-html/fig-reactome-medium-1.png" id="fig-reactome-medium" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-reactome-medium-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-31"><img src="seq_files/figure-html/fig-reactome-medium-1.png" id="fig-reactome-medium" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1528,7 +1457,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-reactome-rif" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-reactome-rif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-reactome-rif-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-37"><img src="seq_files/figure-html/fig-reactome-rif-1.png" id="fig-reactome-rif" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-reactome-rif-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-32"><img src="seq_files/figure-html/fig-reactome-rif-1.png" id="fig-reactome-rif" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reactome-rif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1594,7 +1523,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-go-abe" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-abe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-go-abe-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-38"><img src="seq_files/figure-html/fig-go-abe-1.png" id="fig-go-abe" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-go-abe-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-33"><img src="seq_files/figure-html/fig-go-abe-1.png" id="fig-go-abe" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-abe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1609,7 +1538,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-go-il1b-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-go-il1b-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-39"><img src="seq_files/figure-html/fig-go-il1b-0.1-1.png" id="fig-go-il1b-0.1" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-go-il1b-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-34"><img src="seq_files/figure-html/fig-go-il1b-0.1-1.png" id="fig-go-il1b-0.1" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1624,7 +1553,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-go-il1b-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-go-il1b-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-40"><img src="seq_files/figure-html/fig-go-il1b-10-1.png" id="fig-go-il1b-10" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-go-il1b-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-35"><img src="seq_files/figure-html/fig-go-il1b-10-1.png" id="fig-go-il1b-10" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1639,7 +1568,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-go-il6-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-il6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-go-il6-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-41"><img src="seq_files/figure-html/fig-go-il6-0.1-1.png" id="fig-go-il6-0.1" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-go-il6-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-36"><img src="seq_files/figure-html/fig-go-il6-0.1-1.png" id="fig-go-il6-0.1" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-il6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1654,7 +1583,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-go-il6-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-go-il6-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-42"><img src="seq_files/figure-html/fig-go-il6-10-1.png" id="fig-go-il6-10" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-go-il6-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-37"><img src="seq_files/figure-html/fig-go-il6-10-1.png" id="fig-go-il6-10" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-il6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1669,7 +1598,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-go-plots6" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-go-plots6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-43"><img src="seq_files/figure-html/fig-go-plots6-1.png" id="fig-go-plots6" class="img-fluid figure-img" width="1152"></a>
+<a href="seq_files/figure-html/fig-go-plots6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-38"><img src="seq_files/figure-html/fig-go-plots6-1.png" id="fig-go-plots6" class="img-fluid figure-img" width="1152"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-plots6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1684,7 +1613,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-go-medium" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-go-medium-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-44"><img src="seq_files/figure-html/fig-go-medium-1.png" id="fig-go-medium" class="img-fluid figure-img" width="1152"></a>
+<a href="seq_files/figure-html/fig-go-medium-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-39"><img src="seq_files/figure-html/fig-go-medium-1.png" id="fig-go-medium" class="img-fluid figure-img" width="1152"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1699,7 +1628,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-go-rif" class="quarto-figure quarto-figure-center quarto-float anchored" width="1152">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-rif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-go-rif-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-45"><img src="seq_files/figure-html/fig-go-rif-1.png" id="fig-go-rif" class="img-fluid figure-img" width="1152"></a>
+<a href="seq_files/figure-html/fig-go-rif-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-40"><img src="seq_files/figure-html/fig-go-rif-1.png" id="fig-go-rif" class="img-fluid figure-img" width="1152"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-rif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1789,7 +1718,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-go-split-il1b-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-split-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-go-split-il1b-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-46"><img src="seq_files/figure-html/fig-go-split-il1b-0.1-1.png" id="fig-go-split-il1b-0.1" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-go-split-il1b-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-41"><img src="seq_files/figure-html/fig-go-split-il1b-0.1-1.png" id="fig-go-split-il1b-0.1" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-split-il1b-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1809,7 +1738,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-go-split-il1b-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="1920">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-split-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-go-split-il1b-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-47"><img src="seq_files/figure-html/fig-go-split-il1b-10-1.png" id="fig-go-split-il1b-10" class="img-fluid figure-img" width="1920"></a>
+<a href="seq_files/figure-html/fig-go-split-il1b-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-42"><img src="seq_files/figure-html/fig-go-split-il1b-10-1.png" id="fig-go-split-il1b-10" class="img-fluid figure-img" width="1920"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-split-il1b-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1829,7 +1758,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-go-split-i6-0.1" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-split-i6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-go-split-i6-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-48"><img src="seq_files/figure-html/fig-go-split-i6-0.1-1.png" id="fig-go-split-i6-0.1" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-go-split-i6-0.1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-43"><img src="seq_files/figure-html/fig-go-split-i6-0.1-1.png" id="fig-go-split-i6-0.1" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-split-i6-0.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1849,7 +1778,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-go-split-i6-10" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-split-i6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-go-split-i6-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-49"><img src="seq_files/figure-html/fig-go-split-i6-10-1.png" id="fig-go-split-i6-10" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-go-split-i6-10-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-44"><img src="seq_files/figure-html/fig-go-split-i6-10-1.png" id="fig-go-split-i6-10" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-split-i6-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1869,7 +1798,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-go-split-i6-combined" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-split-i6-combined-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-go-split-i6-combined-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-50"><img src="seq_files/figure-html/fig-go-split-i6-combined-1.png" id="fig-go-split-i6-combined" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-go-split-i6-combined-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-45"><img src="seq_files/figure-html/fig-go-split-i6-combined-1.png" id="fig-go-split-i6-combined" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-split-i6-combined-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1889,7 +1818,7 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 <div id="fig-go-split-medium" class="quarto-figure quarto-figure-center quarto-float anchored" width="672">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-go-split-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="seq_files/figure-html/fig-go-split-medium-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-51"><img src="seq_files/figure-html/fig-go-split-medium-1.png" id="fig-go-split-medium" class="img-fluid figure-img" width="672"></a>
+<a href="seq_files/figure-html/fig-go-split-medium-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-46"><img src="seq_files/figure-html/fig-go-split-medium-1.png" id="fig-go-split-medium" class="img-fluid figure-img" width="672"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-go-split-medium-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 </figcaption>
@@ -1899,6 +1828,10 @@ Volcano plot. IL-1B 0.1 ng/ml vs.&nbsp;vehicle control. Vertical lines for fold 
 </div></div>
 </section>
 </section>
+</section>
+<section id="main-seq-plots" class="level1">
+<h1>MAIN SEQ PLOTS</h1>
+<p>Lav en samlet figur med 0.1 og 10 ng/ml IL-6 og en anden med begge koncentratioenr med IL-1B. Så laver du A, B, C for at få pathway analyser og vulkan plot med.</p>
 </section>
      </main>
 <!-- /main column -->  <script id="quarto-html-after-body" type="application/javascript">
@@ -2309,7 +2242,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","loop":false,"selector":".lightbox","closeEffect":"zoom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"openEffect":"zoom","closeEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
