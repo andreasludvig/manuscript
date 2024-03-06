@@ -3,6 +3,7 @@ project:
   render: 
     - "*.qmd"
     - "!notebooks/qPCR/old_qPCR_import/"
+    - "!notebooks/seq/GSEA.qmd"
 
 execute:
   freeze: auto

@@ -6,7 +6,6 @@ fig-width: 12
 fig-height: 10
 ---
 
-
 ## Pathway/gene set enrichment analysis
 
 After differential gene expression (DGE) analysis we have a long list of differentially expressed genes. Pathway enrichment analysis (PEA) is a common approach to summarise this long list of genes and interpret hundreds of DGEs at once. So instead of having a list of 20 000 genes, we may get a list of 50 or 60 biological pathways.
@@ -133,7 +132,6 @@ ggplot(plot_data, aes(x = NES, y = fct_reorder(pathway, NES), color = padj, size
   #scale_color_distiller(type = "seq", palette = "PuRd") +
   geom_vline(xintercept = 0)
 ```
-
 
 ### All KEGG plots
 
@@ -661,4 +659,3 @@ combined_plot <- GO_plots[[7]]$BP + GO_plots[[7]]$CC + GO_plots[[7]]$MF +
 # Print the combined plot
 print(combined_plot)
 ```
-
