@@ -160,6 +160,8 @@ IC50:      9.447e-01
 
 ### Sequencing
 
+![](images/seq_il1B_2.png){#fig-seq-1B}
+
 ![IL-1B sequencing](images/seq_il1b.png){#fig-seq-il1b}
 
 ## Supplementary
