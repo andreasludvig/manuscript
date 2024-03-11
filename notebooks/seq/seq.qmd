@@ -299,9 +299,9 @@ file <- here("notebooks/seq/data_raw/IL1B_10_vs_vehicle.xlsx")
 il1B_10_data <- read_xlsx(file, sheet = 1)
 
 
-setDT(il1B_10_data)
-il1B_10_data[logCPM > 1 & FDR < 0.05 & logFC > 1] |> nrow()
-il1B_10_data[logCPM > 1 & FDR < 0.05 & logFC < 1] |> nrow()
+# setDT(il1B_10_data)
+# il1B_10_data[logCPM > 1 & FDR < 0.05 & logFC > 1] |> nrow()
+# il1B_10_data[logCPM > 1 & FDR < 0.05 & logFC < 1] |> nrow()
 ```
 
 
@@ -315,11 +315,11 @@ il1B_10_data$diffexpressed <- "NO" # Default value for genes not differentially 
 
 # Identify and label upregulated genes
 # Genes with log2FoldChange > 1, FDR < 0.05, and logCPM > 1 are labeled as "UP"
-il1B_10_data$diffexpressed[il1B_10_data$FDR < 0.05 & il1B_10_data$logCPM > 1 & il1B_10_data$logFC > 0] <- "UP"
+il1B_10_data$diffexpressed[il1B_10_data$FDR < 0.05 & il1B_10_data$logCPM > 1 & il1B_10_data$logFC > 1] <- "UP"
 
 # Identify and label downregulated genes
 # Genes with log2FoldChange < -1, FDR < 0.05, and logCPM > 1 are labeled as "DOWN"
-il1B_10_data$diffexpressed[il1B_10_data$FDR < 0.05 & il1B_10_data$logCPM > 1 & il1B_10_data$logFC < 0] <- "DOWN"
+il1B_10_data$diffexpressed[il1B_10_data$FDR < 0.05 & il1B_10_data$logCPM > 1 & il1B_10_data$logFC < -1] <- "DOWN"
 
 # Initialize 'delabel' column to NA for all rows to create the column
 il1B_10_data$delabel <- NA
@@ -327,23 +327,36 @@ il1B_10_data$delabel <- NA
 # Now, you can safely assign gene names to the 'delabel' column for differentially expressed genes
 il1B_10_data$delabel[il1B_10_data$diffexpressed != "NO"] <- il1B_10_data$genes[il1B_10_data$diffexpressed != "NO"]
 
+# Legend numbers
+category_counts <- table(il1B_10_data$diffexpressed)
+labels_with_counts <- paste(names(category_counts), "(", category_counts, " genes)", sep = "")
+
 # Create the volcano plot using ggplot2
 plot_volcano_il1B_10 <- 
-  ggplot(data=il1B_10_data, aes(x=logFC, y=-log10(FDR), col=diffexpressed, label=delabel)) + 
+  ggplot(data=il1B_10_data,
+         aes(x=logFC,
+             y=-log10(FDR),
+             col=diffexpressed,
+             label=delabel
+             )
+         ) + 
     theme_minimal() + # Use a minimal theme for the plot
-        geom_text_repel(size = 2.5,
+        geom_text_repel(max.overlaps = 1,
+                        # size = 3,
                         nudge_x = .25,
                         nudge_y = .25,
-                        point.padding = 0.5,
-                        box.padding = 1,
-                        max.overlaps = 10,
-                        force = 1) + 
-    scale_color_manual(values=c("blue", "black", "red")) + # Custom colors for differential expression
+                        # point.padding = 0.5,
+                        # box.padding = .5,
+                        # force = 1
+                        ) + 
+    scale_color_manual(values=c("blue", "black", "red"), # Custom colors for differential expression
+                       labels = labels_with_counts       # Use the labels with gene counts.
+                       ) + 
     geom_vline(xintercept=c(-1, 1), col="dark grey", linetype = "dashed") + # Vertical lines for fold change thresholds
     geom_hline(yintercept=-log10(0.05), col="dark grey", linetype = "dashed") + # Horizontal line for FDR threshold
     geom_point() + # Add points for each gene
     labs(color = 'Direction of gene expression', # Customize legend title
-         x = expression("log"[2]*"FC (IL6 vs Vehicle)"), # Customize x-axis label
+         x = expression("log"[2]*"FC"), # Customize x-axis label
          y = expression("-log"[10]*"FDR")) + # Customize y-axis label
     #scale_x_continuous(limits = c(-8, 10)) + # Customize x-axis breaks
     #scale_y_continuous(limits = c(0, 320)) + # Customize y-axis breaks
@@ -356,8 +369,16 @@ plot_volcano_il1B_10 <-
 
 plot_volcano_il1B_10
 
-# ggsave(filename = here("notebooks/seq/output/IL_1B_10ng_volcano.png"))
-# ggsave(filename = here("notebooks/seq/output/IL_1B_10ng_volcano.pdf"))
+ggsave(filename = here("notebooks/seq/output/IL_1B_10ng_volcano.png"))
+ggsave(filename = here("notebooks/seq/output/IL_1B_10ng_volcano.pdf"))
+
+
+
+
+```
+
+Tables with top xx down or upregulated genes?
+```{r}
 
 ```
 
@@ -385,11 +406,11 @@ il1B_0.1_data$diffexpressed <- "NO" # Default value for genes not differentially
 
 # Identify and label upregulated genes
 # Genes with log2FoldChange > 1, FDR < 0.05, and logCPM > 1 are labeled as "UP"
-il1B_0.1_data$diffexpressed[il1B_0.1_data$FDR < 0.05 & il1B_0.1_data$logCPM > 1 & il1B_0.1_data$logFC > 0] <- "UP"
+il1B_0.1_data$diffexpressed[il1B_0.1_data$FDR < 0.05 & il1B_0.1_data$logCPM > 1 & il1B_0.1_data$logFC > 1] <- "UP"
 
 # Identify and label downregulated genes
 # Genes with log2FoldChange < -1, FDR < 0.05, and logCPM > 1 are labeled as "DOWN"
-il1B_0.1_data$diffexpressed[il1B_0.1_data$FDR < 0.05 & il1B_0.1_data$logCPM > 1 & il1B_0.1_data$logFC < 0] <- "DOWN"
+il1B_0.1_data$diffexpressed[il1B_0.1_data$FDR < 0.05 & il1B_0.1_data$logCPM > 1 & il1B_0.1_data$logFC < -1] <- "DOWN"
 
 # Initialize 'delabel' column to NA for all rows to create the column
 il1B_0.1_data$delabel <- NA
@@ -397,24 +418,32 @@ il1B_0.1_data$delabel <- NA
 # Now, you can safely assign gene names to the 'delabel' column for differentially expressed genes
 il1B_0.1_data$delabel[il1B_0.1_data$diffexpressed != "NO"] <- il1B_0.1_data$genes[il1B_0.1_data$diffexpressed != "NO"]
 
+
+# Legend numbers
+category_counts <- table(il1B_0.1_data$diffexpressed)
+labels_with_counts <- paste(names(category_counts), "(", category_counts, " genes)", sep = "")
+
 # Create the volcano plot using ggplot2
 plot_volcano_il1B_0.1 <- 
   ggplot(data=il1B_0.1_data, aes(x=logFC, y=-log10(FDR), col=diffexpressed, label=delabel)) + 
     theme_minimal() + # Use a minimal theme for the plot
-    geom_text_repel(size = 2.5,
-                    nudge_x = .25,
-                    nudge_y = .25,
-                    point.padding = 0.5,
-                    box.padding = 0.5,
-                    max.overlaps = 10,
-                    force = 1) + 
-    scale_color_manual(values=c("blue", "black", "red")) + # Custom colors for differential expression
+    geom_text_repel(max.overlaps = 1,
+                    # size = 2.5,
+                    # nudge_x = .25,
+                    # nudge_y = .25,
+                    # point.padding = 0.5,
+                    # box.padding = 0.5,
+                    # force = 1
+                    ) + 
+    scale_color_manual(values=c("blue", "black", "red"), # Custom colors for differential expression
+                       labels = labels_with_counts         # Custom labels with counts
+                       ) + 
     #scale_color_viridis_d(option = "H")+
     geom_vline(xintercept=c(-1, 1), col="dark grey", linetype = "dashed") + # Vertical lines for fold change thresholds
     geom_hline(yintercept=-log10(0.05), col="dark grey", linetype = "dashed") + # Horizontal line for FDR threshold
     geom_point() + # Add points for each gene
     labs(color = 'Direction of gene expression', # Customize legend title
-         x = expression("log"[2]*"FC (IL6 vs Vehicle)"), # Customize x-axis label
+         x = expression("log"[2]*"FC"), # Customize x-axis label
          y = expression("-log"[10]*"FDR")) + # Customize y-axis label
     #scale_x_continuous(limits = c(-8, 10)) + # Customize x-axis breaks
     #scale_y_continuous(limits = c(0, 320)) + # Customize y-axis breaks
