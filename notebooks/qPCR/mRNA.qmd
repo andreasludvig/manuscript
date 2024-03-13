@@ -82,9 +82,13 @@ overall_means <-
            .(overall_mean = mean(time_means)),
            by = .(condition, treatment)
            ]
+
+# data_3A4[]
+# 
+# overall_means[]
 ```
 
-Plot
+Plot. Updated below withot facet
 
 ```{r}
 #| label: fig-mRNA-CYP3A4
@@ -101,38 +105,235 @@ Plot
 #              size = 7)
 #              
 
-plot_3A4 <- 
-  ggplot(data = data_3A4,
-         aes(x = treatment,
-             y = time_means,
-             color = factor(time)
-             )
-         ) +
-  facet_wrap(facets = vars(condition)) +
-  geom_point(size = 5) + 
-  scale_color_brewer(palette = "Set2") +
-  geom_point(data = overall_means, 
-             aes(x = treatment,
-                 y = overall_mean),
-             size = 8,
-             color = "black",
-             alpha = 0.7) +
+# plot_3A4 <- 
+#   ggplot(data = data_3A4,
+#          aes(x = treatment,
+#              y = time_means,
+#              color = factor(time)
+#              )
+#          ) +
+#   facet_wrap(facets = vars(condition)) +
+#   geom_point(size = 5) + 
+#   scale_color_brewer(palette = "Set2") +
+#   geom_point(data = overall_means, 
+#              aes(x = treatment,
+#                  y = overall_mean),
+#              size = 8,
+#              color = "black",
+#              alpha = 0.7) +
+#   theme_bw() +
+#   labs(title = "Relative expression of CYP3A4",
+#        x = "Treatment",
+#        y = "Expression relative to vehicle control",
+#        color = "Time"
+#        )  +
+#   theme(axis.text.x = element_text(angle = 30, hjust = 1),
+#         axis.title.y = element_text(vjust = 3, face = "bold"),
+#         axis.title.x = element_text(vjust = -1.5, face ="bold"),
+#         plot.title = element_text(face = "bold"),
+#         legend.title = element_text(face = "bold"),
+#         legend.position = "bottom"
+#      )
+# 
+# 
+# plot_3A4
+```
+
+**Main plot**
+```{r}
+#| label: fig-mRNA-CYP3A4-main
+#| fig-cap: "Relative CYP3A4 mRNA expression. Small points are mean of three donors for 72 and 120 hours, and two donors for 24 hours (donors two and three)"
+
+
+
+# Subset the data for each condition
+data_IL1B <- data_3A4[condition == "IL-1B"]
+data_IL1B_means <- overall_means[condition == "IL-1B"]
+data_IL6 <- data_3A4[condition == "IL-6"]
+data_IL6_means <- overall_means[condition == "IL-6"]
+
+# Split the treatment string so we can have a continous x axis. Otherwise we cannot put lines or rectangles at relevant levels of ILs
+data_IL1B[, conc := tstrsplit(treatment, " ", type.convert = TRUE, keep = 1)]
+data_IL1B_means[, conc := tstrsplit(treatment, " ", type.convert = TRUE, keep = 1)]
+data_IL6[, conc := tstrsplit(treatment, " ", type.convert = TRUE, keep = 1)]
+data_IL6_means[, conc := tstrsplit(treatment, " ", type.convert = TRUE, keep = 1)]
+
+head(data_IL1B)
+
+# Generate the plot for IL-1B condition
+plot_IL1B <-
+  ggplot(
+    data_IL1B,
+    aes(
+      x = conc,
+      y = time_means
+    )
+  ) +
+  ## First layer ##
+  geom_point(
+    aes(
+      fill = factor(time)
+    ),
+    size = 7,
+    shape = 21,  # Use a shape that is filled, 21 is filled
+    color = "black",
+    stroke = 1,
+    alpha = .7
+  ) +
+  scale_fill_brewer(palette = "Set2") +
+  ## Second layer ##
+  geom_point(
+    data = data_IL1B_means,
+    aes(
+      x = conc,
+      y = overall_mean
+    ),
+    size = 12, alpha = 0.80
+  ) +
+  ## Modifications ##
+  labs(
+    x = "Treatment",
+    y = "Expression relative to vehicle control",
+    fill = "Duration of treatment, hours:"
+  ) +
+  scale_y_continuous(limits = c(0, 1.25), n.breaks = 6) +
+  scale_x_log10(
+    name = "Concentration IL-1β (ng/ml)") +
+  annotation_logticks(sides = "b")  +
+  geom_hline(yintercept = 1, linetype = "dashed") +
   theme_bw() +
-  labs(title = "Relative expression of CYP3A4",
-       x = "Treatment",
-       y = "Expression relative to vehicle control",
-       color = "Time"
-       )  +
-  theme(axis.text.x = element_text(angle = 30, hjust = 1),
-        axis.title.y = element_text(vjust = 3, face = "bold"),
-        axis.title.x = element_text(vjust = -1.5, face ="bold"),
-        plot.title = element_text(face = "bold"),
-        legend.title = element_text(face = "bold"),
-        legend.position = "bottom"
-     )
+  theme(
+    #axis.text.x = element_text(angle = 30, hjust = 1),
+    axis.text = element_text(size = 12, face = "bold"),
+    axis.title.y = element_text(vjust = 3,
+                                face = "bold",
+                                size = 15,
+                                margin = margin(t = 0, r = 10, b = 0, l = 0)),
+    plot.margin = margin(t = 10, r = 10, b = 10, l = 30),
+    axis.title.x = element_text(vjust = -1.5, face = "bold", size = 15),
+    plot.title = element_text(face = "bold"),
+    #legend.title = element_text(face = "bold"),
+    legend.position = "bottom",
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank()
+  )
 
 
-plot_3A4
+# plot_IL1B
+
+
+# Generate the plot for IL-6 condition
+plot_IL6 <-
+  ggplot(
+    data_IL6,
+    aes(
+      x = conc,
+      y = time_means
+    )
+  ) +
+  geom_rect(xmin = log10(0.00000000001),  #Rect to indicate phys levels. Call before main layes so it does not cover these. 
+            xmax = log10(0.02),
+            ymin = -Inf,
+            ymax = Inf,
+            fill = "lightgreen",
+            alpha = 0.006
+            ) +
+  geom_rect(xmin = log10(0.015),  #Rect to indicate phys levels. Call before main layes so it does not cover these. 
+            xmax = log10(0.15),
+            ymin = -Inf,
+            ymax = Inf,
+            fill = "yellow",
+            alpha = 0.006
+            ) +
+  geom_rect(xmin = log10(0.09),  #Rect to indicate phys levels. Call before main layes so it does not cover these. 
+            xmax = log10(Inf),
+            ymin = -Inf,
+            ymax = Inf,
+            fill = "coral",
+            alpha = 0.006
+            ) +
+  ## First layer ##
+  geom_point(
+    aes(
+      fill = factor(time)
+    ),
+    size = 7,
+    shape = 21,  # Use a shape that is filled, 21 is filled
+    color = "black",
+    stroke = 1,
+    alpha = .7
+  ) +
+  scale_fill_brewer(palette = "Set2") +
+  ## Second layer ##
+  geom_point(
+    data = data_IL6_means,
+    aes(
+      x = conc,
+      y = overall_mean
+    ),
+    size = 12, alpha = 0.8
+  ) +
+  ## Modifications ##
+  labs(
+    x = "Treatment",
+    y = "Expression relative to vehicle control",
+    fill = "Duration of treatment, hours:"
+  ) +
+  scale_y_continuous(limits = c(0, 1.25), n.breaks = 6) +
+  scale_x_log10(name = "Concentration IL-6 (ng/ml)") +
+  annotation_logticks(sides = "b")  +
+  geom_hline(yintercept = 1, linetype = "dashed") +
+  theme_bw() +
+  theme(
+    #axis.text.x = element_text(angle = 30, hjust = 1),
+    axis.text = element_text(size = 12, face = "bold"),
+    axis.title.y = element_text(vjust = 3,
+                                face = "bold",
+                                size = 20,
+                                margin = margin(t = 0, r = 10, b = 0, l = 0)),
+    axis.title.x = element_text(vjust = -1.5, face = "bold", size = 15),
+    plot.title = element_text(face = "bold"),
+    #legend.title = element_text(face = "bold"),
+    legend.position = "bottom",
+    plot.margin = margin(t = 10, r = 10, b = 10, l = 30),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank()
+  )
+
+# plot_IL6
+
+
+
+#### Combine the plots
+# Update individual plots for combination
+# Remove the y-axis title from the second plot
+plot_IL6 <- plot_IL6 + theme(axis.title.y = element_blank(),
+                             #axis.title.x = element_blank(),
+                             ) +
+  ggtitle("IL-6")
+
+plot_IL1B <- plot_IL1B + 
+  ggtitle("IL-1β")
+
+
+# Combine the plots with a common legend at the bottom
+combined_plot <- plot_IL1B + plot_IL6 +
+  plot_layout(guides = 'collect') & # This collects and uses a single guide (legend)
+  plot_annotation(
+    title = 'Relative expression of CYP3A4',
+    theme = theme(
+      plot.title = element_text(size = 22, face = "bold", hjust = 0.5), # Increase the size of the main title
+      plot.subtitle = element_text(size = 18) # Increase the size of the subtitles
+    )
+  ) & 
+  theme(
+    legend.position = "bottom",
+    legend.text = element_text(size = 14), # Increase the size of the legend text
+    legend.title = element_text(size = 16) # Increase the size of the legend title
+  )
+
+# Print the combined plot
+combined_plot
 ```
 
 
