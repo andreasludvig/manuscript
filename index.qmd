@@ -56,7 +56,7 @@ Drug-metabolizing enzymes and transporters (DMETs), predominantly found in hepat
 
 Previous research has provided valuable insights into the effects of inflammation on DMETs, but a clear correlation between in vitro studies and clinical observations remains elusive. For instance Dunvald et al. [@dunvald] conducted a comprehensive review of the clinical and in vitro evidence on inflammation-mediated modulation of DMETs and the impact on drug metabolism in humans. They found that in vitro studies in primary human hepatocytes revealed strong evidence of downregulation of key cytochrome P450 (CYP) enzymes by inflammatory cytokines such as IL-6 and IL-1β. However, these studies often employed supraphysiological cytokine doses, which may not accurately represent the inflammatory conditions observed in patients.
 
-Levels of IL-6 and IL-1B in healthy individuals are generally low, with reports in range of \~10pg/ml in adults for IL-6, and \~2.5 pg/ml IL-1B in adults [@kim2011; @kleiner2013; @said2021; @strand2020]. In contrast, cytokine levels may be considerably elevated with IL-6 levels of \~140 pg/mL, and I[L-1B levels of \~100 pg/mL]{.underline}, among patients with rheumatoid arthritis or SLE [@umare2014] to more than 1 ng/mL of IL-6 for patients with acute inflammation caused by sepsis [@franco2019]. These variations in cytokine levels, which span a wide range in different pathological states, highlight the complex and dynamic nature of inflammation and underscore the need for research that considers this variability when investigating the effects of inflammation on drug-metabolizing enzymes.
+Levels of IL-6 and IL-1β in healthy individuals are generally low, with reports in range of \~10pg/ml in adults for IL-6, and \~2.5 pg/ml IL-1β in adults [@kim2011; @kleiner2013; @said2021; @strand2020]. In contrast, cytokine levels may be considerably elevated with IL-6 levels of \~140 pg/mL, and IL-1β [levels of \~100 pg/mL]{.underline}, among patients with rheumatoid arthritis or SLE [@umare2014] to more than 1 ng/mL of IL-6 for patients with acute inflammation caused by sepsis [@franco2019]. These variations in cytokine levels, which span a wide range in different pathological states, highlight the complex and dynamic nature of inflammation and underscore the need for research that considers this variability when investigating the effects of inflammation on drug-metabolizing enzymes.
 
 The median IL-6 values (IQR) in the control, sepsis, and septic shock groups were 23.6 (11.2–43.5), 89.9 (45.2–272.6), and 1378.6 (256.4–11,062.1) pg/mL
 
@@ -164,11 +164,17 @@ IC50:      9.447e-01
 
 ### Sequencing
 
+**IL-1β**
+
 ![](images/main_seq_IL1B.png){#fig-seq-3}
 
 ![](images/seq_il1B_2.png){#fig-seq-1B}
 
-![IL-1B sequencing](images/seq_il1b.png){#fig-seq-il1b}
+![IL-1β sequencing](images/seq_il1b.png){#fig-seq-il1b}
+
+**IL-6**
+
+![Sequencing data for IL-6. Note that there are only 2 sig diff genes in volcano plot a, with log(2) fold change less than -1. No cutoff value set for FC](images/main_seq_IL6.png){#fig-seq-il6}
 
 ## Supplementary
 

@@ -82,6 +82,10 @@ plot_volcano_il6_pooled
 # Import raw data from the specified Excel file and sheet
 file <- here("notebooks/seq/data_raw/IL6_10_vs_vehicle.xlsx")
 il6_10_data <- read_xlsx(file, sheet = 1)
+
+setDT(il6_10_data)
+il6_10_data[logCPM >1 & FDR < 0.05 & logFC < -1] |> nrow()
+il6_10_data[logCPM >1 & FDR < 0.05 & logFC > 1] |> nrow()
 ```
 
 
@@ -107,63 +111,75 @@ il6_10_data$delabel <- NA
 # Now, you can safely assign gene names to the 'delabel' column for differentially expressed genes
 il6_10_data$delabel[il6_10_data$diffexpressed != "NO"] <- il6_10_data$genes[il6_10_data$diffexpressed != "NO"]
 
+
+# Legend numbers
+category_counts <- table(il6_10_data$diffexpressed)
+labels_with_counts <- paste(names(category_counts), ": ", category_counts, " genes", sep = "")
+
+
 # Create the volcano plot using ggplot2
-plot_volcano_il6_10 <- 
-  ggplot(data=il6_10_data, aes(x=logFC, y=-log10(FDR), col=diffexpressed, label=delabel)) + 
-    theme_minimal() + # Use a minimal theme for the plot
-    geom_text_repel(max.overlaps = 10) + # Use repelling text to avoid label overlap
-    scale_color_manual(values=c("blue", "black", "red")) + # Custom colors for differential expression
-    geom_vline(xintercept=c(-1, 1), col="dark grey", linetype = "dashed") + # Vertical lines for fold change thresholds
-    geom_hline(yintercept=-log10(0.05), col="dark grey", linetype = "dashed") + # Horizontal line for FDR threshold
-    geom_point() + # Add points for each gene
-    labs(color = 'Direction of gene expression', # Customize legend title
-         x = expression("log"[2]*"FC (IL6 vs Vehicle)"), # Customize x-axis label
-         y = expression("-log"[10]*"FDR")) + # Customize y-axis label
-    scale_x_continuous(limits = c(-8, 10)) + # Customize x-axis breaks
-    scale_y_continuous(limits = c(0, 320)) + # Customize y-axis breaks
-    theme(panel.grid.minor.y = element_blank(),# Remove minor grid lines
-          panel.grid.minor.x = element_blank(),# Remove minor grid lines
-          legend.position = "bottom" 
-          )+ 
-    ggtitle('Volcano Plot: IL6 10 ng/ml vs Vehicle') # Add a title to the plot
+plot_volcano_il6_10 <-
+  ggplot(
+    data = il6_10_data,
+    aes(
+      x = logFC,
+      y = -log10(FDR),
+      col = diffexpressed,
+      label = delabel
+    )
+  ) +
+  theme_minimal() + # Use a minimal theme for the plot
+  geom_text_repel(
+    max.overlaps = 5,
+    # size = 2.5,
+    # nudge_x = .25,
+    # nudge_y = .25,
+    # point.padding = 0.5,
+    # box.padding = 0.5,
+    # force = 1,
+    show.legend = FALSE # Dont let legend inherit symbols from this function. They look weird
+  ) +
+  scale_color_manual(
+    values = c("blue", "black", "red"), # Custom colors for differential expression
+    labels = labels_with_counts
+  ) + # Custom labels w/ counts differential expression
+  geom_vline(xintercept = c(-1, 1), col = "dark grey", linetype = "dashed") + # Vertical lines for fold change thresholds
+  geom_hline(yintercept = -log10(0.05), col = "dark grey", linetype = "dashed") + # Horizontal line for FDR threshold
+  geom_point() + # Add points for each gene
+  labs(
+    color = bquote(bold("Direction of gene regulation")), # Customize legend title
+    x = bquote(bold("log"[2] * "FC")), # Customize x-axis label
+    y = bquote(bold("-log"[10] * "FDR")) # Customize y-axis label
+  ) +
+  # scale_x_continuous(limits = c(-8, 10)) + # Customize x-axis breaks
+  # scale_y_continuous(limits = c(0, 320)) + # Customize y-axis breaks
+  theme(
+    panel.grid.minor.y = element_blank(), # Remove minor grid lines
+    panel.grid.minor.x = element_blank(), # Remove minor grid lines
+    legend.position = "bottom",
+    plot.background = element_rect(fill = "white", linetype = "blank"),
+    legend.text = element_text(face = "bold"),
+    axis.text = element_text(size = 10, face = "bold"),
+    axis.title = element_text(size = 14),
+    panel.background = element_rect(linetype = "solid")
+  ) +
+  ggtitle("Volcano Plot: IL6 10 ng/ml vs Vehicle") # Add a title to the plot
 
 
 plot_volcano_il6_10
 
-# ggsave(filename = here("notebooks/seq/output/IL_6_10ng_volcano.png"))
-```
-
-Trying to ad a box around the out of bounds data points. They have a smaller FDR than can be handled.
-```{r}
-# # Adjusting the dataset to include points with FDR of 0
-# il6_10_data$adjusted_FDR <- ifelse(il6_10_data$FDR == 0, 340, -log10(il6_10_data$FDR))
-# 
-# # Create the volcano plot using ggplot2
-# plot_volcano_il6_10 <- 
-#   ggplot(data=il6_10_data, aes(x=logFC, y=adjusted_FDR, col=diffexpressed, label=delabel)) + 
-#     theme_minimal() +
-#     geom_text_repel(max.overlaps = 10) +
-#     scale_color_manual(values=c("blue", "black", "red")) +
-#     geom_vline(xintercept=c(-1, 1), col="dark grey", linetype = "dashed") +
-#     geom_hline(yintercept=-log10(0.05), col="dark grey", linetype = "dashed") + # Use the new adjusted value
-#     geom_point() +
-#     labs(color = 'Direction of gene expression',
-#          x = expression("log"[2]*"FC (IL6 vs Vehicle)"),
-#          y = expression("-log"[10]*"Adjusted FDR")) +
-#     scale_x_continuous(limits = c(-8, 10)) +
-#     scale_y_continuous(limits = c(0, 450)) +
-#     theme(
-#       panel.grid.minor.y = element_blank(),
-#       panel.grid.minor.x = element_blank(),
-#       legend.position = "bottom"
-#     ) +
-#     annotate("rect", xmin = 1, xmax = 10, ymin = 320, ymax = 340, alpha = .2, color = "black") +
-#     ggtitle('Volcano Plot: IL6 10 ng/ml vs Vehicle')
-# 
-# # Display the plot
-# plot_volcano_il6_10
+ggsave(filename = here("notebooks/seq/output/IL_6_10ng_volcano.png"),
+       device = "png",
+       width = 8.27,
+       height = 11.69,
+       units = "in")
 
 
+ggsave(filename = here("notebooks/seq/output/IL_6_10ng_volcano.pdf"),
+       device = "pdf",
+       width = 8.27,
+       height = 11.69,
+       units = "in", )
 ```
 
 ## IL-6 0.1 ng/ml
@@ -174,6 +190,14 @@ il6_0.1_data <- read_xlsx(file, sheet = 1)
 
 
 setDT(il6_0.1_data)
+il6_0.1_data[logCPM > 1 & FDR < 0.05] |> nrow()
+# Only 0/2 sig diff genes  with logcpm > 1, FDR >0.05, and logFC +1/-1, respectively:
+il6_0.1_data[logCPM > 1 & FDR < 0.05 & logFC > 1] |> nrow()
+il6_0.1_data[logCPM > 1 & FDR < 0.05 & logFC < -1] |> nrow()
+# 5/4 genes when log FC +0.5/-0.5
+il6_0.1_data[logCPM > 1 & FDR < 0.05 & logFC > 0.5] |> nrow()
+il6_0.1_data[logCPM > 1 & FDR < 0.05 & logFC < -0.5] |> nrow()
+# 25/8 for logFC any 
 il6_0.1_data[logCPM > 1 & FDR < 0.05 & logFC > 0] |> nrow()
 il6_0.1_data[logCPM > 1 & FDR < 0.05 & logFC < 0] |> nrow()
 ```
@@ -202,30 +226,67 @@ il6_0.1_data$delabel <- NA
 # Now, you can safely assign gene names to the 'delabel' column for differentially expressed genes
 il6_0.1_data$delabel[il6_0.1_data$diffexpressed != "NO"] <- il6_0.1_data$genes[il6_0.1_data$diffexpressed != "NO"]
 
+
+# Legend numbers
+category_counts <- table(il6_0.1_data$diffexpressed)
+labels_with_counts <- paste(names(category_counts), ": ", category_counts, " genes", sep = "")
+
 # Create the volcano plot using ggplot2
 plot_volcano_il6_0.1 <- 
-  ggplot(data=il6_0.1_data, aes(x=logFC, y=-log10(FDR), col=diffexpressed, label=delabel)) + 
+  ggplot(data=il6_0.1_data,
+         aes(x=logFC,
+             y=-log10(FDR),
+             col=diffexpressed,
+             label=delabel
+             )
+         ) + 
     theme_minimal() + # Use a minimal theme for the plot
-    geom_text_repel(max.overlaps = 10) + # Use repelling text to avoid label overlap
-    scale_color_manual(values=c("blue", "black", "red")) + # Custom colors for differential expression
+    geom_text_repel(max.overlaps = 10,
+                  # size = 2.5,
+                  # nudge_x = .25,
+                  # nudge_y = .25,
+                  # point.padding = 0.5,
+                  # box.padding = 0.5,
+                  # force = 1,
+                  show.legend = FALSE # Dont let legend inherit symbols from this function. They look weird
+                  ) +
+    scale_color_manual(values=c("blue", "black", "red"), # Custom colors for differential expression
+                       labels = labels_with_counts # Custom labels with counts
+                       ) +
     geom_vline(xintercept=c(-1, 1), col="dark grey", linetype = "dashed") + # Vertical lines for fold change thresholds
     geom_hline(yintercept=-log10(0.05), col="dark grey", linetype = "dashed") + # Horizontal line for FDR threshold
     geom_point() + # Add points for each gene
-    labs(color = 'Direction of gene expression', # Customize legend title
-         x = expression("log"[2]*"FC (IL6 vs Vehicle)"), # Customize x-axis label
-         y = expression("-log"[10]*"FDR")) + # Customize y-axis label
+    labs(color = bquote(bold("Direction of gene regulation")), # Customize legend title
+         x = bquote(bold("log"[2]*"FC")), # Customize x-axis label
+         y = bquote(bold("-log"[10]*"FDR")) # Customize y-axis label
+         ) +
     #scale_x_continuous(limits = c(-8, 10)) + # Customize x-axis breaks
     #scale_y_continuous(limits = c(0, 320)) + # Customize y-axis breaks
-    theme(panel.grid.minor.y = element_blank(),# Remove minor grid lines
-          panel.grid.minor.x = element_blank(),# Remove minor grid lines
-          legend.position = "bottom" 
-          )+ 
+  theme(panel.grid.minor.y = element_blank(),# Remove minor grid lines
+        panel.grid.minor.x = element_blank(),# Remove minor grid lines
+        legend.position = "bottom",
+        plot.background = element_rect(fill = "white", linetype = "blank"),
+        legend.text = element_text(face = "bold"),
+        axis.text = element_text(size = 10, face = "bold"),
+        axis.title = element_text(size = 14),
+        panel.background = element_rect(linetype = "solid")
+  ) +
     ggtitle('Volcano Plot: IL6 0.1 ng/ml vs Vehicle') # Add a title to the plot
 
 
 plot_volcano_il6_0.1
 
-# ggsave(filename = here("notebooks/seq/output/IL_6_01ng_volcano.png"))
+
+# ggsave(filename = here("notebooks/seq/output/IL_6_01ng_volcano.png"),
+#        device = "png",
+#        width = 8.27,
+#        height = 11.69,
+#        units= "in")
+# ggsave(filename = here("notebooks/seq/output/IL_6_01ng_volcano.pdf"),
+#        device = "pdf",
+#        width = 8.27,
+#        height = 11.69,
+#        units= "in")
 
 ```
 
@@ -390,11 +451,6 @@ plot_volcano_il1B_10
 
 
 
-
-```
-
-Tables with top xx down or upregulated genes?
-```{r}
 
 ```
 
@@ -1191,34 +1247,72 @@ Here call and save the needed GSEA plots.
 
 0.1 ng/ml IL-1B
 ```{r}
-GO_plots$`IL1B 0.1`$BP
-
-ggsave(filename = here("notebooks/seq/output/GSEA_il1b_01.png"),
-       device = "png",
-       width = 8.27,
-       height = 11.69,
-       units= "in")
-ggsave(filename = here("notebooks/seq/output/GSEA_il1b_01.pdf"),
-       device = "pdf",
-       width = 8.27,
-       height = 11.69,
-       units= "in")
+# GO_plots$`IL1B 0.1`$BP
+# 
+# ggsave(filename = here("notebooks/seq/output/GSEA_il1b_01.png"),
+#        device = "png",
+#        width = 8.27,
+#        height = 11.69,
+#        units= "in")
+# ggsave(filename = here("notebooks/seq/output/GSEA_il1b_01.pdf"),
+#        device = "pdf",
+#        width = 8.27,
+#        height = 11.69,
+#        units= "in")
 ```
 
 10 ng/ml IL-1B
 ```{r}
-GO_plots$`IL1B 10`$BP
-
-
-ggsave(filename = here("notebooks/seq/output/GSEA_il1b_10.png"),
-       device = "png",
-       width = 8.27,
-       height = 11.69,
-       units= "in")
-ggsave(filename = here("notebooks/seq/output/GSEA_il1b_10.pdf"),
-       device = "pdf",
-       width = 8.27,
-       height = 11.69,
-       units= "in")
+# GO_plots$`IL1B 10`$BP
+# 
+# 
+# ggsave(filename = here("notebooks/seq/output/GSEA_il1b_10.png"),
+#        device = "png",
+#        width = 8.27,
+#        height = 11.69,
+#        units= "in")
+# ggsave(filename = here("notebooks/seq/output/GSEA_il1b_10.pdf"),
+#        device = "pdf",
+#        width = 8.27,
+#        height = 11.69,
+#        units= "in")
 ```
+
+
+### IL-6
+Vulcano plots already saved in output. 
+Here call and save the needed GSEA plots.
+
+0.1 ng/ml IL-6
+```{r}
+# GO_plots$`IL6 0.1`
+# 
+# ggsave(filename = here("notebooks/seq/output/GSEA_il6_01.png"),
+#        device = "png",
+#        width = 8.27,
+#        height = 11.69,
+#        units= "in")
+# ggsave(filename = here("notebooks/seq/output/GSEA_il6_01.pdf"),
+#        device = "pdf",
+#        width = 8.27,
+#        height = 11.69,
+#        units= "in")
+```
+
+10 ng/ml IL-1B
+```{r}
+# GO_plots$`IL6 10`$BP
+# 
+# ggsave(filename = here("notebooks/seq/output/GSEA_il610.png"),
+#        device = "png",
+#        width = 8.27,
+#        height = 11.69,
+#        units= "in")
+# ggsave(filename = here("notebooks/seq/output/GSEA_il6_10.pdf"),
+#        device = "pdf",
+#        width = 8.27,
+#        height = 11.69,
+#        units= "in")
+```
+
 
