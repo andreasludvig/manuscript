@@ -58,6 +58,10 @@ Previous research has provided valuable insights into the effects of inflammatio
 
 Levels of IL-6 and IL-1B in healthy individuals are generally low, with reports in range of \~10pg/ml in adults for IL-6, and \~2.5 pg/ml IL-1B in adults [@kim2011; @kleiner2013; @said2021; @strand2020]. In contrast, cytokine levels may be considerably elevated with IL-6 levels of \~140 pg/mL, and I[L-1B levels of \~100 pg/mL]{.underline}, among patients with rheumatoid arthritis or SLE [@umare2014] to more than 1 ng/mL of IL-6 for patients with acute inflammation caused by sepsis [@franco2019]. These variations in cytokine levels, which span a wide range in different pathological states, highlight the complex and dynamic nature of inflammation and underscore the need for research that considers this variability when investigating the effects of inflammation on drug-metabolizing enzymes.
 
+The median IL-6 values (IQR) in the control, sepsis, and septic shock groups were 23.6 (11.2–43.5), 89.9 (45.2–272.6), and 1378.6 (256.4–11,062.1) pg/mL
+
+<https://bmcinfectdis.biomedcentral.com/articles/10.1186/s12879-019-4618-7>
+
 Recently, 3D primary human hepatocytes (PHH) have challenged 2D PHH as a more physiologically relevant culture method of PHH. 3D culture leads to more stable cell cultures that retain their hepatic phenotype for extended periods of time [@bell2016]. Consequently, this 3D PHH have been shown to predict CYP induction and hepatotoxicity more accurately than 2D PHH [@bell2018; @järvinen2023]. Historically, 2D PHH have been utilized to study the effect of drugs and inflammation on hepatocyte/liver function. However, the inherent limitations of 2D cultures, primarily their inability to maintain the physiological phenotype and liver-specific functions of hepatocytes, have prompted a shift towards the 3D liver spheroid models. This model is increasingly recognized for their physiological relevance and stability, offering a more accurate representation of hepatic responses. The 3D liver spheroids preserve liver cell phenotypes and functions over extended periods, thereby enhancing the reliability of drug-induced liver injury predictions and disease mechanism investigations. This advancement positions 3D liver spheroids as potentially the new standard for in vitro hepatocyte studies, while still being suitable for a high throughput setting, and financially accessible as opposed to even more advanced liver models (ref for last part) [@ingelman-sundberg; @dunvald] . Another claim for the lack of correlation discussed in the review by AC et al. is that there might be methodological limitations to the widespread use of 2D models of PHHs [@dunvald].
 
 We aimed to utilize 3D primary human hepatocytes [@bell2016] to study the impact of physiologically relevant concentrations of cytokines on CYP expression and activity. This may help further our understanding of the impact of inflammation on clinical drug metabolism among patients with inflammation. This, in turn, may inform more precise and adaptive prescribing strategies for patients in various inflammatory states.
@@ -142,7 +146,7 @@ We used ATP content as a proxy for viability. Viability and morphology for
 
 The treatments did not have a negative effect on the viability or morphology of the spheroids.
 
-{{< embed notebooks/qPCR/mRNA.qmd#fig-mRNA-CYP3A4 >}}
+{{< embed notebooks/qPCR/mRNA.qmd#fig-mRNA-CYP3A4-main >}}
 
 ### Activity
 
@@ -159,6 +163,8 @@ IC50:      9.447e-01
 ```
 
 ### Sequencing
+
+![](images/main_seq_IL1B.png){#fig-seq-3}
 
 ![](images/seq_il1B_2.png){#fig-seq-1B}
 

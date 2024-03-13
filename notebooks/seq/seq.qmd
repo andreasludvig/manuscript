@@ -377,8 +377,16 @@ plot_volcano_il1B_10 <-
 
 plot_volcano_il1B_10
 
-# ggsave(filename = here("notebooks/seq/output/IL_1B_10ng_volcano.png"))
-# ggsave(filename = here("notebooks/seq/output/IL_1B_10ng_volcano.pdf"))
+# ggsave(filename = here("notebooks/seq/output/IL_1B_10ng_volcano.png"),
+#        device = "png",
+#        width = 8.27,
+#        height = 11.69,
+#        units= "in")
+# ggsave(filename = here("notebooks/seq/output/IL_1B_10ng_volcano.pdf"),
+#        device = "pdf",
+#        width = 8.27,
+#        height = 11.69,
+#        units= "in")
 
 
 
@@ -471,8 +479,17 @@ plot_volcano_il1B_0.1 <-
 
 plot_volcano_il1B_0.1
 
-# ggsave(filename = here("notebooks/seq/output/IL_1B_01ng_volcano.png"))
-# ggsave(filename = here("notebooks/seq/output/IL_1B_01ng_volcano.pdf"))
+# ggsave(filename = here("notebooks/seq/output/IL_1B_01ng_volcano.png"),
+#        device = "png",
+#        width = 8.27,
+#        height = 11.69,
+#        units= "in")
+# 
+# ggsave(filename = here("notebooks/seq/output/IL_1B_01ng_volcano.pdf"),
+#        device = "pdf",
+#        width = 8.27,
+#        height = 11.69,
+#        units= "in")
 ```
 
 ## Abemaciclib 5 µM 
@@ -1176,14 +1193,32 @@ Here call and save the needed GSEA plots.
 ```{r}
 GO_plots$`IL1B 0.1`$BP
 
-# ggsave(filename = here("notebooks/seq/output/GSEA_il1b_01.png"))
-# ggsave(filename = here("notebooks/seq/output/GSEA_il1b_01.pdf"))
+ggsave(filename = here("notebooks/seq/output/GSEA_il1b_01.png"),
+       device = "png",
+       width = 8.27,
+       height = 11.69,
+       units= "in")
+ggsave(filename = here("notebooks/seq/output/GSEA_il1b_01.pdf"),
+       device = "pdf",
+       width = 8.27,
+       height = 11.69,
+       units= "in")
 ```
 
 10 ng/ml IL-1B
 ```{r}
 GO_plots$`IL1B 10`$BP
-# ggsave(filename = here("notebooks/seq/output/GSEA_il1b_10.png"))
-# ggsave(filename = here("notebooks/seq/output/GSEA_il1b_10.pdf"))
+
+
+ggsave(filename = here("notebooks/seq/output/GSEA_il1b_10.png"),
+       device = "png",
+       width = 8.27,
+       height = 11.69,
+       units= "in")
+ggsave(filename = here("notebooks/seq/output/GSEA_il1b_10.pdf"),
+       device = "pdf",
+       width = 8.27,
+       height = 11.69,
+       units= "in")
 ```
 
