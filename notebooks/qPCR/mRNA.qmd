@@ -91,8 +91,7 @@ overall_means <-
 Plot. Updated below withot facet
 
 ```{r}
-#| label: fig-mRNA-CYP3A4
-#| fig-cap: "Relative CYP3A4 mRNA expression. Small points are mean of three donors for 72 and 120 hours, and two donors for 24 hours (donors two and three)"
+
 
 
 # ggplot(data_3A4[condition == "IL-6"]) +
