@@ -136,15 +136,17 @@ Some loss of viability or metabolic activity cannot be ruled out, however this s
 
 Within nine days from seeding the spheroid has formed and exhibit a tightly compacted appearance.
 
-We used ATP content as a proxy for viability. Viability and morphology for
-
 ![Morphology for donors one, two, and three. Photos from the same well for each donor throughout the experiment. Scale bars represent 200 µm.](images/morph.png){#fig-morph width="4500"}
 
 {{< embed notebooks/viability/Viability.qmd#fig-viability >}}
 
 ### Effect of inflammatory cytokines on mRNA expression
 
-The treatments did not have a negative effect on the viability or morphology of the spheroids.
+Employing the 3D model and more physiologically relevant concentrations of the pro-inflammatory cytokines IL-6 and IL-1β, we observed a dose-dependent downregulation of the transcription of the critical CYP3A4 enzyme, also at physiologically relevant concentrations, a notable finding that deviates from much of the existing literature (hører til I discussion, snarere end her?). Similar dose-dependent effects were seen with CYP1A2, 2B6, and 2D6 upon cytokine exposure, except for an unexpected upregulation of 2B6 after treatment with IL1-B.
+
+/fi
+
+No negative effect of the treatments on viability or morphology was observed (rather the reverse, likely due to the excessive handling of the plates for viability/morphology). (Har også viability for treatments. Plottes og tilføjes supp.?)
 
 {{< embed notebooks/qPCR/mRNA.qmd#fig-mRNA-CYP3A4-main >}}
 
@@ -163,6 +165,8 @@ IC50:      9.447e-01
 ```
 
 ### Sequencing
+
+We see that supraphysiological levels of IL-6 and IL-1β have a marked effect on the up- and downregulation of the expression of several genes. IL-6 at 10 ng/ml gives rise to an upregulation of \~500 genes, and a downregulation of \~400 genes, whereas IL-1B at the same concentration leads to an up and downregulation of \~650 and and \~550 genes respecitvely. Not surprinsingly, our gene set enrichment analysis
 
 **IL-1β**
 
